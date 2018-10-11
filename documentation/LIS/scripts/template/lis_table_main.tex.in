@@ -1,0 +1,190 @@
+\documentclass[10pt]{article}
+
+\usepackage{graphicx}
+\usepackage{rotating}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{array}
+
+\usepackage[a4paper, landscape, vmargin=1.25cm, hmargin=1cm]{geometry}
+
+
+\newcommand{\lisTabDir}{__WORKDIR__}
+\newcolumntype{C}[1]{>{\centering}m{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{LIS cabling table (Italy)}
+\vfill
+\vskip 2cm
+\begin{center}
+  \scalebox{1.0}{\input{\lisTabDir/gveto_0-1.tex}}
+  \vskip 40pt
+  \noindent\begin{minipage}{3cm}
+  \begin{center}
+    \scalebox{0.66}{\input{\lisTabDir/xcalo_0-1.tex}}
+  \end{center}
+  \end{minipage}
+  \begin{minipage}{21cm}
+    \begin{center}
+      \scalebox{0.8}{\input{\lisTabDir/calo_0.tex}}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{3cm}
+    \begin{center}
+      \scalebox{0.66}{\input{\lisTabDir/xcalo_0-0.tex}}
+    \end{center}
+  \end{minipage}
+  \vskip 40pt
+  \scalebox{1.0}{\input{\lisTabDir/gveto_0-0.tex}}
+\end{center}
+\pagebreak
+
+\section{LIS cabling table (France)}
+\vfill
+\vskip 2cm
+\begin{center}
+  \scalebox{1.0}{\input{\lisTabDir/gveto_1-1.tex}}
+  \vskip 40pt
+  \noindent
+  \begin{minipage}{3cm}
+    \begin{center}
+      \scalebox{0.66}{\input{\lisTabDir/xcalo_1-0.tex}}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{21cm}
+    \begin{center}
+      \scalebox{0.8}{\input{\lisTabDir/calo_1.tex}}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{3cm}
+    \begin{center}
+      \scalebox{0.66}{\input{\lisTabDir/xcalo_1-1.tex}}
+    \end{center}
+  \end{minipage}
+  \vskip 40pt
+  \scalebox{1.0}{\input{\lisTabDir/gveto_1-0.tex}}
+\end{center}
+
+\end{document}
+%%%
+
+\section{LIS main calorimeter cabling table (Italy)}
+\vskip 10pt
+View of the Italy main calorimeter wall:
+\vskip 10pt
+\par$\leftarrow$ Tunnel\hfill$\rightarrow$ Edelweiss
+\vskip 10pt
+\begin{center}
+  \input{\lisTabDir/calo_0.tex}
+\end{center}
+\pagebreak
+
+\section{LIS X-wall cabling table (Italy/Edelweiss)}
+\vskip 10pt
+View of the Italy/Edelweiss X-wall:
+\vskip 10pt
+\begin{center}
+  \hskip 2cm $\rightarrow$ Source
+  \vskip 10pt
+  \input{\lisTabDir/xcalo_0-0.tex}
+\end{center}
+\pagebreak
+
+\section{LIS X-wall cabling table (Italy/Tunnel)}
+\vskip 10pt
+View of the Italy/Edelweiss X-wall:
+\vskip 10pt
+\begin{center}
+  Source $\leftarrow$ \hskip 2cm \,
+  \vskip 10pt
+  \input{\lisTabDir/xcalo_0-1.tex}
+\end{center}
+\pagebreak
+
+\section{LIS Gamma veto cabling table (Italy/Bottom)}
+\vskip 10pt
+View of the Italy/Bottom G-veto:
+\vskip 10pt
+\begin{center}
+  \par$\leftarrow$ Tunnel\hfill$\rightarrow$ Edelweiss
+  \vskip 10pt
+  \input{\lisTabDir/gveto_0-0.tex}
+\end{center}
+\pagebreak
+
+\section{LIS Gamma veto cabling table (Italy/Top)}
+\vskip 10pt
+View of the Italy/Top G-veto:
+\vskip 10pt
+\begin{center}
+  \par$\leftarrow$ Tunnel\hfill$\rightarrow$ Edelweiss
+  \vskip 10pt
+  \input{\lisTabDir/gveto_0-1.tex}
+\end{center}
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{LIS main calorimeter cabling table (France)}
+\vskip 10pt
+View of the France main calorimeter wall:
+\vskip 10pt
+$\leftarrow$ Edelweiss \hfill $\rightarrow$ Tunnel
+\vskip 10pt
+\begin{center}
+  \input{\lisTabDir/calo_1.tex}
+\end{center}
+\pagebreak
+
+\section{LIS X-wall cabling table (France/Edelweiss)}
+\vskip 10pt
+View of the France/Edelweiss X-wall:
+\vskip 10pt
+\begin{center}
+  Source $\leftarrow$ \hskip 2cm \,
+  \vskip 10pt
+  \input{\lisTabDir/xcalo_1-0.tex}
+\end{center}
+\pagebreak
+
+\section{LIS X-wall cabling table (France/Tunnel)}
+\vskip 10pt
+View of the France/Tunnel X-wall:
+\vskip 10pt
+\begin{center}
+  \hskip 2cm $\rightarrow$ Source
+  \vskip 10pt
+  \input{\lisTabDir/xcalo_1-1.tex}
+\end{center}
+
+\section{LIS Gamma veto cabling table (France/Bottom)}
+\vskip 10pt
+View of the France/Bottom G-veto:
+\vskip 10pt
+\begin{center}
+  \par$\leftarrow$ Edelweiss\hfill$\rightarrow$ Tunnel
+  \vskip 10pt
+  \input{\lisTabDir/gveto_1-0.tex}
+\end{center}
+\pagebreak
+
+\section{LIS Gamma veto cabling table (France/Top)}
+\vskip 10pt
+View of the France/Top G-veto:
+\vskip 10pt
+\begin{center}
+  \par$\leftarrow$ Edelweiss\hfill$\rightarrow$ Tunnel
+  \vskip 10pt
+  \input{\lisTabDir/gveto_1-1.tex}
+\end{center}
+\pagebreak
+
+
+\end{document}
+
+%% end
+

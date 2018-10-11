@@ -1,0 +1,378 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{a4wide}
+\usepackage{verbatim}
+\usepackage[T1]{fontenc}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+%\usepackage[french]{babel}
+\usepackage[dvips]{color}
+\usepackage{graphicx}
+\usepackage{epic}
+\usepackage{eepic}
+\usepackage{eepicemu}
+\usepackage{array}
+\usepackage{moreverb}
+\usepackage{fancyvrb}
+\usepackage{url}
+\usepackage{eurosym}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multicol}
+
+\newcommand{\imgpath}{./images}
+\newcommand{\samplespath}{./samples}
+\newcommand{\pdfteximgpath}{./pdftex}
+\newcommand{\pdftextimgpath}{./pdftex_t}
+
+\title{SuperNEMO Demonstrator\\
+  Light Injection System (LIS)\\
+  Cabling scheme and cable labels\\
+  version 0.2}
+\author{Y.Lemi\`ere, F.Mauger}
+\date{October 5th, 2018}
+
+%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  \noindent This document presents the cable labelling convention used
+  for the SuperNEMO Demonstrator's Light Injection System (LIS).
+\end{abstract}
+
+\tableofcontents
+
+\section{Principle}
+
+The  Light  Injection  System  implements  20  LEDs  which  distribute
+reference  pulses  of  light  to  all  optical  modules  (OM)  in  the
+demonstrator (main calorimeter walls, X-walls,  gamma veto) as well as
+to a few reference OMs.
+
+Each LED is  able to send light  through an unique bundle  of about 70
+optical fibers.  The termination of each  fiber must be connected to a
+scintillator block from OM in  the main calorimeter walls, the X-walls
+or the gamma veto setup.
+
+Each  scintillator block  has  two  connectors in  order  to plug  the
+optical fibers which  transport light from LEDs to  the detector.  One
+of  this connector  is named  the \emph{primary}  connector while  the
+other is the \emph{secondary} connector.  The \emph{primary} connector
+is intended to receive light pulse  from a LED for routine calibration
+operations. The \emph{secondary} connector is  used as a spare in case
+of failure of the \emph{primary} line.
+
+\vskip 10pt
+\noindent\textbf{Note:}  We  have  no   information  today  about  the
+identification  of   the  OM's  \emph{primary}   and  \emph{secondary}
+connectors  with respect  to their  placement and  orientation in  the
+detector.
+\vskip 10pt
+
+\noindent
+Figure \ref{fig:lis:principle:1}  shows the  basic diagram of  the LIS
+system.  For  practical reason  one considers to  use a  special label
+stuck on each optical fiber and bundle during cabling operations.
+
+\begin{figure}[h!]
+  \begin{center}
+    \scalebox{0.75}{\input{\pdftextimgpath/fig-lis-1.pdftex_t}}
+  \end{center}
+  \caption{Principle of  the light distribution  to the OMs  using the
+    LIS and labelling.}
+  \label{fig:lis:principle:1}
+\end{figure}
+
+\pagebreak
+\section{Addressing objects}
+
+\subsection{Format of a LIS label}
+
+Each label to be used for LIS cabling will use the following format:
+
+\begin{center}
+  \fbox{\texttt{X:}$id_1$.$id_2$\dots$id_n$}
+\end{center}
+\noindent  where \texttt{X}  is a  single letter  which describes  the
+category  of the  labelled  object,  and the  $id_1$.$id_2$\dots$id_n$
+sequence is the unique address of the object within its category.  The
+$id_x$ tokens  are positive  integers.  The \emph{colon}  character is
+used to separate  the category letter from the  address.  The sequence
+of  identifiers in  the  address  use the  \emph{dot}  character as  a
+separator.
+
+
+\subsection{LEDs, bundles and fibers}
+
+Each LED belonging  to the LI system is identified  with an unique ID,
+namely a number ranging from \texttt{1} to  \texttt{20}.
+We propose to label a given LED
+with the following scheme:
+\begin{center}
+  \fbox{\texttt{L:$led$}}
+\end{center}
+where \texttt{$led$} is the number of the LED (positive integer).
+\vskip 10pt
+\par\noindent Examples: \fbox{\texttt{L:3}}, 
+\fbox{\texttt{L:4}},\fbox{\texttt{L:12}}.
+\vskip 10pt
+\par Practically, the LED labels should not be necessary unless
+they can easily be stuck on the LIS crate.
+
+\vskip 10pt
+
+\par\noindent Up  to 70 optical fibers  are associated to a  LED. They
+all are grouped within a single  bundle.  A bundle inherits the number
+of the  LED it is  connected to.  We propose  to label a  given bundle
+with the following scheme:
+\begin{center}
+  \fbox{\texttt{B:$led$}}
+\end{center}
+where \texttt{$led$} is the number of the LED associated to the bundle.
+\vskip 10pt
+\par\noindent Examples: \fbox{\texttt{B:3}}, 
+\fbox{\texttt{B:4}}\dots\fbox{\texttt{B:12}}.
+ 
+\vskip 10pt  An optical  fiber inherits  the number of  the LED  it is
+associated to.  It is distinguished from  the other fibers in the same
+bundle thanks  to an  additional \emph{fiber  number}.  We  propose to
+label a  given fiber connected  to the block's primary  connector with
+the following scheme:
+\begin{center}
+  \fbox{\texttt{P:$led$.$fib$}}\hskip 1cm or\hskip 1cm\fbox{\texttt{S:$led$.$fib$}}
+\end{center}
+where \texttt{$led$} is the number  of the LED (and bundle) associated
+to the fiber and \texttt{$fib$} is  the number of the fiber within the
+bundle  (starting at  1). The  leading \texttt{P}  is used  for fibers
+connected to the \emph{primary} connector of a scintillator block; the
+\texttt{S}  is  used  for  fibers connected  to  the  \emph{secondary}
+connector of a scintillator block.
+\vskip 10pt
+\par\noindent Examples: \fbox{\texttt{P:3.1}}, 
+\fbox{\texttt{P:3.34}}, \fbox{\texttt{S:12.3}}.
+
+\subsection{Optical modules}
+
+The  identification scheme  of the  optical  modules is  based on  the
+addressing scheme defined in the geometry model and implemented in the
+simulation     and     data    analysis     software\footnote{Falaise:
+  \url{https://gitub.com/SuperNEMO-DBD/Falaise}}.     There   are    4
+categories  of  optical  modules  and  thus  of  scintillator  blocks,
+depending on their location in the experimental setup:
+
+\begin{itemize}
+  
+\item Main wall block (Falaise: geometry category \texttt{"calorimeter\_block"}
+  and  type  \texttt{1302}):
+
+  \par  OMs are  addressed  through  their
+  \emph{side}   number from 0 (Italy)     to  1 (France),
+  \emph{column} number from 0 (Edelweiss) to 19 (Tunnel) and
+  \emph{row}    number from 0 (bottom)    to 12 (top).
+
+  \par We  propose to label such a block with the following scheme:
+  \begin{center}
+    \fbox{\texttt{M:$side$.$column$.$row$}}
+  \end{center}
+  \vskip 10pt
+  \par\noindent Examples: \fbox{\texttt{M:0.0.0}}, 
+  \fbox{\texttt{M:0.19.12}}, \fbox{\texttt{M:1.0.0}}, \fbox{\texttt{M:1.19.12}}.
+  
+\item X-wall block (Falaise: geometry category \texttt{"xcalo\_block"} and type
+  \texttt{1232}):
+  
+  \par OMs  are addressed  through their
+  \emph{side}   number from 0 (Italy)     to  1 (France),
+  \emph{wall}   number from 0 (Edelweiss) to  1 (tunnel),
+  \emph{column} number from 0 (source)    to  1 (calorimeter) and
+  \emph{row}    number from 0 (bottom)    to 15 (top).
+  
+  \par  We propose  to
+  label such a block with the following scheme:
+  \begin{center}
+    \fbox{\texttt{X:$side$.$wall$.$column$.$row$}}
+  \end{center}
+  \vskip 10pt
+  \par\noindent Examples: \fbox{\texttt{X:0.1.1.15}}, \fbox{\texttt{X:1.0.0.8}}
+  
+\item Gamma veto block  (Falaise: geometry category \texttt{"gveto\_block"} and
+  type   \texttt{1252}):
+  
+  \par   OMs  are   addressed  through   their
+  \emph{side}   number from 0 (Italy)     to  1 (France),
+  \emph{wall}   number from 0 (bottom)    to  1 (top)  and
+  \emph{column} number from 0 (Edelweiss) to 15 (tunnel).
+  
+  \par We propose to label  such a block
+  with the following scheme:
+  \begin{center}
+    \fbox{\texttt{G:$side$.$wall$.$column$}}
+  \end{center}
+  \vskip 10pt
+  
+  \par\noindent Examples: \fbox{\texttt{G:0.1.0}}, \fbox{\texttt{G:1.0.8}}
+  
+\item  Block for  reference  optical module:
+  
+  \par  OMs are  addressed  through their \emph{ref}  number.
+  
+  \par We propose to  label such a  block with the following scheme:
+  \begin{center}
+    \fbox{\texttt{R:$ref$}}
+  \end{center}
+
+\end{itemize}
+
+
+\section{The LIS cabling table and its usage}
+
+\subsection{Source table}
+
+Cabling the LIS consists in  the association of each OM's scintillator
+block to one  or two optical fibers.  An unique  cabling table must be
+provided to give  an unambiguous description of the  fibers' path from
+the LIS boards to the detector.   The table consists in an associative
+map like the one shown on table \ref{tab:lis:map:1}.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|}
+  \hline
+  \textbf{Fiber label} & \textbf{Scintillator block label} \\
+  \hline
+  \hline
+  \multicolumn{2}{|l|}{\textbf{Bundle} \texttt{B:1} (primary)}  \\
+  \hline
+  \texttt{P:1.1}  & \texttt{M:0.1.0} \\
+  \hline
+  \texttt{P:1.2}  & \texttt{M:0.2.0} \\
+  \hline
+  \texttt{P:1.3}  & \texttt{M:0.3.0} \\
+  \hline
+  \vdots          & \vdots             \\  
+  \hline
+  \hline
+  \multicolumn{2}{|l|}{\textbf{Bundle} \texttt{B:2} (primary)}  \\
+  \hline
+  \texttt{P:2.1}  & \texttt{M:0.6.0} \\
+  \hline
+  \texttt{P:2.2}  & \texttt{M:0.7.0} \\
+  \hline
+  \vdots          & \vdots             \\  
+  \hline
+  \hline
+  \multicolumn{2}{|l|}{\textbf{Bundle} \texttt{B:12} (secondary)}  \\
+  \hline
+  \vdots          & \vdots             \\  
+  \hline
+  \texttt{S:12.5}  & \texttt{X:1.15.8.2} \\
+  \hline
+  \vdots          & \vdots             \\  
+  \hline
+\end{tabular}
+\end{center}
+\caption{Example of LIS cabling table}
+\label{tab:lis:map:1}
+\end{table}
+
+\par\noindent The  Austin group, in  charge of  the LI system,  has to
+provide this table  in the form of a  CSV\footnote{CSV: coma separated
+  value} file. The file must use the following format:
+
+\begin{itemize}
+\item The file contains only ASCII characters.
+\item Blank lines are ignored.
+\item Lines starting with the hashtag character \fbox{\texttt{\#}} are
+  ignored, enabling to write some comments.
+\item There is only one fiber/OM association per line.
+\item Each  line has  two columns  separated by  the \emph{semi-colon}
+  character \fbox{\texttt{;}}.
+\item The first column contains the label of an optical fiber (primary
+  or secondary).
+\item The second column contains the  label of an optical module (main
+  wall, x-wall, gamma veto or reference OM).
+\end{itemize}
+\par\noindent  With  this  system,  a  given  optical  module  can  be
+addressed  twice  because  of  its connections  to  both  primary  and
+secondary LIS fibers.
+
+\par\noindent The  LIS cabling  map file  will be  used as  the unique
+source of information for different purposes:
+\begin{itemize}
+\item generation of labels to be stuck on fibers and bundles,
+\item generation of  printable tables for people in charge  of the LIS
+  cabling at LSM,
+\item input for dedicated software  modeling tools used by the
+  Control and Monitoring System (CMS), the simulation\dots 
+\end{itemize}
+
+\par\noindent An extract of the expected LIS cabling map file is shown
+on table \ref{tab:lis:map:2}.
+\begin{table}[h]
+  \begin{center}
+    \begin{tabular}{|ccc|}
+      \hline
+      \multicolumn{3}{|c|}{\vdots}\\
+      \texttt{P:}$led_a$\texttt{.}$fib_a$  & \texttt{;} & \texttt{M:1.12.11} \\
+      \texttt{S:}$led_b$\texttt{.}$fib_b$  & \texttt{;} & \texttt{M:1.12.11} \\
+      \multicolumn{3}{|c|}{\vdots}\\
+      \hline
+    \end{tabular}
+  \end{center}
+  \caption{Extract  of  the  LIS  cabling map file.   Symbol
+    $led_X$ corresponds  to the identifier  of a LED.   Symbol $fib_X$
+    corresponds  to  the  identifier  of   an  optical  fiber  in  its
+    bundle. In  this example,  the scintillator  block of  the optical
+    module on  French side, column 12  and row 11 is  connected to two
+    fibers (one  primary and  one secondary) lit  up by  two different
+    LEDs.}
+\label{tab:lis:map:2}
+\end{table}
+
+
+\subsection{LIS cabling sheets}
+
+From  the LIS  cabling  table, a  Python script  will  be provided  to
+generate a printable PDF document with cabling tables corresponding to
+each  part of  the  detector.  A typical  output  is  shown on  figure
+\ref{fig:lis:sheet:1}.
+
+
+\begin{figure}[h!]
+  \begin{center}
+    \scalebox{0.58}{\input{\samplespath/calo_0.tex}}
+  \end{center}
+  \caption{Expected  printable   LIS  cabling  table  for   the  Italy
+    calorimeter  main  wall  (front  view).  Question  marks  will  be
+    replaced by the real fibers' identifiers when the final table will
+    be  available. Similar  tables will  be provided  for X-walls  and
+    gamma veto lines.}
+  \label{fig:lis:sheet:1}
+\end{figure}
+
+
+\subsection{LIS labels}
+
+Practically, we  plan to generate  labels for all bundles  and optical
+fibers  to  help  the  cabling  team  to  identifiy  the  proper  OM's
+connection for each fiber.  The label  will be prepared and stuck near
+the termination of the fiber. We propose that the label shows both the
+fiber identifier and the OM's identifier.
+
+\noindent Example below displays the  full text expected to be printed
+on a fiber label:
+\begin{center}
+\fbox{\texttt{P:2.34} $\rightarrow$ \texttt{M:0.2.5}}
+\end{center}
+
+\par\noindent Such  informations are of course  redundant with respect
+to  the  printable   plain  table  shown  in   the  previous  section.
+The  fiber labels could  possibly be removed before  installing the
+coil.
+
+\par\noindent We  consider to write  a Python script  to automatically
+generate all labels (up to 1400).
+
+\end{document}
