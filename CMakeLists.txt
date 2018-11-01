@@ -76,7 +76,7 @@ set(SNCABLING_BINARY_DIR "${PROJECT_BINARY_DIR}")
 #-----------------------------------------------------------------------
 # Configure testing if required
 #
-option(SNCABLING_ENABLE_TESTING "Build unit testing system for SNCabling" OFF)
+option(SNCABLING_ENABLE_TESTING "Build unit testing system for SNCabling" ON)
 if(SNCABLING_ENABLE_TESTING)
   enable_testing()
 endif()
@@ -92,19 +92,6 @@ mark_as_advanced(SNCABLING_WITH_DEVELOPER_TOOLS)
 #
 option(SNCABLING_WITH_DOCS "Build documentation for SNCabling" ON)
 
-# #-----------------------------------------------------------------------
-# # Option for enabling Qt GUI components
-# #
-# option(SNCABLING_WITH_QT_GUI "Build Qt-based GUI components" ON)
-# mark_as_advanced(SNCABLING_WITH_QT_GUI)
-# if (SNCABLING_WITH_QT_GUI)
-#   # Minimal system Qt5 version from Ubuntu 14.04:
-#   set(SNCABLING_QT5_VERSION "5.2.1")
-#   # Qt5 version from cadfaelbrew (but conflict with system installation
-#   # on Ubuntu 14.04 when running examples):
-#   # set(SNCABLING_QT5_VERSION "5.6.0")
-# endif()
-
 #-----------------------------------------------------------------------
 # Debug
 message( STATUS "[info] SNCabling_VERSION              = '${SNCabling_VERSION}'")
@@ -113,7 +100,6 @@ message( STATUS "[info] SNCABLING_BINARY_DIR           = '${SNCABLING_BINARY_DIR
 message( STATUS "[info] SNCABLING_ENABLE_TESTING       = '${SNCABLING_ENABLE_TESTING}'")
 message( STATUS "[info] SNCABLING_WITH_DEVELOPER_TOOLS = '${SNCABLING_WITH_DEVELOPER_TOOLS}'")
 message( STATUS "[info] SNCABLING_WITH_DOCS            = '${SNCABLING_WITH_DOCS}'")
-#message( STATUS "[info] SNCABLING_WITH_QT_GUI          = '${SNCABLING_WITH_QT_GUI}'")
 
 #-----------------------------------------------------------------------
 include(SNCablingDependencies)
@@ -132,7 +118,6 @@ add_subdirectory(source)
 # Resource installation
 # add_subdirectory(resources)
 
-
 #-----------------------------------------------------------------------
 # - CMake Support files
 include(CMakePackageConfigHelpers)
@@ -146,13 +131,6 @@ write_basic_package_version_file(
 message(STATUS "[debug] CMAKE_INSTALL_CMAKEDIR = '${CMAKE_INSTALL_CMAKEDIR}'")
 message(STATUS "[debug] PROJECT_TAG            = '${PROJECT_TAG}'")
 
-message(STATUS "[debug] Fetch variables from subdirectories : ")
-get_directory_property(BxJsontools_VERSION     DIRECTORY "source/vire" DEFINITION "BxJsontools_VERSION" )
-get_directory_property(BxProtobuftools_VERSION DIRECTORY "source/vire" DEFINITION "BxProtobuftools_VERSION" )
-get_directory_property(BxRabbitMQ_VERSION      DIRECTORY "source/vire" DEFINITION "BxRabbitMQ_VERSION" )
-message(STATUS "[debug] * BxJsontools_VERSION     = '${BxJsontools_VERSION}'")
-message(STATUS "[debug] * BxProtobuftools_VERSION = '${BxProtobuftools_VERSION}'")
-message(STATUS "[debug] * BxRabbitMQ_VERSION      = '${BxRabbitMQ_VERSION}'")
 # - Config file is also the same in build/install trees as we use same layout
 configure_package_config_file(
   ${PROJECT_SOURCE_DIR}/cmake/SNCablingConfig.cmake.in
@@ -188,16 +166,10 @@ install(
 
 #-----------------------------------------------------------------------
 # - Install published resources and documentation
-message(STATUS "[devel] PROJECT_BUILD_DATAROOTDIR = '${PROJECT_BUILD_DATAROOTDIR}'")
-install(DIRECTORY ${PROJECT_BUILD_DATAROOTDIR}/
-  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}
-  )
-
-#-----------------------------------------------------------------------
-# - Plugins installation - Must come last because they must find SNCabling
-if (SNCABLING_WITH_PLUGINS)
-  add_subdirectory(plugins)
-endif()
+# message(STATUS "[devel] PROJECT_BUILD_DATAROOTDIR = '${PROJECT_BUILD_DATAROOTDIR}'")
+# install(DIRECTORY ${PROJECT_BUILD_DATAROOTDIR}/
+#   DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}
+#   )
 
 message (STATUS "[info] End of 'CMakeLists.txt'.")
 
