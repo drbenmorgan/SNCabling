@@ -1,0 +1,79 @@
+\documentclass[10pt]{article}
+
+\usepackage{graphicx}
+\usepackage{rotating}
+\usepackage[table]{xcolor}
+\usepackage{amsmath}
+\usepackage{array}
+
+\usepackage[a4paper, landscape, vmargin=1.25cm, hmargin=1cm]{geometry}
+
+
+\newcommand{\calohvTabDir}{__WORKDIR__}
+%%\newcolumntype{C}[1]{>{\centering}m{#1}}
+%%\definecolor{XwallGreen}{rgb}{1,50,32}
+\definecolor{XwallGreen}{rgb}{0.01,0.5,0.10}
+\definecolor{XwallViolet}{rgb}{0.5,0.1,0.50}
+\definecolor{MainTopBlue}{rgb}{0.1,0.3,0.70}
+\definecolor{GvetoBlue}{rgb}{0.3,0.5,0.80}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CaloHV cabling table (Italy)}
+\vfill
+\vskip 1cm
+\noindent\begin{center}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_0-1.tex}}
+  \vskip 40pt
+  \noindent
+  \begin{minipage}{3cm}
+  \begin{center}
+    \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_0-1.tex}}
+  \end{center}
+  \end{minipage}
+  \begin{minipage}{21cm}
+    \begin{center}
+      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_0.tex}}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{3cm}
+    \begin{center}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_0-0.tex}}
+    \end{center}
+  \end{minipage}
+  \vskip 40pt
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_0-0.tex}}
+\end{center}
+\pagebreak
+
+\section{CaloHV cabling table (France)}
+\vfill
+\vskip 1cm
+\noindent\begin{center}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_1-1.tex}}
+  \vskip 40pt
+  \noindent
+  \begin{minipage}{3cm}
+    \begin{center}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_1-0.tex}}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{21cm}
+    \begin{center}
+      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_1.tex}}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{3cm}
+    \begin{center}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_1-1.tex}}
+    \end{center}
+  \end{minipage}
+  \vskip 40pt
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_1-0.tex}}
+\end{center}
+
+\end{document}
+%%%
