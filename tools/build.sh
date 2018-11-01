@@ -124,21 +124,6 @@ else
     echo >&2 "[info] Found Bayeux ${bxversion}"
 fi
 
-which bxrabbitmq-query > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-    echo >&2 "[error] BxRabbitMQ is not setup!"
-    my_exit 1
-else
-   echo >&2 "[info] Found BxRabbitMQ $(bxrabbitmq-query --version) in $(bxrabbitmq-query --cmakedir)"
-    
-fi
-
-which bxprotobuftools-query > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-    echo >&2 "[error] BxProtobuftools is not setup!"
-    my_exit 1
-fi
-
 if [ -d ${install_dir} ]; then
     rm -fr ${install_dir}
 fi
