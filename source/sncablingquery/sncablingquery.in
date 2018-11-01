@@ -1,0 +1,143 @@
+#!/usr/bin/env bash
+
+# Copyright 2015 François Mauger <mauger@lpccaen.in2p3.fr>
+#
+# This file is part of SNCabling.
+#
+# SNCabling is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SNCabling is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with SNCabling.  If not, see <http://www.gnu.org/licenses/>.
+
+# Description: an utility  script to fetch informations about the
+# current SNCabling installation. This should be very useful when used
+# from some client scripts (i.e. wrapper/launcher scripts for a
+# batch system on a computin farm).
+# Note: this is a not relocatable version.
+
+prefix_dir="@CMAKE_INSTALL_PREFIX@"
+version_str="@SNCabling_VERSION@"
+lib_dir="${prefix_dir}/@CMAKE_INSTALL_LIBDIR@"
+bin_dir="${prefix_dir}/@CMAKE_INSTALL_BINDIR@"
+inc_dir="${prefix_dir}/@CMAKE_INSTALL_INCLUDEDIR@"
+data_dir="${prefix_dir}/@CMAKE_INSTALL_DATADIR@/SNCabling-@SNCabling_VERSION@"
+doc_dir="${data_dir}/Documentation"
+resource_dir="${data_dir}/resources"
+# plugin_dir="${lib_dir}/@SNCabling_PLUGINLIBDIR@"
+cmake_dir="${prefix_dir}/@CMAKE_INSTALL_LIBDIR@/cmake/SNCabling-@SNCabling_VERSION@"
+APPNAME="sncablingquery"
+
+# Experimental:
+# plugins="$(find ${plugin_dir} -name lib*.* -exec basename \{\} \; | cut -d. -f1 | sed -e 's/lib//g')"
+
+function print_usage()
+{
+
+		cat<<EOF
+
+sncablingquery - Utility script to fetch informations about SNCabling and
+                 perform useful operations.
+
+Options:
+  -h [ --help ]          Print help.
+
+  --version              Print version.
+
+  --prefix               Print installation prefix directory.
+
+  --libdir               Print library directory.
+
+  --cmakedir             Print CMake config script directory.
+
+  --bindir               Print binary directory.
+
+  --incdir               Print include base directory.
+
+  --datadir              Print data base directory.
+
+  --docdir               Print documentation base directory.
+
+  --resourcedir          Print resource base directory.
+
+EOF
+
+    return
+}
+
+function vrhelp_browse_api()
+{
+    browser=$(which xdg-open)
+    if [ -z "${browser}" ]; then
+				browser=$(which firefox)
+    fi
+    if [ -n "${browser}" ]; then
+				${browser} ${doc_dir}/API/html/index.html &
+    else
+				echo "error: ${APPNAME}: vrhelp_browse_api: Could not find a browser !" >&2
+				return 1
+    fi
+    return 0
+}
+
+while [ -n "$?" ]; do
+    token="$1"
+    if [ "${token:0:1}" = "-" ]; then
+				option="${token}"
+				if [ "${option}" = "--help" -o "${option}" = "-h" ]; then
+						print_usage
+						exit 0
+				elif [ "${option}" = "--version" ]; then
+						echo ${version_str}
+						exit 0
+				elif [ "${option}" = "--prefix" ]; then
+						echo ${prefix_dir}
+						exit 0
+				elif [ "${option}" = "--libdir" ]; then
+						echo ${lib_dir}
+						exit 0
+				elif [ "${option}" = "--cmakedir" ]; then
+						echo ${cmake_dir}
+						exit 0
+				elif [ "${option}" = "--bindir" ]; then
+						echo ${bin_dir}
+						exit 0
+				elif [ "${option}" = "--incdir" ]; then
+						echo ${inc_dir}
+						exit 0
+				elif [ "${option}" = "--datadir" ]; then
+						echo ${data_dir}
+						exit 0
+				elif [ "${option}" = "--docdir" ]; then
+						echo ${doc_dir}
+						exit 0
+				elif [ "${option}" = "--resourcedir" ]; then
+						echo ${resource_dir}
+						exit 0
+				else
+						echo "error: ${APPNAME}: Invalid option '${option}' !" >&2
+						print_usage
+						exit 1
+				fi
+    else
+				echo "error: ${APPNAME}: Invalid argument '${token}' !" >&2
+				print_usage
+				exit 1
+    fi
+    shift 1
+done
+
+exit 0
+
+## Local Variables: --
+## mode: shell-script --
+## c-file-style: "gnu" --
+## tab-width: 2 --
+## End: --

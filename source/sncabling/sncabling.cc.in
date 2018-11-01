@@ -1,0 +1,114 @@
+// sncabling/sncabling.cc - Implementation of SNCabling init/fini function
+//
+// Copyright (c) 2018 by Francois Mauger <mauger@lpccaen.in2p3.fr>
+//
+// This file is part of SNCabling.
+//
+// SNCabling is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// SNCabling is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with SNCabling. If not, see <http://www.gnu.org/licenses/>.
+
+// Ourselves:
+#include <sncabling/sncabling.h>
+
+// Standard library
+#include <iostream>
+
+// Third party:
+// - Bayeux:
+#include <bayeux/bayeux.h>
+// - Bayeux/datatools
+#include <datatools/exception.h>
+
+// This project:
+#include <sncabling/version.h>
+#include <sncabling/resource_files.h>
+#include <sncabling/sncabling_library.h>
+
+namespace {
+
+  static bool _sncablingInit = false;
+
+  void sncabling_initialize_impl()
+  {
+   ::datatools::logger::priority logging = ::sncabling::sncabling_library::process_logging_env();
+    DT_LOG_TRACE_ENTERING(logging);
+    // sncabling::init_resources();
+
+    if (!::sncabling::sncabling_library::is_instantiated()) {
+      DT_LOG_TRACE(logging, "Instantiating SNCabling system singleton...");
+      ::sncabling::sncabling_library & sncablingLib = ::sncabling::sncabling_library::instantiate();
+      DT_LOG_TRACE(logging, "Initializing SNCabling system singleton with specific internals...");
+      sncablingLib.initialize();
+    }
+
+    DT_LOG_TRACE_EXITING(logging);
+    return;
+  }
+
+  void sncabling_terminate_impl()
+  {
+   ::datatools::logger::priority logging = ::sncabling::sncabling_library::process_logging_env();
+    DT_LOG_TRACE_ENTERING(logging);
+    if (::sncabling::sncabling_library::is_instantiated()) {
+      DT_LOG_TRACE(logging, "Shutdown SNCabling system singleton specific internals...");
+      ::sncabling::sncabling_library & sncablingLib = ::sncabling::sncabling_library::instance();
+      if (sncablingLib.is_initialized()) {
+        sncablingLib.shutdown();
+      }
+      DT_LOG_TRACE(logging, "SNCabling system singleton have been terminated.");
+    }
+    DT_LOG_TRACE_EXITING(logging);
+    return;
+  }
+
+}
+
+namespace sncabling {
+
+  bool is_initialized()
+  {
+    return ::_sncablingInit;
+  }
+
+  void initialize(int argc_, char * argv_[], uint32_t flags_)
+  {
+    if (! ::_sncablingInit) {
+      // Wrap Bayeux initialization because we need resources from various Bayeux's modules:
+      ::bayeux::initialize(argc_,argv_, flags_);
+      // Initialization code from SNCabling itself:
+      sncabling_initialize_impl();
+      ::_sncablingInit = true;
+    } else {
+      DT_THROW_IF(true, std::logic_error,
+                  "Attempt to initialize the already initialized SNCabling library!");
+    }
+    return;
+  }
+
+  void terminate()
+  {
+    if (::_sncablingInit) {
+      // Termination code for SNCabling:
+      ::_sncablingInit = false;
+      sncabling_terminate_impl();
+
+      // Wrap Bayeux termination:
+      ::bayeux::terminate();
+    } else {
+        DT_THROW(std::logic_error,
+                 "Attempt to terminate the already terminated SNCabling library!");
+    }
+    return;
+  }
+
+} // namespace sncabling
