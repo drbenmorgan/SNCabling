@@ -1,0 +1,253 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{a4wide}
+\usepackage{verbatim}
+\usepackage[T1]{fontenc}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[dvips]{color}
+\usepackage{graphicx}
+\usepackage{epic}
+\usepackage{eepic}
+\usepackage{eepicemu}
+\usepackage{array}
+\usepackage{moreverb}
+\usepackage{fancyvrb}
+\usepackage{url}
+\usepackage{eurosym}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multicol}
+
+\newcommand{\imgpath}{./images}
+\newcommand{\samplespath}{./samples}
+\newcommand{\pdfteximgpath}{./pdftex}
+\newcommand{\pdftextimgpath}{./pdftex_t}
+
+\title{SuperNEMO Demonstrator\\
+  Calorimeter Signal Readout System\\
+  Cabling scheme and cable labels\\
+  version 0.1}
+\author{M.Bongrand, Y.Lemi\`ere, F.Mauger}
+\date{October 21th, 2018}
+
+%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  \noindent This document presents the cable labelling convention used
+  for  the SuperNEMO  Demonstrator's Calorimeter Signal Readout  System
+  (CaloSignal).  We reuse  here some informations available  from a couple
+  of documents prepared  by Cedric and Mathieu,  with some adaptations
+  and addons.
+\end{abstract}
+
+\tableofcontents
+\vfill
+
+\clearpage
+\section{Principle}
+
+The  SuperNEMO   Demonstrator's  Calorimeter  Signal   Readout  System
+(CaloSignal)  uses three  crates which  host a  total of  52 front-end
+boards to address the signal collection from 712 PMTs.
+
+Each front end board  manages up to 16 channels and  is connected to a
+specific set  of PMTs through a  pair of harnesses.  A  first harness,
+called \emph{external harness}, links the  board to a single connector
+on the patch  panel (external side). From this connector  on the patch
+panel,  a  new harness,  namely  the  \emph{internal harness},  routes
+signal channel to the PMTs.  The end of the \emph{internal harness} is
+designed in  such a  way cables  can be  routed individually  to their
+associated PMTs.   Of course, a  given harness  handles a set  of PMTs
+that are geographically close to each  other, in order to optimize the
+length of the cables.
+
+In  the present  scheme, it  has been  decided to  identify individual
+signal cables  using the  pin identifiers on  the connectors  they are
+associated to.  Ideally,  the pin number on the  frontend board output
+connector thus identifies the cable  linked to it.  This identifier is
+propagated to the pin number on the patch panel connectors then to the
+end  of the  cable linked  to the  PMT. This  enables to  build rather
+simple and comprehensible cabling tables.
+
+\noindent\par Figure \ref{fig:calosignal:principle:1}  shows the basic
+diagram of the CaloSignal system. A dedicated labelling system will be
+used to ease the cabling operations.
+
+\begin{figure}[h!]
+  \begin{center}
+    \scalebox{0.75}{\input{\pdftextimgpath/fig-calosignal-1.pdftex_t}}
+  \end{center}
+  \caption{Principle of the signal distribution  to the PMTs using the
+    CaloFEB boards.}
+  \label{fig:calosignal:principle:1}
+\end{figure}
+
+\clearpage
+\section{Addressing objects}
+
+\subsection{Format of a CaloSignal label}
+
+Each label  to be used for  CaloSignal cabling will use  the following
+format:
+
+\begin{center}
+  \fbox{\texttt{X:}$id_1$.$id_2$\dots$id_n$}
+\end{center}
+\noindent  where \texttt{X}  is a  single letter  which describes  the
+category  of the  labelled  object,  and the  $id_1$.$id_2$\dots$id_n$
+sequence is the unique address of the object within its category.  The
+$id_x$ tokens are positive integers (possibly zero).  The \emph{colon}
+character is  used to separate  the category letter from  the address.
+The  sequence  of  identifiers  in  the  address  use  the  \emph{dot}
+character as a separator.
+
+
+\subsection{Frondend crates, boards, channel, harnesses and cables}
+
+Frontend crates  belonging to the  CaloSignal system are  installed in
+racks  number  2 and  3  on  the  electronics  platform.  A  crate  is
+identified with an unique ID,  namely a number ranging from \texttt{0}
+to \texttt{2}.  We  propose to label a given crate  with the following
+scheme:
+\begin{center}
+   \fbox{\texttt{C:$crate$}}
+ \end{center}
+where \texttt{$crate$} is the number of the crate (positive integer).
+\vskip     10pt    \par\noindent     Examples:    \fbox{\texttt{C:0}},
+\fbox{\texttt{C:1}}.   \par Conventionally,  crate \texttt{0}  manages
+PMTs from  the main  wall on the  \emph{Italy} side,  crate \texttt{1}
+manages PMTs  from the main wall  on the \emph{France} side  and crate
+\texttt{2} manages PMTs from X-walls and gamma veto.
+
+ \vskip 10pt  A crate contains  up to  20 16-channel boards.   A board
+ inherits the  number of the crate  it is plugged into  and is located
+ through its slot number.  We propose  to label a given board with the
+ following scheme:
+\begin{center}
+   \fbox{\texttt{B:$crate$.$board$}}
+ \end{center}
+where \texttt{$crate$} is the number of the crate and \texttt{$board$}
+is  the  number  of  the  board  (slot)  ranging  from  \texttt{0}  to
+\texttt{15}.
+\vskip 10pt
+\par\noindent Examples: \fbox{\texttt{B:0.0}},  \dots
+\fbox{\texttt{B:1.11}}.
+
+\vskip 10pt  \par\noindent Up  to 16 channels  are addressed  within a
+board.  We propose to label a given channel with the following scheme:
+\begin{center}
+   \fbox{\texttt{H:$crate$.$board$.$channel$}}
+ \end{center}
+where \texttt{$crate$} is the number of the crate, \texttt{$board$} is
+the number  of the crate and  \texttt{$channel$} is the number  of the
+channel  ranging   from  \texttt{0}  to   \texttt{15}.   \par\noindent
+Examples: \fbox{\texttt{H:0.0.0}}, \dots \fbox{\texttt{H:1.19.15}}
+
+\vskip  10pt A  channel is  automatically associated  to specific  pin
+number of the output connector of the board.
+
+\vskip 10pt A signal external harness  connecting a given board to the
+patch panel uses an unique  ID ranging from \texttt{0} to \texttt{23}.
+We  propose to  label  a  given external  harness  with the  following
+scheme:
+\begin{center}
+   \fbox{\texttt{E:$harness$}}
+ \end{center}
+where \texttt{$harness$} is the number of the external harness.
+\par\noindent Examples: \fbox{\texttt{E:0}}, \dots
+\fbox{\texttt{E:23}}
+
+\vskip 10pt Compared with the  labelling scheme proposed by Mathieu in
+original  documents,  it   has  been  decided  not   to  introduce  an
+intermediate cable  identifier depending on  the location of  the PMTs
+(main walls,  top row  in main  walls, X-walls,  gamma veto  rows).  A
+unique  scheme  is  used  in  place,  based  on  an  already  existing
+informations, independently of the geometry.  Individual cables within
+an external  harness are identified  through the pin numbers  they are
+associated  to   on  the  board  output   connector.   This  pin/cable
+identifier propagates up to the patch panel and beyond to the internal
+cable terminations.  There is no need to label internal cables because
+they  are  confined within  their  harness  and thus  never  addressed
+individually during cabling operations.
+
+
+\subsection{Optical modules}
+
+The  identification scheme  of the  optical  modules is  based on  the
+addressing scheme defined in the geometry model and implemented in the
+simulation     and     data    analysis     software\footnote{Falaise:
+  \url{https://gitub.com/SuperNEMO-DBD/Falaise}}.     There   are    4
+categories  of  optical  modules  and  thus  of  scintillator  blocks,
+depending on their location in the experimental setup:
+
+\begin{itemize}
+  
+\item     Main    wall     block    (Falaise:     geometry    category
+  \texttt{"calorimeter\_block"} and type \texttt{1302}):
+
+  \par  OMs are  addressed  through  their
+  \emph{side}   number from 0 (Italy)     to  1 (France),
+  \emph{column} number from 0 (Edelweiss) to 19 (Tunnel) and
+  \emph{row}    number from 0 (bottom)    to 12 (top).
+
+  \par We  propose to label such a block with the following scheme:
+  \begin{center}
+    \fbox{\texttt{M:$side$.$column$.$row$}}
+  \end{center}
+  \vskip 10pt
+  \par\noindent Examples: \fbox{\texttt{M:0.0.0}}, 
+  \fbox{\texttt{M:0.19.12}}, \fbox{\texttt{M:1.0.0}}, \fbox{\texttt{M:1.19.12}}.
+  
+\item X-wall block (Falaise: geometry category \texttt{"xcalo\_block"} and type
+  \texttt{1232}):
+  
+  \par OMs  are addressed  through their
+  \emph{side}   number from 0 (Italy)     to  1 (France),
+  \emph{wall}   number from 0 (Edelweiss) to  1 (tunnel),
+  \emph{column} number from 0 (source)    to  1 (calorimeter) and
+  \emph{row}    number from 0 (bottom)    to 15 (top).
+  
+  \par  We propose  to
+  label such a block with the following scheme:
+  \begin{center}
+    \fbox{\texttt{X:$side$.$wall$.$column$.$row$}}
+  \end{center}
+  \vskip 10pt
+  \par\noindent Examples: \fbox{\texttt{X:0.1.1.15}}, \fbox{\texttt{X:1.0.0.8}}
+  
+\item Gamma veto block  (Falaise: geometry category \texttt{"gveto\_block"} and
+  type   \texttt{1252}):
+  
+  \par   OMs  are   addressed  through   their
+  \emph{side}   number from 0 (Italy)     to  1 (France),
+  \emph{wall}   number from 0 (bottom)    to  1 (top)  and
+  \emph{column} number from 0 (Edelweiss) to 15 (tunnel).
+  
+  \par We propose to label  such a block
+  with the following scheme:
+  \begin{center}
+    \fbox{\texttt{G:$side$.$wall$.$column$}}
+  \end{center}
+  \vskip 10pt
+  
+  \par\noindent Examples: \fbox{\texttt{G:0.1.0}}, \fbox{\texttt{G:1.0.8}}
+  
+\item  Block for  reference  optical module:
+  
+  \par  OMs are  addressed  through their \emph{ref}  number.
+  
+  \par We propose to  label such a  block with the following scheme:
+  \begin{center}
+    \fbox{\texttt{R:$ref$}}
+  \end{center}
+
+\end{itemize}
+
+%\input{calosignal_crates.tex}
+%\input{calosignal_cabling_table.tex}
+
+\end{document}

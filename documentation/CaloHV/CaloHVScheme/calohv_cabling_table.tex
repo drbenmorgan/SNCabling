@@ -1,0 +1,112 @@
+% -*- mode: latex; -*-
+
+\section{The CaloHV cabling table and its usage}
+
+\subsection{Source table}
+
+Cabling the CaloHV consists in the association of each OM's PMT to one
+HV  cable.  An  unique  cabling  table must  be  provided  to give  an
+unambiguous description of the cables' path  from the HV boards to the
+detector.  The table consists in an associative map like the one shown
+on table \ref{tab:calohv:map:1}.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+  \hline
+  \textbf{HV channel}& \textbf{External harness} & \textbf{Internal cable} & \textbf{Optical Module} \\
+  \hline
+  %% \hline
+  %% \multicolumn{4}{|l|}{\textbf{HV board} \texttt{B:0.1}}  \\
+  \hline
+  \texttt{H:0.0.23}  & \texttt{E:12} & \texttt{A:12.3} & \texttt{M:0.0.0} \\
+  \hline
+  \texttt{H:0.0.22}  & \texttt{E:12} & \texttt{A:12.18} & \texttt{M:0.0.1} \\
+  \hline
+  \texttt{H:0.0.6}  & \texttt{E:12} & \texttt{A:12.34} & \texttt{M:0.0.2} \\
+  \hline
+  \texttt{H:0.2.23}  & \texttt{E:14} & \texttt{A:14.3} & \texttt{M:0.0.3} \\
+  \hline
+  \vdots          & & & \vdots             \\  
+  \hline
+  \hline
+\end{tabular}
+\end{center}
+\caption{Example of CaloHV cabling table}
+\label{tab:calohv:map:1}
+\end{table}
+
+\par\noindent  The   table  will  be   provided  in  the  form   of  a
+CSV\footnote{CSV: coma  separated value} file.  The file must  use the
+following format:
+
+\begin{itemize}
+\item The file contains only ASCII characters.
+\item Blank lines are ignored.
+\item Lines starting with the hashtag character \fbox{\texttt{\#}} are
+  ignored, enabling to write some comments.
+\item There is only one HV channel/PMT association per line.
+\item Each  line has  four columns  separated by  the \emph{semi-colon}
+  character \fbox{\texttt{;}}.
+\item The first column contains the label of the HV channel.
+\item The second column contains the label of the external bundle.
+\item The third column contains the label of the internal cable.
+\item The fourth column contains the label of the PMT (optical module).
+\end{itemize}
+
+\par\noindent The  CaloHV cabling  map file  will be  used as  the unique
+source of information for different purposes:
+\begin{itemize}
+\item generation of labels to be stuck on cables, harnesses, patch panel;
+\item generation of  printable tables for people in charge  of the CaloHV
+  cabling at LSM,
+\item input for dedicated software  modeling tools used by the
+  Control and Monitoring System (CMS), the simulation\dots 
+\end{itemize}
+
+
+\subsection{CaloHV cabling sheets}
+
+
+From  the CaloHV  cabling  table, a  Python script  will  be provided  to
+generate a printable PDF document with cabling tables corresponding to
+each  part of  the  detector.
+
+%% A typical  output  is  shown on  figure
+%% \ref{fig:lis:sheet:1}.
+
+
+%% \begin{figure}[h!]
+%%   \begin{center}
+%%     \scalebox{0.58}{\input{\samplespath/calo_0.tex}}
+%%   \end{center}
+%%   \caption{Expected  printable   LIS  cabling  table  for   the  Italy
+%%     calorimeter  main  wall  (front  view).  Question  marks  will  be
+%%     replaced by the real fibers' identifiers when the final table will
+%%     be  available. Similar  tables will  be provided  for X-walls  and
+%%     gamma veto lines.}
+%%   \label{fig:lis:sheet:1}
+%% \end{figure}
+
+
+\subsection{LIS labels}
+
+Practically, we  plan to generate  labels for all harnesses and cables
+to  help  the  cabling  team  to  identifiy  the  proper  board/patch panel
+and internal cable/PMT connections.
+The label  will be prepared and stuck near
+the terminations of the harnesses and cables.
+
+%% \noindent Example below displays the  full text expected to be printed
+%% on a fiber label:
+%% \begin{center}
+%% \fbox{\texttt{P:2.34} $\rightarrow$ \texttt{M:0.2.5}}
+%% \end{center}
+
+%% \par\noindent Such  informations are of course  redundant with respect
+%% to  the  printable   plain  table  shown  in   the  previous  section.
+%% The  fiber labels could  possibly be removed before  installing the
+%% coil.
+
+%% \par\noindent We  consider to write  a Python script  to automatically
+%% generate all labels (up to 1400).
