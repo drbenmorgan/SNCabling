@@ -14,6 +14,10 @@ if [ -d ${build_dir} ]; then
     rm -fr ${build_dir}
 fi
 
+if [ -d $(pwd)/utils/__pycache__ ]; then
+    rm -fr $(pwd)/utils/__pycache__ 
+fi
+
 cd ${opwd}
 exit 0
 
