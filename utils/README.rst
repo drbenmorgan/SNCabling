@@ -29,6 +29,10 @@ CaloHV system
 
      $ bash calohv_map_print.sh
 
+* ``calohv_print_labels.py`` : Generate LaTeX  files with CaloHV cabling labels
+  corresponding to the different parts  of the detector. The generated
+  files can then be included in a LaTeX master document.
+
 
 
 

@@ -6,29 +6,7 @@ import errno
 
 from om_address import *
 from snemo import *
-
-class InternalCableAddress :
-    
-    def __init__(self, label_):
-        self.label = label_.strip()
-        self.fibtype = self.label[0].strip()
-        address = self.label.split(':')[1].strip()
-        self.address = address.split('.')
-        self.harness = 666
-        self.cable   = 666
-        if self.address[0] != '?' :
-            self.harness = int(self.address[0])
-        if self.address[1] != '?' :
-            self.cable = int(self.address[1])
-        return
-    
-    def print_me(self, out_ = sys.stderr, title_ = "", indent_ = ""):
-        if len(title_) :
-            out_.write("{:s}{:s}\n".format(indent_, title_))
-        out_.write("{:s}|-- Harness   = {:d}\n".format(indent_, self.harness))
-        out_.write("{:s}`-- Cable = {:d}\n".format(indent_, self.cable))
-        return
-        
+from calohv import *
          
 class CaloHVCablingMapPrint:
     """CaloHV Cabling Map Printer """
@@ -55,15 +33,15 @@ class CaloHVCablingMapPrint:
             if len(line) == 0 : continue
             if line[0] == '#' : continue
             tokens = line.split(";")
-            channel_label = tokens[0].strip()
+            channel_label    = tokens[0].strip()
             extharness_label = tokens[1].strip()
-            intcable_label = tokens[2].strip()
-            pmt_label    = tokens[3].strip()
-            pmtaddr = OMaddress(pmt_label)
-            intcableaddr = InternalCableAddress(intcable_label)
+            intcable_label   = tokens[2].strip()
+            pmt_label        = tokens[3].strip()
+            pmtaddr      = OMaddress(pmt_label)
+            intcableaddr = CaloHVInternalCableAddress(intcable_label)
             pmtaddr.print_me(sys.stderr, "PMT address: ", "[debug] ")
             intcableaddr.print_me(sys.stderr, "Internal HV cable address: ", "[debug] ")
-            self._pmt_to_cable_[pmt_label] = intcable_label
+            self._pmt_to_cable_[pmt_label]   = intcable_label
             self._pmt_to_channel_[pmt_label] = channel_label
         print(self._pmt_to_cable_)
         print(self._pmt_to_channel_)
@@ -297,7 +275,6 @@ class CaloHVCablingMapPrint:
         self._mktable_xcalo(SuperNEMO.side_italy, SuperNEMO.side_edelweiss)
         self._mktable_gveto(SuperNEMO.side_italy, SuperNEMO.wall_bottom)
         self._mktable_gveto(SuperNEMO.side_italy, SuperNEMO.wall_top)
-        
         self._mktable_xcalo(SuperNEMO.side_france, SuperNEMO.side_edelweiss)
         self._mktable_calo(SuperNEMO.side_france)
         self._mktable_xcalo(SuperNEMO.side_france, SuperNEMO.side_tunnel)
@@ -312,8 +289,8 @@ if __name__ == "__main__" :
         calohvmap = sys.argv[1]
     if len(sys.argv) > 2 :
         workdir = sys.argv[2]
-    sys.stderr.write("CaloHV map file   : '{:s}'\n".format(calohvmap))
-    sys.stderr.write("Work directory : '{:s}'\n".format(workdir)) 
+    sys.stderr.write("CaloHV map file : '{:s}'\n".format(calohvmap))
+    sys.stderr.write("Work directory  : '{:s}'\n".format(workdir)) 
     pm = CaloHVCablingMapPrint(calohvmap, workdir)
     error_code = pm.run()
     sys.exit(error_code)

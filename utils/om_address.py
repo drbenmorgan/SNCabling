@@ -47,7 +47,18 @@ class OMaddress :
             if self.address[0] != '?' :
                 self.ref = int(self.address[0])
         return
-
+ 
+    def to_string(self):
+        if self.omtype == "M" :
+            return "M:{:d}.{:d}.{:d}".format(self.side, self.column, self.row)
+        if self.omtype == "X" :
+            return "X:{:d}.{:d}.{:d}.{:d}".format(self.side, self.wall, self.column, self.row)
+        if self.omtype == "G" :
+            return "G:{:d}.{:d}.{:d}".format(self.side, self.wall, self.column)
+        if self.omtype == "R" :
+            return "R:{:d}".format(self.ref)
+        return ""
+    
     def print_me(self, out_ = sys.stderr, title_ = "", indent_ = ""):
         if len(title_) :
             out_.write("{:s}{:s}\n".format(indent_, title_))

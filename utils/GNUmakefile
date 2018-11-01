@@ -16,6 +16,7 @@ lis_calohv :
 .PHONY : clean
 clean : clean_lis clean_calohv
 	find . -name "*~" -exec rm -f \{\} \;
+	$(RM) *.pyc
 	$(RM) -fr __pycache__/
 
 .PHONY : clean_lis
@@ -24,6 +25,6 @@ clean_lis :
 
 .PHONY : clean_calohv
 clean_calohv :
-	$(RM) -fr _calohv_table_out.d/
+	$(RM) -fr _calohv_table_out.d/ _calohv_labels_out.d/
 
 # end

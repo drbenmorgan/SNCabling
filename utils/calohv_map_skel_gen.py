@@ -188,7 +188,7 @@ class CaloHVCablingMapSkelGen:
                     pin_num = CaloHVCablingMapSkelGen.get_redel_female_pins_xwall()[pin_index]
                     cable_num = pin_num
                     channel_num = CaloHVCablingMapSkelGen.get_calohv_board_channel_pin_assignment()[pin_num]
-                    board_num = harness_num
+                    board_num = harness_num % 12
                     if self._debug_ :
                         sys.stderr.write("\tHarness  # ={:d}\n".format(harness_num))
                         sys.stderr.write("\tCrate    # ={:d}\n".format(crate_num))
