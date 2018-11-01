@@ -1,0 +1,71 @@
+
+The  identification scheme  of the  optical  modules and their PMTs
+is  based on  the
+addressing scheme defined in the geometry model and implemented in the
+simulation     and     data    analysis     software\footnote{Falaise:
+  \url{https://gitub.com/SuperNEMO-DBD/Falaise}}.     There   are    4
+categories  of  optical  modules  and  thus  of  scintillator  blocks,
+depending on their location in the experimental setup:
+
+\begin{itemize}
+  
+\item Main wall block (Falaise: geometry category \texttt{"calorimeter\_block"}
+  and  type  \texttt{1302}):
+
+  \par  OMs are  addressed  through  their
+  \emph{side}   number from 0 (Italy)     to  1 (France),
+  \emph{column} number from 0 (Edelweiss) to 19 (Tunnel) and
+  \emph{row}    number from 0 (bottom)    to 12 (top).
+
+  \par We  propose to label such a block with the following scheme:
+  \begin{center}
+    \fbox{\texttt{M:$side$.$column$.$row$}}
+  \end{center}
+  \vskip 10pt
+  \par\noindent Examples: \fbox{\texttt{M:0.0.0}}, 
+  \fbox{\texttt{M:0.19.12}}, \fbox{\texttt{M:1.0.0}}, \fbox{\texttt{M:1.19.12}}.
+  
+\item X-wall block (Falaise: geometry category \texttt{"xcalo\_block"} and type
+  \texttt{1232}):
+  
+  \par OMs  are addressed  through their
+  \emph{side}   number from 0 (Italy)     to  1 (France),
+  \emph{wall}   number from 0 (Edelweiss) to  1 (tunnel),
+  \emph{column} number from 0 (source)    to  1 (calorimeter) and
+  \emph{row}    number from 0 (bottom)    to 15 (top).
+  
+  \par  We propose  to
+  label such a block with the following scheme:
+  \begin{center}
+    \fbox{\texttt{X:$side$.$wall$.$column$.$row$}}
+  \end{center}
+  \vskip 10pt
+  \par\noindent Examples: \fbox{\texttt{X:0.1.1.15}}, \fbox{\texttt{X:1.0.0.8}}
+  
+\item Gamma veto block  (Falaise: geometry category \texttt{"gveto\_block"} and
+  type   \texttt{1252}):
+  
+  \par   OMs  are   addressed  through   their
+  \emph{side}   number from 0 (Italy)     to  1 (France),
+  \emph{wall}   number from 0 (bottom)    to  1 (top)  and
+  \emph{column} number from 0 (Edelweiss) to 15 (tunnel).
+  
+  \par We propose to label  such a block
+  with the following scheme:
+  \begin{center}
+    \fbox{\texttt{G:$side$.$wall$.$column$}}
+  \end{center}
+  \vskip 10pt
+  
+  \par\noindent Examples: \fbox{\texttt{G:0.1.0}}, \fbox{\texttt{G:1.0.8}}
+  
+\item  Block for  reference  optical module:
+  
+  \par  OMs are  addressed  through their \emph{ref}  number.
+  
+  \par We propose to  label such a  block with the following scheme:
+  \begin{center}
+    \fbox{\texttt{R:$ref$}}
+  \end{center}
+
+\end{itemize}

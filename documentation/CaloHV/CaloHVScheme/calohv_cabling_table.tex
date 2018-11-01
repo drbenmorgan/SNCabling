@@ -6,9 +6,10 @@
 
 Cabling the CaloHV consists in the association of each OM's PMT to one
 HV  cable.  An  unique  cabling  table must  be  provided  to give  an
-unambiguous description of the cables' path  from the HV boards to the
-detector.  The table consists in an associative map like the one shown
-on table \ref{tab:calohv:map:1}.
+unambiguous description of the cable paths  from the HV boards to the
+PMTs.  The table consists in an associative map like the one shown
+on table \ref{tab:calohv:map:1}. This map contains the minimal
+informations to ensure the addressing of all HV cables.
 
 \begin{table}[h]
 \begin{center}
@@ -29,14 +30,13 @@ on table \ref{tab:calohv:map:1}.
   \hline
   \vdots          & & & \vdots             \\  
   \hline
-  \hline
 \end{tabular}
 \end{center}
 \caption{Example of CaloHV cabling table}
 \label{tab:calohv:map:1}
 \end{table}
 
-\par\noindent  The   table  will  be   provided  in  the  form   of  a
+\par\noindent  The   table is   provided  in  the  form   of  a
 CSV\footnote{CSV: coma  separated value} file.  The file must  use the
 following format:
 
@@ -54,11 +54,11 @@ following format:
 \item The fourth column contains the label of the PMT (optical module).
 \end{itemize}
 
-\par\noindent The  CaloHV cabling  map file  will be  used as  the unique
+\par\noindent The  CaloHV cabling  map file  is  used as  the unique
 source of information for different purposes:
 \begin{itemize}
-\item generation of labels to be stuck on cables, harnesses, patch panel;
-\item generation of  printable tables for people in charge  of the CaloHV
+\item generation of labels to be stuck on cables, harnesses, patch panel,
+\item generation of  printable cabling tables for people in charge  of the CaloHV
   cabling at LSM,
 \item input for dedicated software  modeling tools used by the
   Control and Monitoring System (CMS), the simulation\dots 
@@ -68,7 +68,7 @@ source of information for different purposes:
 \subsection{CaloHV cabling sheets}
 
 
-From  the CaloHV  cabling  table, a  Python script  will  be provided  to
+From  the CaloHV  cabling  table, a  Python script  is provided  to
 generate a printable PDF document with cabling tables corresponding to
 each  part of  the  detector.
 
@@ -89,13 +89,25 @@ each  part of  the  detector.
 %% \end{figure}
 
 
-\subsection{LIS labels}
+\subsection{Labels}
 
-Practically, we  plan to generate  labels for all harnesses and cables
-to  help  the  cabling  team  to  identifiy  the  proper  board/patch panel
-and internal cable/PMT connections.
-The label  will be prepared and stuck near
-the terminations of the harnesses and cables.
+A dedicated script is used to automatically generate labels for  all HV harnesses
+and  cables to  help  the  cabling team  to  identifiy  the proper  HV
+board-to-patch panel  and internal  HV cable-to-PMT  connections.  The
+labels must be stuck  on the terminations of the harnesses
+and cables.
+Figure \ref{fig:calohv:labels:1} shows where various kinds of
+labels are supposed to be stuck on harnesses and cables.
+
+\begin{figure}[h!]
+  \begin{center}
+    \scalebox{0.75}{\input{\pdftextimgpath/fig-calohv-labels-1.pdftex_t}}
+  \end{center}
+  \caption{CaloHV labelling}
+  \label{fig:calohv:labels:1}
+\end{figure}
+
+
 
 %% \noindent Example below displays the  full text expected to be printed
 %% on a fiber label:
@@ -105,7 +117,7 @@ the terminations of the harnesses and cables.
 
 %% \par\noindent Such  informations are of course  redundant with respect
 %% to  the  printable   plain  table  shown  in   the  previous  section.
-%% The  fiber labels could  possibly be removed before  installing the
+%% The  labels could  possibly be removed before  installing the
 %% coil.
 
 %% \par\noindent We  consider to write  a Python script  to automatically

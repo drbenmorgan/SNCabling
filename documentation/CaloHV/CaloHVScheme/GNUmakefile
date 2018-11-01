@@ -52,7 +52,7 @@ clean_pdftex :
 clean_pdftex_t :
 	@$(RM) $(addprefix $(PDFTEX_T_DIR)/,$(fig2pdftex_t_files))
 
-tex_sources=calohv_crates.tex
+tex_sources=calohv_crates.tex calohv_addressing.tex calohv_cabling_table.tex
 
 .PHONY : pdf
 pdf : $(MAIN).pdf 
