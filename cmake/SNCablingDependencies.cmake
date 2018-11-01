@@ -10,9 +10,9 @@ message( STATUS "[info] Define SNCabling dependencies")
 # - Boost
 # - GSL
 # - ROOT
-set(VIRE_BAYEUX_MIN_VERSION "3.4.0")
-message( STATUS "[info] Searching Bayeux ${VIRE_BAYEUX_MIN_VERSION}...")
-find_package(Bayeux ${VIRE_BAYEUX_MIN_VERSION} REQUIRED NO_MODULE)
+set(SNCABLING_BAYEUX_MIN_VERSION "3.4.0")
+message( STATUS "[info] Searching Bayeux ${SNCABLING_BAYEUX_MIN_VERSION}...")
+find_package(Bayeux ${SNCABLING_BAYEUX_MIN_VERSION} REQUIRED NO_MODULE)
 if (Bayeux_FOUND)
   message( STATUS "[info] Bayeux ${Bayeux_VERSION} found.")
   message( STATUS "[info] BAYEUX_BOOST_VERSION    = '${BAYEUX_BOOST_VERSION}'")
@@ -30,21 +30,21 @@ endif()
 # - Boost:
 # Boost is also important with specific libs
 message( STATUS "[info] Searching special Boost material for SNCabling...")
-set(VIRE_BOOST_MIN_VERSION ${BAYEUX_BOOST_VERSION})
+set(SNCABLING_BOOST_MIN_VERSION ${BAYEUX_BOOST_VERSION})
 set(Boost_NO_BOOST_CMAKE ON)
-set(VIRE_BOOST_COMPONENTS
+set(SNCABLING_BOOST_COMPONENTS
   ${BAYEUX_BOOST_COMPONENTS}
   )
-list(APPEND VIRE_BOOST_COMPONENTS log)
-message( STATUS "[info] VIRE_BOOST_COMPONENTS   = '${VIRE_BOOST_COMPONENTS}'")
+list(APPEND SNCABLING_BOOST_COMPONENTS log)
+message( STATUS "[info] SNCABLING_BOOST_COMPONENTS   = '${SNCABLING_BOOST_COMPONENTS}'")
 message( STATUS "[info] Finding Boost with specific libraries...")
-find_package(Boost ${VIRE_BOOST_MIN_VERSION} REQUIRED
-  ${VIRE_BOOST_COMPONENTS}
+find_package(Boost ${SNCABLING_BOOST_MIN_VERSION} REQUIRED
+  ${SNCABLING_BOOST_COMPONENTS}
   )
 set(SNCabling_Boost_VERSION ${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION})
 set(SNCabling_Boost_LIBRARIES)
-foreach(_vire_boost_lib ${SNCABLING_BOOST_COMPONENTS})
-  list(APPEND SNCabling_Boost_LIBRARIES Boost::${_vire_boost_lib})
+foreach(_sncabling_boost_lib ${SNCABLING_BOOST_COMPONENTS})
+  list(APPEND SNCabling_Boost_LIBRARIES Boost::${_sncabling_boost_lib})
 endforeach()
 message(STATUS "[info] SNCabling_Boost_VERSION   = '${SNCabling_Boost_VERSION}'")
 message(STATUS "[info] SNCabling_Boost_LIBRARIES = '${SNCabling_Boost_LIBRARIES}'")
@@ -64,27 +64,27 @@ message(STATUS "[info] SNCabling_Boost_LIBRARIES = '${SNCabling_Boost_LIBRARIES}
 #-----------------------------------------------------------------------
 # Qt5 support
 #
-if (SNCABLING_WITH_QT_GUI)
-  set(SNCablingLibrary_HEADERS_QT_TO_BE_MOCCED)
-  find_package(Qt5Core    ${SNCABLING_QT5_VERSION} REQUIRED)
-  find_package(Qt5Gui     ${SNCABLING_QT5_VERSION} REQUIRED)
-  find_package(Qt5Widgets ${SNCABLING_QT5_VERSION} REQUIRED)
-  find_package(Qt5Svg     ${SNCABLING_QT5_VERSION} REQUIRED)
-  message (STATUS "[info] Include dirs         = ${Qt5Core_INCLUDE_DIRS}")
-  message (STATUS "[info] Include private dirs = ${Qt5Core_PRIVATE_INCLUDE_DIRS}")
-  message (STATUS "[info] Include dirs         = ${Qt5Gui_INCLUDE_DIRS}")
-  message (STATUS "[info] Include private dirs = ${Qt5Gui_PRIVATE_INCLUDE_DIRS}")
-  message (STATUS "[info] Include dirs         = ${Qt5Widgets_INCLUDE_DIRS}")
-  message (STATUS "[info] Include private dirs = ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}")
-  include_directories(
-    ${Qt5Core_INCLUDE_DIRS}
-    ${Qt5Core_PRIVATE_INCLUDE_DIRS}
-    ${Qt5Gui_INCLUDE_DIRS}
-    ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
-    ${Qt5Widgets_INCLUDE_DIRS}
-    ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}
-    )
-endif()
+# if (SNCABLING_WITH_QT_GUI)
+#   set(SNCablingLibrary_HEADERS_QT_TO_BE_MOCCED)
+#   find_package(Qt5Core    ${SNCABLING_QT5_VERSION} REQUIRED)
+#   find_package(Qt5Gui     ${SNCABLING_QT5_VERSION} REQUIRED)
+#   find_package(Qt5Widgets ${SNCABLING_QT5_VERSION} REQUIRED)
+#   find_package(Qt5Svg     ${SNCABLING_QT5_VERSION} REQUIRED)
+#   message (STATUS "[info] Include dirs         = ${Qt5Core_INCLUDE_DIRS}")
+#   message (STATUS "[info] Include private dirs = ${Qt5Core_PRIVATE_INCLUDE_DIRS}")
+#   message (STATUS "[info] Include dirs         = ${Qt5Gui_INCLUDE_DIRS}")
+#   message (STATUS "[info] Include private dirs = ${Qt5Gui_PRIVATE_INCLUDE_DIRS}")
+#   message (STATUS "[info] Include dirs         = ${Qt5Widgets_INCLUDE_DIRS}")
+#   message (STATUS "[info] Include private dirs = ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}")
+#   include_directories(
+#     ${Qt5Core_INCLUDE_DIRS}
+#     ${Qt5Core_PRIVATE_INCLUDE_DIRS}
+#     ${Qt5Gui_INCLUDE_DIRS}
+#     ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
+#     ${Qt5Widgets_INCLUDE_DIRS}
+#     ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}
+#     )
+# endif()
 
 
 #-----------------------------------------------------------------------
