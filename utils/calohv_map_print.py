@@ -237,13 +237,15 @@ class CaloHVCablingMapPrint:
             # Cables:
             for icol in range(ncols) :
                 column = icol
+                if side == SuperNEMO.side_italy:
+                    column = ncols - 1 - icol
                 pmt_label = "{:s}:{:d}.{:d}.{:d}".format("G", side, wall, column)
                 pmt_addr = OMaddress(pmt_label)
                 pmt_addr.print_me(sys.stderr, "OM address: ", "[info] ")
                 if pmt_label in self._pmt_to_cable_ :
-                    print("Found OM label '{:s}' with primary CaloHV fiber ".format(pmt_label))
+                    print("Found OM label '{:s}' with CaloHV cable ".format(pmt_label))
                 else:
-                    print("Cannot found OM label '{:s}' with primary CaloHV fiber ".format(pmt_label))
+                    print("Cannot found OM label '{:s}' with CaloHV cable ".format(pmt_label))
                 cable_label = self._pmt_to_cable_[pmt_label]
                 pmt_addr.print_me(sys.stderr, "OM address: ", "[info] ")
                 fout.write("\\newline  \\cellcolor{%s}\\textcolor{%s}{\\texttt{%s}} \\newline " % (backcolor, textcolor, cable_label));
