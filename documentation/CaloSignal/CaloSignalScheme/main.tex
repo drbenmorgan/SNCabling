@@ -25,7 +25,7 @@
 \newcommand{\pdftextimgpath}{./pdftex_t}
 
 \title{SuperNEMO Demonstrator\\
-  Calorimeter Signal Readout System\\
+  Calorimeter Signal Readout System (CaloSignal)\\
   Cabling scheme and cable labels\\
   version 0.1}
 \author{M.Bongrand, Y.Lemi\`ere, F.Mauger}
@@ -42,6 +42,13 @@
   (CaloSignal).  We reuse  here some informations available  from a couple
   of documents prepared  by Cedric and Mathieu, SNDER,  with some adaptations,
   fixes and addons.
+  
+  \vskip 10pt
+  \noindent This document and all associated tools
+  are hosted at:
+  \vskip 5pt
+  \url{https://gitlab.in2p3.fr/SuperNEMO-DBD/SNCabling}.
+
 \end{abstract}
 
 \tableofcontents
@@ -52,41 +59,39 @@
 
 The  SuperNEMO   Demonstrator's  Calorimeter  Signal   Readout  System
 (CaloSignal)  uses three  crates which  host a  total of  52 front-end
-boards to address the signal collection from 712 PMTs.
+boards to collect signals from 712 PMTs.
 
 Each front end board  manages up to 16 channels and  is connected to a
 specific set  of PMTs through a  pair of harnesses.  A  first harness,
-called \emph{external harness}, groups a set of signal cables linked
-to the Wavecatcher front-end board through MCX male connectors and to
-the patch  panel (external side) also through MCX male connectors.
-From this connector  on the patch
-panel,  a  new harness,  namely  the  \emph{internal harness},  routes
-internal signal cables to the PMTs.  Both ends of the \emph{internal harness} is
-designed in  such a  way internal signal cables  can be  routed individually  from the
-patch panel to their
-associated PMTs. On the patch panel side, an internal signal cable is equipped with
-a MCX female connector. On the PMT side,  an internal signal cable is equipped with
-a Souriau pin. 
-A  given harness  handles a set of PMTs
+called \emph{external harness},  groups a set of  signal cables linked
+to the Wavecatcher front-end board  through MCX male connectors and to
+the  patch panel  (external side)  also through  MCX male  connectors.
+From  the internal side  of patch panel, a
+new  harness,  namely  the \emph{internal  harness},  routes  internal
+signal cables to  the PMTs.  Both ends of  the \emph{internal harness}
+are designed in  such  a  way internal  signal  cables  can be  connected
+individually from  the patch  panel to their  associated PMTs.  On the
+patch panel  side, an  internal signal  cable is  equipped with  a MCX
+female  connector.  On  the  PMT  side, an  internal  signal cable  is
+equipped with  a Souriau pin.  A  given harness handles a  set of PMTs
 that are geographically close to each  other, in order to optimize the
 length of the cables.
 
 In  the present  scheme, it  has been  decided to  identify individual
-signal cables within a harness using a unique cable identifier.
-This identifier is
-propagated through the patch panel to the
-end  of the  cable linked  to the  PMT.
-This scheme implies to use a dedicated cabling table.
+signal cables within a harness  using a unique cable identifier.  This
+identifier is  propagated through the  patch panel  to the end  of the
+cable  linked to  the PMT.   This scheme  implies to  use a  dedicated
+cabling table.
 
 \noindent\par Figure \ref{fig:calosignal:principle:1}  shows the basic
-diagram of the CaloSignal system. A dedicated labelling system is
-used to ease the cabling operations (see next sections).
+diagram of the CaloSignal system. A dedicated labelling system is used
+to ease the cabling operations (see next sections).
 
 \begin{figure}[h!]
   \begin{center}
     \scalebox{0.75}{\input{\pdftextimgpath/fig-calosignal-1.pdftex_t}}
   \end{center}
-  \caption{Principle of the signal distribution from the PMTs to the
+  \caption{Principle of the  signal distribution from the  PMTs to the
     Wavecatcher CaloFEB boards and labelling of cables and harnesses.}
   \label{fig:calosignal:principle:1}
 \end{figure}

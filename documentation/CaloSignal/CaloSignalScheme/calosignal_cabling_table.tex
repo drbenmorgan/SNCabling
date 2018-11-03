@@ -1,21 +1,22 @@
 % -*- mode: latex; -*-
 
+\clearpage
 \section{The Calorimeter signal cabling table and its usage}
 
 \subsection{Source table}
 
 Cabling the calorimeter readout system  consists in the association of
-each PMT  to a Wavecatcher channel.   An unique cabling table  must be
-provided to  give an unambiguous  description of the cable  paths from
-the calorimeter front-end boards to  the detector.  The table consists
-in   an    associative   map   like    the   one   shown    on   table
+each  PMT  to a  Wavecatcher  channel.   An  unique cabling  table  is
+provided to give an unambiguous  description of the signal cable paths
+from  the calorimeter  front-end boards  to the  detector.  The  table
+consists  in  an   associative  map  like  the  one   shown  on  table
 \ref{tab:calosignal:map:1}.
 
 \begin{table}[h]
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
   \hline
-  \textbf{Channel}& \textbf{External cable} & \textbf{Internal cable} & \textbf{Optical Module} \\
+  \textbf{Readout Channel}& \textbf{External signal cable} & \textbf{Internal signal cable} & \textbf{Optical Module} \\
   \hline
   \hline
   \texttt{H:0.0.0}   & \texttt{L:11.0}   & \texttt{A:11.0}   & \texttt{M:0.0.0}   \\
@@ -45,15 +46,15 @@ in   an    associative   map   like    the   one   shown    on   table
 \item Each  line has four  columns separated by  the \emph{semi-colon}
   character \fbox{\texttt{;}}.
 \item The first column contains the label of the Wavecatcher front-end
-  board channel.
-\item The second column contains the label of the external cable.
-\item The third column contains the label of the internal cable.
+  board readout channel.
+\item The second column contains the label of the external signal cable.
+\item The third column contains the label of the internal signal cable.
 \item  The  fourth column  contains  the  label  of the  PMT  (optical
   module).
 \end{itemize}
 
-\par\noindent  The CaloSignal  cabling map  file  can be  used as  the
-unique source of information for different purposes:
+\par\noindent The  CaloSignal cabling map  file is used as  the unique
+source of information for different purposes:
 \begin{itemize}
 \item generation of labels to be stuck on external and internal cables
   or harnesses;
@@ -67,19 +68,35 @@ unique source of information for different purposes:
 \subsection{CaloSignal cabling sheets}
 
 
-A  Python  script is  provided  to  automatically generate,  from  the
-CaloSignal cabling table, a printable PDF document with cabling tables
-corresponding to each part of the detector.
+The  SNCabling  package  provides  a Python  script  to  automatically
+generate, from the CaloSignal cabling  table, a printable PDF document
+with cabling  tables corresponding  to each part  of the  detector and
+each front-end crate.
 
 \subsection{Labels}
 
-A  Python  script is  provided  to  automatically generate,  from  the
-CaloSignal cabling table, lists of labels for all signal harnesses and
-cables.  The labels must be stuck on the terminations of all harnesses
-and  cables  to  help  the   cabling  team  to  identifiy  the  proper
-connections  between  front-end board  channels/external  cables/patch
-panel/internal  cables/PMT.   Figure  \ref{fig:calosignal:principle:1}
-shows  where various  kinds  of labels  are supposed  to  be stuck  on
-harnesses and cables.
+The  SNCabling  package  provides  a Python  script  to  automatically
+generate, from the  CaloSignal cabling table, the lists of  all labels for all
+signal  harnesses  and  cables.   The  labels must  be  stuck  on  the
+terminations of all  harnesses and cables to help the  cabling team to
+identifiy   the    proper   connections   between    front-end   board
+channels/external  cables/patch   panel/internal  cables/PMT.   Figure
+\ref{fig:calosignal:principle:1} shows  where various kinds  of labels
+are supposed to be stuck on signal harnesses and cables.
+
+\begin{itemize}
+\item Each label  stuck on the end of an  internal signal cable on
+  the PMT  side identifies  not only  the signal cable  itself but  also the
+  optical module/PMT it is connected to. Example:
+  \begin{center}
+    \fbox{\texttt{A:9:1 -> M:1.4.0}}
+  \end{center}
+\item Each label  stuck on the end of an  external signal cable on
+  the front-end crate  side identifies  not only  the signal cable  itself but  also the
+  Wavecatcher readout channel it is connected to.Example:
+  \begin{center}
+    \fbox{\texttt{L:9:1 -> H:1.1.0}}
+  \end{center}
+\end{itemize}
 
 %% end

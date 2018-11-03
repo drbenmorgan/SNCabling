@@ -19,25 +19,26 @@ character as a separator.
 
 \subsection{Front-end crates, boards and channels}
 
-Frontend crates  belonging to the  CaloSignal system are  installed in
+Front-end crates belonging  to the CaloSignal system  are installed in
 racks  number  2 and  3  on  the  electronics  platform.  A  crate  is
 identified with an unique ID,  namely a number ranging from \texttt{0}
-to \texttt{2}.  We  propose to label a given crate  with the following
-scheme:
+to \texttt{2}.   A given  crate is  identified by  its label  with the
+following scheme:
 \begin{center}
    \fbox{\texttt{C:$crate$}}
  \end{center}
 where \texttt{$crate$} is the number of the crate (positive integer).
 \vskip     10pt    \par\noindent     Examples:    \fbox{\texttt{C:0}},
-\fbox{\texttt{C:1}}.   \par Conventionally,  crate \texttt{0}  manages
+\fbox{\texttt{C:1}},
+\fbox{\texttt{C:2}}.   \par Conventionally,  crate \texttt{0}  manages
 PMTs from  the main  wall on the  \emph{Italy} side,  crate \texttt{1}
 manages PMTs  from the main wall  on the \emph{France} side  and crate
 \texttt{2} manages PMTs from X-walls and gamma veto.
 
- \vskip 10pt  A crate contains  up to  20 16-channel boards.   A board
+ \vskip 10pt A crate contains up to twenty 16-channel boards.  A board
  inherits the  number of the crate  it is plugged into  and is located
- through its slot number.  We propose  to label a given board with the
- following scheme:
+ through its  slot number. A  given board  is identified by  its label
+ with the following scheme:
 \begin{center}
    \fbox{\texttt{B:$crate$.$board$}}
  \end{center}
@@ -50,7 +51,8 @@ control board slot number.
 \fbox{\texttt{B:1.11}}.
 
 \vskip 10pt  \par\noindent Up  to 16 channels  are addressed  within a
-board.  We propose to label a given channel with the following scheme:
+board.  A given channel is identified  by its label with the following
+scheme:
 \begin{center}
    \fbox{\texttt{H:$crate$.$board$.$channel$}}
  \end{center}
@@ -60,18 +62,22 @@ number  of  the  channel  in  the board  ranging  from  \texttt{0}  to
 \texttt{15}.   \par\noindent Examples:  \fbox{\texttt{H:0.0.0}}, \dots
 \fbox{\texttt{H:1.19.12}}
 
-\vskip  10pt A  channel is  automatically associated  to a specific
-cable number in a given harness.
+\vskip 10pt A channel is  automatically associated to a specific cable
+number  in  a given  harness.  The  association between  each  readout
+channel and the cable it is connected to within a harness is described
+by a dedicated cabling table.
 
 \subsection{Harnesses and cables}
 
 One uses 2$\times$22  harnesses to group individual  channels from the
 front-end boards to the PMTs.
 
-\vskip 10pt  A signal  external harness connects  a set  of individual
-channels on  several frontend boards  to the patch panel.  An external
-harness has an  unique ID ranging from \texttt{0}  to \texttt{21}.  We
-propose to label a given external harness with the following scheme:
+\vskip 10pt  An external signal  harness contains a set  of individual
+external  signal  cables  that  connect  to the  patch  panel  and  to
+individual  channels  divided up  into  several  frontend boards.   An
+external signal  harness has an  unique ID ranging from  \texttt{0} to
+\texttt{21}.  An external signal harness is identified by a label with
+the following scheme:
 \begin{center}
    \fbox{\texttt{E:$harness$}}
  \end{center}
@@ -79,41 +85,46 @@ where \texttt{$harness$} is the number of the external harness.
 \par\noindent Examples: \fbox{\texttt{E:0}}, \dots
 \fbox{\texttt{E:21}}
 
-\vskip 10pt  A signal  internal harness, connecting  patch panel  to a
-given  set of  PMTs  uses  an unique  ID  ranging  from \texttt{0}  to
-\texttt{21}.  We  propose to label  a given external harness  with the
-following scheme:
+\vskip 10pt  An internal signal  harness contains a set  of individual
+internal signal cables that connect to the patch panel and a given set
+of PMTs.  An internal  signal harness  has an  unique ID  ranging from
+\texttt{0} to  \texttt{21}.  An internal signal  harness is identified
+by a label with the following scheme:
 \begin{center}
    \fbox{\texttt{I:$harness$}}
  \end{center}
-where \texttt{$harness$} is the number of the external harness.
+where \texttt{$harness$} is the number of the internal harness.
 \par\noindent Examples: \fbox{\texttt{I:0}}, \dots
 \fbox{\texttt{I:21}}
-\vskip 10pt A internal harness with a given number is associated
-to a external harness with the same number.
+\vskip 10pt An internal harness with a given number is associated to a
+external harness  with the  same number.
+
 
 \vskip 10pt Each  external or internal harness groups up  to 40 signal
 cables identified through  a cable ID from  \texttt{0} to \texttt{39}.
-We propose to label a given external cable with the following scheme:
+An external signal  cable is identified by a label  with the following
+scheme:
+\begin{center}
+   \fbox{\texttt{L:$harness$.$cable$}}
+ \end{center}
+where \texttt{$harness$}  is the  number of  the external  harness and
+\texttt{$cable$} is  the number of the  external cable.  \par\noindent
+Examples: \fbox{\texttt{L:0.0}}, \dots \fbox{\texttt{L:21.15}}.
+
+\vskip 10pt Internal signal cables use a similar scheme:
 \begin{center}
    \fbox{\texttt{A:$harness$.$cable$}}
- \end{center}
-where \texttt{$harness$} is the number of the external harness
-and \texttt{$cable$} is the number of the external cable.
+\end{center}
 \par\noindent Examples: \fbox{\texttt{A:0.0}}, \dots
 \fbox{\texttt{A:21.15}}.
 
-Internal cables use a similar scheme:
-\begin{center}
-   \fbox{\texttt{L:$harness$.$cable$}}
-\end{center}
-\par\noindent Examples: \fbox{\texttt{L:0.0}}, \dots
-\fbox{\texttt{L:21.15}}.
-
 Internal and external signal cables  connected through the patch panel
-share the  same harness  and cable numbers.  Thus, the  internal cable
-\fbox{\texttt{A:7.12}}   is   connected    to   the   external   cable
-\fbox{\texttt{L:7.12}}.
+(MCX male/female connectors) share the same harness and cable numbers.
+Thus, the  internal cable  \fbox{\texttt{A:7.12}} is connected  to the
+external cable \fbox{\texttt{L:7.12}}:
+\begin{center}
+\fbox{\texttt{L:7.12} \texttt{->} \texttt{A:7.12}}.
+\end{center}
 
 
 \subsection{Optical modules}
