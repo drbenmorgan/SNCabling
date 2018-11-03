@@ -72,10 +72,6 @@ generate, from the CaloHV cabling table, a printable PDF document with
 cabling  tables  corresponding to  each  part  of the  detector.  This
 document can be used during cabling operations.
 
-%% A typical  output  is  shown on  figure
-%% \ref{fig:lis:sheet:1}.
-
-
 %% \begin{figure}[h!]
 %%   \begin{center}
 %%     \scalebox{0.58}{\input{\samplespath/calo_0.tex}}
@@ -103,10 +99,16 @@ supposed to be stuck on HV harnesses and cables.
 \begin{itemize}
 \item Each label  stuck on the end of an  internal HV cable on
 the PMT  side identifies  not only  the HV cable  itself but  also the
-optical module/PMT it is connected to.
+optical module/PMT it is connected to. Example:
+  \begin{center}
+    \fbox{\texttt{A:9:3 -> M:1.3.4}}
+  \end{center}
 \item Each label  stuck on the end of an  external HV harness on
 the HV crate  side identifies  not only  the HV harness  itself but  also the
-HV board it is connected to.
+HV board it is connected to. Example:
+  \begin{center}
+    \fbox{\texttt{E:9 -> B:1.9}}
+  \end{center}
 \end{itemize}
 
 \begin{figure}[h!]
