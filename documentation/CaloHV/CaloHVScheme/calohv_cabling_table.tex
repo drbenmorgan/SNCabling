@@ -4,11 +4,11 @@
 
 \subsection{Source table}
 
-Cabling the CaloHV consists in the association of each OM's PMT to one
-HV  cable.  An  unique  cabling  table must  be  provided  to give  an
-unambiguous description of the cable paths  from the HV boards to the
-PMTs.  The table consists in an associative map like the one shown
-on table \ref{tab:calohv:map:1}. This map contains the minimal
+Cabling the CaloHV system consists in the association of each PMT to a
+CAEN HV  board channel.  An unique  cabling table must be  provided to
+give an unambiguous description of the  cable paths from the HV boards
+to the  PMTs.  The table consists  in an associative map  like the one
+shown on  table \ref{tab:calohv:map:1}.  This map contains  the needed
 informations to ensure the addressing of all HV cables.
 
 \begin{table}[h]
@@ -28,7 +28,7 @@ informations to ensure the addressing of all HV cables.
   \hline
   \texttt{H:0.2.23}  & \texttt{E:14} & \texttt{A:14.3} & \texttt{M:0.0.3} \\
   \hline
-  \vdots          & & & \vdots             \\  
+  \vdots          & \vdots  & \vdots   & \vdots             \\  
   \hline
 \end{tabular}
 \end{center}
@@ -36,9 +36,8 @@ informations to ensure the addressing of all HV cables.
 \label{tab:calohv:map:1}
 \end{table}
 
-\par\noindent  The   table is   provided  in  the  form   of  a
-CSV\footnote{CSV: coma  separated value} file.  The file must  use the
-following format:
+\par\noindent The table is provided in the form of a CSV\footnote{CSV:
+  coma separated value} file.  The file must use the following format:
 
 \begin{itemize}
 \item The file contains only ASCII characters.
@@ -48,17 +47,17 @@ following format:
 \item There is only one HV channel/PMT association per line.
 \item Each  line has  four columns  separated by  the \emph{semi-colon}
   character \fbox{\texttt{;}}.
-\item The first column contains the label of the HV channel.
-\item The second column contains the label of the external bundle.
-\item The third column contains the label of the internal cable.
+\item The first column contains the label of the CAEN HV board channel.
+\item The second column contains the label of the external HV harness.
+\item The third column contains the label of the internal HV cable.
 \item The fourth column contains the label of the PMT (optical module).
 \end{itemize}
 
-\par\noindent The  CaloHV cabling  map file  is  used as  the unique
+\par\noindent The  CaloHV cabling map file  can be used as  the unique
 source of information for different purposes:
 \begin{itemize}
-\item generation of labels to be stuck on cables, harnesses, patch panel,
-\item generation of  printable cabling tables for people in charge  of the CaloHV
+\item generation of labels to be stuck on internal HV cables, internal and external HV harnesses,
+\item generation of  printable cabling tables for people in charge  of the calorimeter HV
   cabling at LSM,
 \item input for dedicated software  modeling tools used by the
   Control and Monitoring System (CMS), the simulation\dots 
@@ -68,9 +67,9 @@ source of information for different purposes:
 \subsection{CaloHV cabling sheets}
 
 
-From  the CaloHV  cabling  table, a  Python script  is provided  to
-generate a printable PDF document with cabling tables corresponding to
-each  part of  the  detector.
+A  Python  script is  provided  to  automatically generate,  from  the
+CaloHV cabling table, a printable PDF document with cabling tables
+corresponding to each part of the detector.
 
 %% A typical  output  is  shown on  figure
 %% \ref{fig:lis:sheet:1}.
@@ -91,34 +90,21 @@ each  part of  the  detector.
 
 \subsection{Labels}
 
-A dedicated script is used to automatically generate labels for  all HV harnesses
-and  cables to  help  the  cabling team  to  identifiy  the proper  HV
-board-to-patch panel  and internal  HV cable-to-PMT  connections.  The
-labels must be stuck  on the terminations of the harnesses
-and cables.
-Figure \ref{fig:calohv:labels:1} shows where various kinds of
-labels are supposed to be stuck on harnesses and cables.
+A  Python  script is  provided  to  automatically generate,  from  the
+CaloHV cabling table, lists of labels for all HV harnesses and
+cables.  The labels must be stuck on the terminations of all harnesses
+and  cables  to  help  the   cabling  team  to  identifiy  the  proper
+connections  between  CAEN HV boards/external HV harnesses/patch
+panel/internal HV cables/PMT.   Figure  \ref{fig:calohv:labels:1}
+shows  where various  kinds  of labels  are supposed  to  be stuck  on
+HV harnesses and cables.
 
 \begin{figure}[h!]
   \begin{center}
     \scalebox{0.75}{\input{\pdftextimgpath/fig-calohv-labels-1.pdftex_t}}
   \end{center}
-  \caption{CaloHV labelling}
+  \caption{CaloHV labelling of HV harnesses and internal cables}
   \label{fig:calohv:labels:1}
 \end{figure}
 
-
-
-%% \noindent Example below displays the  full text expected to be printed
-%% on a fiber label:
-%% \begin{center}
-%% \fbox{\texttt{P:2.34} $\rightarrow$ \texttt{M:0.2.5}}
-%% \end{center}
-
-%% \par\noindent Such  informations are of course  redundant with respect
-%% to  the  printable   plain  table  shown  in   the  previous  section.
-%% The  labels could  possibly be removed before  installing the
-%% coil.
-
-%% \par\noindent We  consider to write  a Python script  to automatically
-%% generate all labels (up to 1400).
+%% end
