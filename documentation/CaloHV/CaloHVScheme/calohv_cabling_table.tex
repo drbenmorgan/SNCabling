@@ -1,11 +1,12 @@
 % -*- mode: latex; -*-
 
+\clearpage
 \section{The CaloHV cabling table and its usage}
 
 \subsection{Source table}
 
 Cabling the CaloHV system consists in the association of each PMT to a
-CAEN HV  board channel.  An unique  cabling table must be  provided to
+CAEN HV  board channel.  An unique  cabling table is  provided to
 give an unambiguous description of the  cable paths from the HV boards
 to the  PMTs.  The table consists  in an associative map  like the one
 shown on  table \ref{tab:calohv:map:1}.  This map contains  the needed
@@ -15,10 +16,8 @@ informations to ensure the addressing of all HV cables.
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
   \hline
-  \textbf{HV channel}& \textbf{External harness} & \textbf{Internal cable} & \textbf{Optical Module} \\
+  \textbf{HV channel}& \textbf{External HV harness} & \textbf{Internal HV cable} & \textbf{Optical Module} \\
   \hline
-  %% \hline
-  %% \multicolumn{4}{|l|}{\textbf{HV board} \texttt{B:0.1}}  \\
   \hline
   \texttt{H:0.0.23}  & \texttt{E:12} & \texttt{A:12.3} & \texttt{M:0.0.0} \\
   \hline
@@ -56,20 +55,22 @@ informations to ensure the addressing of all HV cables.
 \par\noindent The  CaloHV cabling map file  can be used as  the unique
 source of information for different purposes:
 \begin{itemize}
-\item generation of labels to be stuck on internal HV cables, internal and external HV harnesses,
-\item generation of  printable cabling tables for people in charge  of the calorimeter HV
-  cabling at LSM,
-\item input for dedicated software  modeling tools used by the
-  Control and Monitoring System (CMS), the simulation\dots 
+\item generation of labels to be stuck on internal HV cables, internal
+  and external HV harnesses,
+\item generation of  printable cabling tables for people  in charge of
+  the calorimeter HV cabling at LSM,
+\item input for dedicated software  modeling tools used by the Control
+  and Monitoring System (CMS), the simulation\dots
 \end{itemize}
 
 
 \subsection{CaloHV cabling sheets}
 
 
-A  Python  script is  provided  to  automatically generate,  from  the
-CaloHV cabling table, a printable PDF document with cabling tables
-corresponding to each part of the detector.
+The  SNCabling  package  provides  a  Python  script  to  automatically
+generate, from the CaloHV cabling table, a printable PDF document with
+cabling  tables  corresponding to  each  part  of the  detector.  This
+document can be used during cabling operations.
 
 %% A typical  output  is  shown on  figure
 %% \ref{fig:lis:sheet:1}.
@@ -90,14 +91,23 @@ corresponding to each part of the detector.
 
 \subsection{Labels}
 
-A  Python  script is  provided  to  automatically generate,  from  the
-CaloHV cabling table, lists of labels for all HV harnesses and
-cables.  The labels must be stuck on the terminations of all harnesses
-and  cables  to  help  the   cabling  team  to  identifiy  the  proper
-connections  between  CAEN HV boards/external HV harnesses/patch
-panel/internal HV cables/PMT.   Figure  \ref{fig:calohv:labels:1}
-shows  where various  kinds  of labels  are supposed  to  be stuck  on
-HV harnesses and cables.
+The  SNCabling  package  provides  a Python  script  to  automatically
+generate, from the  CaloHV cabling table, the lists of  all labels for
+all  HV  harnesses and  cables.   The  labels  must  be stuck  on  the
+terminations of all  harnesses and cables to help the  cabling team to
+identify  the proper  connections between  CAEN HV  boards/external HV
+harnesses/patch     panel/internal      HV     cables/PMT.      Figure
+\ref{fig:calohv:labels:1}  shows where  various  kinds  of labels  are
+supposed to be stuck on HV harnesses and cables.
+
+\begin{itemize}
+\item Each label  stuck on the end of an  internal HV cable on
+the PMT  side identifies  not only  the HV cable  itself but  also the
+optical module/PMT it is connected to.
+\item Each label  stuck on the end of an  external HV harness on
+the HV crate  side identifies  not only  the HV harness  itself but  also the
+HV board it is connected to.
+\end{itemize}
 
 \begin{figure}[h!]
   \begin{center}

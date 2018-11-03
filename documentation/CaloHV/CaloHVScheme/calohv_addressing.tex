@@ -3,12 +3,12 @@
 
 \subsection{Format of a CaloHV label}
 
-Each label to be used for CaloHV cabling will use the following format:
+Each label used for CaloHV cabling uses the following format:
 
 \begin{center}
   \fbox{\texttt{X:}$id_1$.$id_2$\dots$id_n$}
 \end{center}
-\noindent  where \texttt{X}  is a  single letter  which describes  the
+\noindent  where \texttt{X}  is a single letter  which indentifies  the
 category  of the  labelled  object,  and the  $id_1$.$id_2$\dots$id_n$
 sequence is the unique address of the object within its category.  The
 $id_x$ tokens are positive integers (possibly zero).  The \emph{colon}
@@ -16,14 +16,16 @@ character is  used to separate  the category letter from  the address.
 The  sequence  of  identifiers  in  the  address  uses  the  \emph{dot}
 character as a separator.
 
+\vskip 10pt Examples: \texttt{H:1.3.4}, \texttt{A:6.3}.
+
 
 \subsection{HV crates, boards and channels}
 
-Each CAEN HV power supply crate belonging to the CaloHV system is installed
-in the rack number 2 on the electronics platform.
-A HV crate is identified with an unique ID, namely
-a number ranging from \texttt{0} to \texttt{1}.  We propose to label a
-given HV crate with the following scheme:
+Each CAEN  HV power  supply crate  belonging to  the CaloHV  system is
+installed in  the rack  number 2  on the  electronics platform.   A HV
+crate is  identified with an unique  ID, namely a number  ranging from
+\texttt{0}  to \texttt{1}.   A given  HV  crate is  labelled with  the
+following scheme:
 \begin{center}
    \fbox{\texttt{C:$crate$}}
  \end{center}
@@ -31,12 +33,13 @@ where \texttt{$crate$} is the number of the crate (positive integer).
 \vskip     10pt    \par\noindent     Examples:    \fbox{\texttt{C:0}},
 \fbox{\texttt{C:1}}.  \par Conventionally, crate \texttt{0} manages HV
 for PMTs on the \emph{Italy} side  and crate \texttt{1} manages HV for
-PMTs on the \emph{France} side.
+PMTs on the \emph{France} side  (including main wall, X-wall and gamma
+veto optical modules).
 
-\vskip 10pt A HV crate contains up to 16 HV 32-channel boards but only 12
-will be  used.  A  HV board  inherits the  number of  the crate  it is
-plugged into  and is addressed through  its slot number.  We give a given HV board
-a label with the following scheme:
+\vskip 10pt A HV crate contains up to 16 HV 32-channel boards but only
+12 will  be used  per crate.  A  HV board inherits  the number  of the
+crate it is plugged into and  is addressed through its slot number.  A
+given HV board is identified by a label with the following scheme:
 \begin{center}
    \fbox{\texttt{B:$crate$.$board$}}
  \end{center}
@@ -47,30 +50,75 @@ is  the  number  of  the  board  (slot)  ranging  from  \texttt{0}  to
 \par\noindent Examples: \fbox{\texttt{B:0.0}},  \dots
 \fbox{\texttt{B:1.11}}.
 
-\vskip 10pt
-\par\noindent Up  to 32 HV channels are addressed within a HV board.
- We propose to label a given HV channel with the following scheme:
+\vskip 10pt \par\noindent Up to 32  HV channels are addressed within a
+HV  board.  A  given HV  channel  is identified  by a  label with  the
+following scheme:
 \begin{center}
    \fbox{\texttt{H:$crate$.$board$.$channel$}}
  \end{center}
-where \texttt{$crate$} is the number of the crate,
-  \texttt{$board$} is the number of the crate
-and  \texttt{$channel$} is the number of the channel
-ranging from
-\texttt{0} to \texttt{31}.
-\par\noindent Examples: \fbox{\texttt{H:0.0.0}}, \dots
-\fbox{\texttt{H:1.11.31}}
+where \texttt{$crate$} is the number of the crate, \texttt{$board$} is
+the number  of the crate and  \texttt{$channel$} is the number  of the
+channel  ranging   from  \texttt{0}  to   \texttt{31}.
+\vskip 10pt\par\noindent
+Examples: \fbox{\texttt{H:0.0.0}}, \dots \fbox{\texttt{H:1.11.31}}
 
-\vskip 10pt
-A HV channel is automatically associated to a specific pin number of
-the output connector of the CAEN HV board. 
+\vskip 10pt A HV channel is automatically associated to a specific pin
+number  of  the  output  connector   of  the  CAEN  HV  board.   Table
+\ref{calohv:channel_pin_map}  shows the  associative  map between  the
+CAEN HV board channel numbers and Radial connector pins.
+
+\begin{table}[h!]
+  \begin{tabular}{|c|c|}
+    \hline
+    HV channel & Radial connector pin \\
+    \hline
+    \hline
+    0 & 45  \\
+    1 & 46  \\
+    2 & 47  \\
+    3 & 48  \\
+    4 & 49  \\
+    5 & 50  \\
+    6 & 34  \\
+    7 & 35  \\
+    8 & 36  \\
+    9 & 37  \\
+    10 & 38   \\
+    11 & 39  \\
+    12 & 24  \\
+    13 & 25  \\
+    14 & 26  \\
+    15 & 27  \\
+    16 & 28  \\
+    17 & 29  \\
+    18 & 14  \\
+    19 & 15  \\
+    20 & 16  \\
+    21 & 17  \\
+    22 & 18  \\
+    23 & 3  \\
+    24 & 4  \\
+    25 & 5  \\
+    26 & 6  \\
+    27 & 7  \\
+    28 & 8  \\
+    29 & 19  \\
+    30 & 20  \\
+    31 & 30  \\
+   \hline
+    \end{tabular}
+  \caption{Associative map between HV board channels and 
+    Radial connector's pins}\label{calohv:channel_pin_map}
+\end{table}
+
+
 
 \subsection{Harnesses and cables}
 
-\vskip 10pt An external HV  harness  connecting a given HV board (Radial
+\vskip 10pt An external HV harness connecting a given HV board (Radial
 connector) to the patch panel (Redel  Male S connector) uses an unique
-ID  ranging from  \texttt{0} to  \texttt{23}.  We give to each
-external HV harness a label with the following scheme:
+ID ranging from  \texttt{0} to \texttt{23}.  An external  HV harness is
+identified by a label with the following scheme:
 \begin{center}
    \fbox{\texttt{E:$harness$}}
  \end{center}
@@ -78,43 +126,41 @@ where \texttt{$harness$} is the number of the external harness.
 \par\noindent Examples: \fbox{\texttt{E:0}}, \dots
 \fbox{\texttt{E:23}}
 
-\vskip 10pt An internal HV  harness  connecting a given external harness on the patch panel (Redel
-connectors) to a PMT uses an unique
-ID  ranging from  \texttt{0} to  \texttt{23}.  We give to each
-internal HV harness a label with the following scheme:
+\vskip 10pt An internal HV harness connecting a given external harness
+on  the patch  panel (Redel  connectors) to  a PMT  uses an  unique ID
+ranging from  \texttt{0} to  \texttt{23}.  An  internal HV  harness is
+identified by a label with the following scheme:
 \begin{center}
    \fbox{\texttt{I:$harness$}}
  \end{center}
-where \texttt{$harness$} is the number of the internal harness.
-\par\noindent Examples: \fbox{\texttt{I:0}}, \dots
+where  \texttt{$harness$}  is  the  number of  the  internal  harness.
+\par\noindent        Examples:       \fbox{\texttt{I:0}},        \dots
 \fbox{\texttt{I:23}}
 
 \vskip 10pt Compared with the  labelling scheme proposed by Mathieu in
-preliminary  documents,  it   has  been  decided  not   to  introduce  an
+preliminary  documents,  it  has  been decided  not  to  introduce  an
 intermediate cable  identifier depending on  the location of  the PMTs
-(main walls,  top row in  main walls,  X-walls, gamma veto rows).  A unique
-scheme   is  used in place,   based   on   already  existing   informations,
-independently of  the geometry.  Individual cables  within an external
-harness are identified through the  pin numbers they are associated to
-on  the CAEN  HV  board  output  connector.    This  pin/cable  identifier
-propagates up  to the  patch panel  and beyond  to the  internal cable
-terminations.  There is no need  to label internal cables because they
-are   confined  within   their  harness   and  thus   never  addressed
-individually during cabling operations.
-Due to the layout of the CAEN HV board connectors, the pin number takes
-its value in the followin list: 3, 4, 5, 6, 7, 8, 14, 15, 16, 17, 18, 19, 20,
-24, 25, 26, 27, 28, 29, 30, 34, 35, 36, 37, 38, 39, 45, 46, 47, 48, 49, 50.
+(main walls,  top row  in main  walls, X-walls,  gamma veto  rows).  A
+unique  scheme   is  used   in  place,   based  on   already  existing
+informations, independently of the geometry.  Individual cables within
+an external  harness are identified  through the pin numbers  they are
+associated to on  the CAEN HV board output  connector.  This pin/cable
+identifier propagates up to the patch panel and beyond to the internal
+cable  terminations.  There  is no  need to  label external  HV cables
+because  they  are  confined  within  their  harness  and  thus  never
+addressed individually  during cabling operations.  Due  to the layout
+of the CAEN HV board connectors, the pin number takes its value in the
+list shown in table \ref{calohv:channel_pin_map}.
 
-\vskip 10pt We give to each
-internal HV cable a label with the following scheme:
+\vskip 10pt An  internal HV cable is identified by its label with the
+following scheme:
 \begin{center}
    \fbox{\texttt{A:$harness$.$pin$}}
  \end{center}
-where \texttt{$harness$} is the number of the internal harness the cable belongs to
-and  \texttt{$pin$} is the number of the pin the cable is associated to.
-\par\noindent Examples: \fbox{\texttt{A:0.3}}, \dots
-\fbox{\texttt{A:0.50}}
-
+where \texttt{$harness$}  is the  number of  the internal  harness the
+cable belongs to and \texttt{$pin$} is the number of the pin the cable
+is  associated  to.   \par\noindent  Examples:  \fbox{\texttt{A:0.3}},
+\dots \fbox{\texttt{A:0.50}}
 
 \subsection{Optical modules}
 

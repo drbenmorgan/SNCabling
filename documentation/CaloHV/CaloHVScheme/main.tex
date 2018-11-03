@@ -25,11 +25,11 @@
 \newcommand{\pdftextimgpath}{./pdftex_t}
 
 \title{SuperNEMO Demonstrator\\
-  Calorimeter High Voltage System\\
+  Calorimeter High Voltage System (CaloHV)\\
   Cabling scheme and cable labels\\
   version 0.2}
 \author{M.Bongrand, Y.Lemi\`ere, F.Mauger}
-\date{November 1st, 2018}
+\date{November 3rd, 2018}
 
 %%%%%%%%%%%%%%%%
 \begin{document}
@@ -63,31 +63,34 @@ distribute HV to 712 PMTs.
 
 Each HV board manages up to 32 channels and is connected to a specific
 set of  PMTs through  a pair  of harnesses.   A first  harness, called
-\emph{external harness}, links the board  to a single connector on the
-patch panel (external side). From this connector on the patch panel, a
-new harness, namely the \emph{internal  harness}, routes HV channel to
-the PMTs.  The end of the  \emph{internal harness} is designed in such
-a way cables can be routed  indivudually to their associated PMTs.  Of
-course, a given harness handles a  set of PMTs that are geographically
+\emph{external  harness},  links the  board  (Radial  connector) to  a
+single  connector  (Redel  S  Male)   on  the  patch  panel  (external
+side). From the  internal face of the patch panel  (Redel S Female), a
+new harness, namely the  \emph{internal harness}, routes individual HV
+cables  to  the PMTs.   The  end  of  the \emph{internal  harness}  is
+designed in  such a  way cables  can be  routed individually  to their
+associated PMTs  by splitting in two  wires (HV and ground).   A given
+harness aggregates  a set of  cables for PMTs that  are geographically
 close to each other, in order to optimize the length of the cables.
 
 In the present  scheme, it has been decided to  identify individual HV
-distribution cables using  the pin identifiers on  the connectors they
-are associated  to.  Ideally, the  pin number  on the HV  board output
-connector thus identifies the cable  linked to it.  This identifier is
-propagated to the pin number on the patch panel connectors then to the
-end  of the  cable linked  to the  PMT. This  enables to  build rather
-simple and comprehensible cabling tables.
+distribution cables using the pin identifiers on the Radial connectors
+they are  associated to on  each HV board.  The  pin number on  the HV
+board output connector  thus identifies the cable linked  to it.  This
+identifier  is  propagated  to  the  pin number  on  the  patch  panel
+connectors  then to  the end  of the  cable linked  to the  PMT.  This
+enables to build rather simple and comprehensible cabling tables.
 
-\noindent\par  Figure  \ref{fig:calohv:principle:1}  shows  the  basic
-diagram of  the CaloHV  system. A dedicated  labelling system  will be
-used to ease the cabling operations.
+\noindent\par Figure \ref{fig:calohv:principle:1}  shows the principle
+of the calorimeter  HV distribution.  A dedicated  labelling system is
+used to ease the cabling operations (see next sections).
 
 \begin{figure}[h!]
   \begin{center}
     \scalebox{0.75}{\input{\pdftextimgpath/fig-calohv-1.pdftex_t}}
   \end{center}
-  \caption{Principle of the HV distribution from the CAEN HV power supplies to the PMTs.}
+  \caption{Principle of  the HV  distribution from  the CAEN  HV power
+    supplies to the PMTs.}
   \label{fig:calohv:principle:1}
 \end{figure}
 
