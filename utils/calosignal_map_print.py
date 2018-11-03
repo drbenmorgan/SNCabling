@@ -189,7 +189,6 @@ class CaloSignalCablingMapPrint:
                     fout.write(" & ")               
             fout.write("& \\textcolor{blue}{\\small %s}" % (row));
             fout.write("\\\\\n");
-           
             fout.write("\\hline\n");
       
         fout.write("\\hline\n");
@@ -246,9 +245,9 @@ class CaloSignalCablingMapPrint:
             pmt_addr = OMaddress(pmt_label)
             pmt_addr.print_me(sys.stderr, "OM address: ", "[info] ")
             if pmt_label in self._pmt_to_intcable_ :
-                print("Found PMT label '{:s}' with CaloSignal cable ".format(pmt_label))
+                print("Found PMT label '{:s}' with CaloSignal internal cable ".format(pmt_label))
             else:
-                print("Cannot found PMT label '{:s}' with CaloSignal cable ".format(pmt_label))
+                print("Cannot find PMT label '{:s}' with CaloSignal internal cable ".format(pmt_label))
             cable_label = self._pmt_to_intcable_[pmt_label]
             pmt_addr.print_me(sys.stderr, "OM address: ", "[info] ")
             fout.write("\\newline  \\cellcolor{%s}\\textcolor{%s}{\\texttt{%s}} \\newline " % (backcolor, textcolor, cable_label));
@@ -271,7 +270,81 @@ class CaloSignalCablingMapPrint:
 
         fout.write("\\end{tabular}\n");
         return
-    
+   
+    def _mktable_crate(self, crate_num_):
+        nboards=21
+        cb_slot=10
+        nchannels=16
+        foutname = "{:s}/calosignal_crate-{:d}.tex".format(self._printpath_, crate_num_)
+        fout = open(foutname, "w") 
+        sys.stderr.write("[info] Generating LaTeX table...\n")
+        fout.write("\\begin{tabular}{|");
+        fout.write("r|");
+        for iboard in range(nboards) :
+            fout.write("|C{1.2cm}");
+        fout.write("||");
+        fout.write("l|}\n");
+        fout.write("\\hline\n");    
+        fout.write(" & ")
+        for iboard in range(nboards) :
+            fout.write("\\textcolor{blue}{\\small %s}" % (iboard));
+            if iboard + 1 != nboards :
+                fout.write(" & ")
+        fout.write(" & ")
+        fout.write("\\\\\n");
+        fout.write("\\hline\n\\hline\n");
+        for ichannel in range(nchannels) :
+            fout.write("\\textcolor{blue}{\\small %s} &" % (ichannel));
+            for iboard in range(nboards) :
+                textcolor = "black"
+                backcolor = "white"                    
+                channel_label = "{:s}:{:d}.{:d}.{:d}".format("H", crate_num_, iboard, ichannel)
+                channel_addr = CaloSignalChannelAddress(channel_label)
+                channel_addr.print_me(sys.stderr, "Channel address: ", "[info] ")
+                extcable_label = ""
+                if channel_label in self._channel_to_extcable_ :
+                    print("Found channel label '{:s}' with CaloSignal external cable ".format(channel_label))
+                    extcable_label = self._channel_to_extcable_[channel_label]
+                    extcable_addr = CaloSignalExternalCableAddress(extcable_label)
+                    harness_num = extcable_addr.harness
+                    if crate_num_ < 2 :
+                        if harness_num in [6, 17]:
+                            backcolor = "MainTopBlue"
+                        elif harness_num in [0, 2, 4, 11, 13, 15]:
+                            backcolor = "yellow!75"
+                        elif harness_num in [1, 3, 5, 12, 14, 16]:
+                            backcolor = "orange!75"
+                    else:
+                        if harness_num in [9, 10, 20, 21]:
+                            backcolor = "GvetoBlue"
+                        elif harness_num in [7, 18]:
+                            backcolor = "XwallGreen"
+                        elif harness_num in [8, 19]:
+                            backcolor = "XwallViolet"
+                        textcolor = "white"
+                else:
+                    print("Cannot find channel label '{:s}' with CaloSignal external cable ".format(channel_label))
+                if iboard == cb_slot:
+                     backcolor = "gray"
+                elif len(extcable_label) == 0:
+                     backcolor = "lightgray"
+                fout.write("\\newline  \\cellcolor{%s}\\textcolor{%s}{\\texttt{%s}} \\newline " % (backcolor, textcolor, extcable_label));
+                if iboard + 1 != nboards :
+                    fout.write(" & ")
+            fout.write("& \\textcolor{blue}{\\small %s}" % (ichannel));
+            fout.write("\\\\\n");
+            fout.write("\\hline\n");               
+
+        fout.write("\\end{tabular}\n");
+
+        return
+  
+    def _mktable_crates(self):
+        self._mktable_crate(0)
+        self._mktable_crate(1)
+        self._mktable_crate(2)
+        return
+     
     def run(self):
         self._load()
         self._mktable_xcalo(SuperNEMO.side_italy, SuperNEMO.side_tunnel)
@@ -284,6 +357,7 @@ class CaloSignalCablingMapPrint:
         self._mktable_xcalo(SuperNEMO.side_france, SuperNEMO.side_tunnel)
         self._mktable_gveto(SuperNEMO.side_france, SuperNEMO.wall_bottom)
         self._mktable_gveto(SuperNEMO.side_france, SuperNEMO.wall_top)
+        self._mktable_crates()
         return
         
 if __name__ == "__main__" :

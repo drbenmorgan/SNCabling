@@ -22,7 +22,7 @@
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{CaloSignal cabling table (Italy)}
+\section{CaloSignal detector cabling table (Italy)}
 \vfill
 \vskip 1cm
 \noindent\begin{center}
@@ -47,9 +47,9 @@
   \vskip 40pt
   \scalebox{0.75}{\input{\calosignalTabDir/calosignal_gveto_0-0.tex}}
 \end{center}
-\pagebreak
 
-\section{CaloSignal cabling table (France)}
+\pagebreak
+\section{CaloSignal detector cabling table (France)}
 \vfill
 \vskip 1cm
 \noindent\begin{center}
@@ -74,6 +74,40 @@
   \vskip 40pt
   \scalebox{0.75}{\input{\calosignalTabDir/calosignal_gveto_1-0.tex}}
 \end{center}
+
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CaloSignal crate 0 cabling table}
+\vfill
+\vskip 1cm
+\noindent
+\begin{center}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_crate-0.tex}}
+\end{center}
+
+
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CaloSignal crate 1 cabling table}
+\vfill
+\vskip 1cm
+\noindent
+\begin{center}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_crate-1.tex}}
+\end{center}
+
+
+
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CaloSignal crate 2 cabling table}
+\vfill
+\vskip 1cm
+\noindent
+\begin{center}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_crate-2.tex}}
+\end{center}
+
 
 \end{document}
 %%%
