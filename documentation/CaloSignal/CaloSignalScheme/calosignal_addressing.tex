@@ -1,0 +1,123 @@
+\section{Addressing objects}
+
+\subsection{Format of a CaloSignal label}
+
+Each label used for calorimeter signal cabling uses  the following
+format:
+
+\begin{center}
+  \fbox{\texttt{X:}$id_1$.$id_2$\dots$id_n$}
+\end{center}
+\noindent  where \texttt{X}  is a  single letter  which describes  the
+category  of the  labelled  object,  and the  $id_1$.$id_2$\dots$id_n$
+sequence is the unique address of the object within its category.  The
+$id_x$ tokens are positive integers (possibly zero).  The \emph{colon}
+character is  used to separate  the category letter from  the address.
+The  sequence  of  identifiers  in  the  address  use  the  \emph{dot}
+character as a separator.
+
+
+\subsection{Front-end crates, boards and channels}
+
+Frontend crates  belonging to the  CaloSignal system are  installed in
+racks  number  2 and  3  on  the  electronics  platform.  A  crate  is
+identified with an unique ID,  namely a number ranging from \texttt{0}
+to \texttt{2}.  We  propose to label a given crate  with the following
+scheme:
+\begin{center}
+   \fbox{\texttt{C:$crate$}}
+ \end{center}
+where \texttt{$crate$} is the number of the crate (positive integer).
+\vskip     10pt    \par\noindent     Examples:    \fbox{\texttt{C:0}},
+\fbox{\texttt{C:1}}.   \par Conventionally,  crate \texttt{0}  manages
+PMTs from  the main  wall on the  \emph{Italy} side,  crate \texttt{1}
+manages PMTs  from the main wall  on the \emph{France} side  and crate
+\texttt{2} manages PMTs from X-walls and gamma veto.
+
+ \vskip 10pt  A crate contains  up to  20 16-channel boards.   A board
+ inherits the  number of the crate  it is plugged into  and is located
+ through its slot number.  We propose  to label a given board with the
+ following scheme:
+\begin{center}
+   \fbox{\texttt{B:$crate$.$board$}}
+ \end{center}
+where \texttt{$crate$} is the number of the crate and \texttt{$board$}
+is  the  number  of  the  board  (slot)  ranging  from  \texttt{0}  to
+\texttt{20}  except  number  \texttt{10}  which is  reserved  for  the
+control board slot number.
+\vskip 10pt
+\par\noindent Examples: \fbox{\texttt{B:0.0}},  \dots
+\fbox{\texttt{B:1.11}}.
+
+\vskip 10pt  \par\noindent Up  to 16 channels  are addressed  within a
+board.  We propose to label a given channel with the following scheme:
+\begin{center}
+   \fbox{\texttt{H:$crate$.$board$.$channel$}}
+ \end{center}
+where \texttt{$crate$} is the number of the crate, \texttt{$board$} is
+the number  of the board  in the  crate and \texttt{$channel$}  is the
+number  of  the  channel  in  the board  ranging  from  \texttt{0}  to
+\texttt{15}.   \par\noindent Examples:  \fbox{\texttt{H:0.0.0}}, \dots
+\fbox{\texttt{H:1.19.12}}
+
+\vskip  10pt A  channel is  automatically associated  to a specific
+cable number in a given harness.
+
+\subsection{Harnesses and cables}
+
+One uses 2$\times$22  harnesses to group individual  channels from the
+front-end boards to the PMTs.
+
+\vskip 10pt  A signal  external harness connects  a set  of individual
+channels on  several frontend boards  to the patch panel.  An external
+harness has an  unique ID ranging from \texttt{0}  to \texttt{21}.  We
+propose to label a given external harness with the following scheme:
+\begin{center}
+   \fbox{\texttt{E:$harness$}}
+ \end{center}
+where \texttt{$harness$} is the number of the external harness.
+\par\noindent Examples: \fbox{\texttt{E:0}}, \dots
+\fbox{\texttt{E:21}}
+
+\vskip 10pt  A signal  internal harness, connecting  patch panel  to a
+given  set of  PMTs  uses  an unique  ID  ranging  from \texttt{0}  to
+\texttt{21}.  We  propose to label  a given external harness  with the
+following scheme:
+\begin{center}
+   \fbox{\texttt{I:$harness$}}
+ \end{center}
+where \texttt{$harness$} is the number of the external harness.
+\par\noindent Examples: \fbox{\texttt{I:0}}, \dots
+\fbox{\texttt{I:21}}
+\vskip 10pt A internal harness with a given number is associated
+to a external harness with the same number.
+
+\vskip 10pt Each  external or internal harness groups up  to 40 signal
+cables identified through  a cable ID from  \texttt{0} to \texttt{39}.
+We propose to label a given external cable with the following scheme:
+\begin{center}
+   \fbox{\texttt{A:$harness$.$cable$}}
+ \end{center}
+where \texttt{$harness$} is the number of the external harness
+and \texttt{$cable$} is the number of the external cable.
+\par\noindent Examples: \fbox{\texttt{A:0.0}}, \dots
+\fbox{\texttt{A:21.15}}.
+
+Internal cables use a similar scheme:
+\begin{center}
+   \fbox{\texttt{L:$harness$.$cable$}}
+\end{center}
+\par\noindent Examples: \fbox{\texttt{L:0.0}}, \dots
+\fbox{\texttt{L:21.15}}.
+
+Internal and external signal cables  connected through the patch panel
+share the  same harness  and cable numbers.  Thus, the  internal cable
+\fbox{\texttt{A:7.12}}   is   connected    to   the   external   cable
+\fbox{\texttt{L:7.12}}.
+
+
+\subsection{Optical modules}
+
+\input{../../common/om_addressing.tex}
+
+%% end

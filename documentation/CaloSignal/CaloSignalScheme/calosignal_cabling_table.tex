@@ -4,109 +4,82 @@
 
 \subsection{Source table}
 
-Cabling the Calorimeter readout signal consists in the association of each OM's PMT to one
-signal  cable.  An  unique  cabling  table must  be  provided  to give  an
-unambiguous description of the cables' path  from the calorimeter front-end boards to the
-detector.  The table consists in an associative map like the one shown
-on table \ref{tab:calosignal:map:1}.
+Cabling the calorimeter readout system  consists in the association of
+each PMT  to a Wavecatcher channel.   An unique cabling table  must be
+provided to  give an unambiguous  description of the cable  paths from
+the calorimeter front-end boards to  the detector.  The table consists
+in   an    associative   map   like    the   one   shown    on   table
+\ref{tab:calosignal:map:1}.
 
 \begin{table}[h]
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
   \hline
-  \textbf{Channel}& \textbf{External harness} & \textbf{Internal cable} & \textbf{Optical Module} \\
+  \textbf{Channel}& \textbf{External cable} & \textbf{Internal cable} & \textbf{Optical Module} \\
   \hline
-  %% \hline
-  %% \multicolumn{4}{|l|}{\textbf{HV board} \texttt{B:0.1}}  \\
   \hline
-  \texttt{H:0.0.23}  & \texttt{E:12} & \texttt{A:12.3} & \texttt{M:0.0.0} \\
+  \texttt{H:0.0.0}   & \texttt{L:11.0}   & \texttt{A:11.0}   & \texttt{M:0.0.0}   \\
   \hline
-  \texttt{H:0.0.22}  & \texttt{E:12} & \texttt{A:12.18} & \texttt{M:0.0.1} \\
+  \texttt{H:0.0.1}   & \texttt{L:11.20}  & \texttt{A:11.20}  & \texttt{M:0.0.1}   \\
   \hline
-  \texttt{H:0.0.6}  & \texttt{E:12} & \texttt{A:12.34} & \texttt{M:0.0.2} \\
+  \texttt{H:0.0.2}   & \texttt{L:12.0}   & \texttt{A:12.0}   & \texttt{M:0.0.2}   \\
   \hline
-  \texttt{H:0.2.23}  & \texttt{E:14} & \texttt{A:14.3} & \texttt{M:0.0.3} \\
-  \hline
-  \vdots          & & & \vdots             \\  
-  \hline
+  \vdots             & \vdots            &  \vdots           & \vdots             \\  
   \hline
 \end{tabular}
 \end{center}
 \caption{Example of CaloSignal cabling table}
-\label{tab:calohv:map:1}
+\label{tab:calosignal:map:1}
 \end{table}
 
-\par\noindent  The   table  will  be   provided  in  the  form   of  a
-CSV\footnote{CSV: coma  separated value} file.  The file must  use the
-following format:
+\par\noindent The table is provided in the form of a CSV\footnote{CSV:
+  coma separated value} file.  The file uses the following format:
 
 \begin{itemize}
 \item The file contains only ASCII characters.
 \item Blank lines are ignored.
 \item Lines starting with the hashtag character \fbox{\texttt{\#}} are
   ignored, enabling to write some comments.
-\item There is only one HV channel/PMT association per line.
-\item Each  line has  four columns  separated by  the \emph{semi-colon}
+\item  There  is  only  one Wavecatcher  front-end  board  channel/PMT
+  association per line.
+\item Each  line has four  columns separated by  the \emph{semi-colon}
   character \fbox{\texttt{;}}.
-\item The first column contains the label of the HV channel.
-\item The second column contains the label of the external bundle.
+\item The first column contains the label of the Wavecatcher front-end
+  board channel.
+\item The second column contains the label of the external cable.
 \item The third column contains the label of the internal cable.
-\item The fourth column contains the label of the PMT (optical module).
+\item  The  fourth column  contains  the  label  of the  PMT  (optical
+  module).
 \end{itemize}
 
-\par\noindent The  CaloSignal cabling  map file  will be  used as  the unique
-source of information for different purposes:
+\par\noindent  The CaloSignal  cabling map  file  can be  used as  the
+unique source of information for different purposes:
 \begin{itemize}
-\item generation of labels to be stuck on cables, harnesses, patch panel;
-\item generation of  printable tables for people in charge  of the CaloSignal
-  cabling at LSM,
-\item input for dedicated software  modeling tools used by the
-  Control and Monitoring System (CMS), the simulation\dots 
+\item generation of labels to be stuck on external and internal cables
+  or harnesses;
+\item  generation of  printable tables  for  people in  charge of  the
+  calorimeter readout cabling at LSM,
+\item input for dedicated software  modeling tools used by the Control
+  and Monitoring System (CMS), the simulation\dots
 \end{itemize}
 
 
-%% \subsection{CaloSignal cabling sheets}
+\subsection{CaloSignal cabling sheets}
 
 
-%% From  the CaloSignal  cabling  table, a  Python script  will  be provided  to
-%% generate a printable PDF document with cabling tables corresponding to
-%% each  part of  the  detector.
+A  Python  script is  provided  to  automatically generate,  from  the
+CaloSignal cabling table, a printable PDF document with cabling tables
+corresponding to each part of the detector.
 
-%% A typical  output  is  shown on  figure
-%% \ref{fig:lis:sheet:1}.
+\subsection{Labels}
 
+A  Python  script is  provided  to  automatically generate,  from  the
+CaloSignal cabling table, lists of labels for all signal harnesses and
+cables.  The labels must be stuck on the terminations of all harnesses
+and  cables  to  help  the   cabling  team  to  identifiy  the  proper
+connections  between  front-end board  channels/external  cables/patch
+panel/internal  cables/PMT.   Figure  \ref{fig:calosignal:principle:1}
+shows  where various  kinds  of labels  are supposed  to  be stuck  on
+harnesses and cables.
 
-%% \begin{figure}[h!]
-%%   \begin{center}
-%%     \scalebox{0.58}{\input{\samplespath/calo_0.tex}}
-%%   \end{center}
-%%   \caption{Expected  printable   LIS  cabling  table  for   the  Italy
-%%     calorimeter  main  wall  (front  view).  Question  marks  will  be
-%%     replaced by the real fibers' identifiers when the final table will
-%%     be  available. Similar  tables will  be provided  for X-walls  and
-%%     gamma veto lines.}
-%%   \label{fig:lis:sheet:1}
-%% \end{figure}
-
-
-%% \subsection{LIS labels}
-
-%% Practically, we  plan to generate  labels for all harnesses and cables
-%% to  help  the  cabling  team  to  identifiy  the  proper  board/patch panel
-%% and internal cable/PMT connections.
-%% The label  will be prepared and stuck near
-%% the terminations of the harnesses and cables.
-
-%% \noindent Example below displays the  full text expected to be printed
-%% on a fiber label:
-%% \begin{center}
-%% \fbox{\texttt{P:2.34} $\rightarrow$ \texttt{M:0.2.5}}
-%% \end{center}
-
-%% \par\noindent Such  informations are of course  redundant with respect
-%% to  the  printable   plain  table  shown  in   the  previous  section.
-%% The  fiber labels could  possibly be removed before  installing the
-%% coil.
-
-%% \par\noindent We  consider to write  a Python script  to automatically
-%% generate all labels (up to 1400).
+%% end
