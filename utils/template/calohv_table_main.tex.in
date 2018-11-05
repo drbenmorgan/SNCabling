@@ -22,57 +22,112 @@
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{CaloHV cabling table (Italy)}
+\section{CaloHV cabling table (Italy) : internal HV cable $\leftrightarrow$ PMT}
 \vfill
 \vskip 1cm
 \noindent\begin{center}
-  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_0-1.tex}}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_intcable_0-1.tex}}
   \vskip 40pt
   \noindent
   \begin{minipage}{3cm}
   \begin{center}
-    \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_0-1.tex}}
+    \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_intcable_0-1.tex}}
   \end{center}
   \end{minipage}
   \begin{minipage}{21cm}
     \begin{center}
-      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_0.tex}}
+      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_intcable_0.tex}}
     \end{center}
   \end{minipage}
   \begin{minipage}{3cm}
     \begin{center}
-      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_0-0.tex}}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_intcable_0-0.tex}}
     \end{center}
   \end{minipage}
   \vskip 40pt
-  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_0-0.tex}}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_intcable_0-0.tex}}
 \end{center}
 \pagebreak
 
-\section{CaloHV cabling table (France)}
+\section{CaloHV cabling table (France) : internal HV cable $\leftrightarrow$ PMT}
 \vfill
 \vskip 1cm
 \noindent\begin{center}
-  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_1-1.tex}}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_intcable_1-1.tex}}
   \vskip 40pt
   \noindent
   \begin{minipage}{3cm}
     \begin{center}
-      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_1-0.tex}}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_intcable_1-0.tex}}
     \end{center}
   \end{minipage}
   \begin{minipage}{21cm}
     \begin{center}
-      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_1.tex}}
+      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_intcable_1.tex}}
     \end{center}
   \end{minipage}
   \begin{minipage}{3cm}
     \begin{center}
-      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_1-1.tex}}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_intcable_1-1.tex}}
     \end{center}
   \end{minipage}
   \vskip 40pt
-  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_1-0.tex}}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_intcable_1-0.tex}}
+\end{center}
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CaloHV cabling table (Italy) : HV channel $\leftrightarrow$ PMT}
+\vfill
+\vskip 1cm
+\noindent\begin{center}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_hvchannel_0-1.tex}}
+  \vskip 40pt
+  \noindent
+  \begin{minipage}{3cm}
+  \begin{center}
+    \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_hvchannel_0-1.tex}}
+  \end{center}
+  \end{minipage}
+  \begin{minipage}{21cm}
+    \begin{center}
+      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_hvchannel_0.tex}}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{3cm}
+    \begin{center}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_hvchannel_0-0.tex}}
+    \end{center}
+  \end{minipage}
+  \vskip 40pt
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_hvchannel_0-0.tex}}
+\end{center}
+\pagebreak
+
+\section{CaloHV cabling table (France) : HV channel $\leftrightarrow$ PMT}
+\vfill
+\vskip 1cm
+\noindent\begin{center}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_hvchannel_1-1.tex}}
+  \vskip 40pt
+  \noindent
+  \begin{minipage}{3cm}
+    \begin{center}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_hvchannel_1-0.tex}}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{21cm}
+    \begin{center}
+      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_hvchannel_1.tex}}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{3cm}
+    \begin{center}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_hvchannel_1-1.tex}}
+    \end{center}
+  \end{minipage}
+  \vskip 40pt
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_hvchannel_1-0.tex}}
 \end{center}
 
 \end{document}

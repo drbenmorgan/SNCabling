@@ -21,10 +21,17 @@ class CaloHVCablingMapPrint:
                 pass
             else:
                 raise
-        self._pmt_to_cable_ = {}
+        self._pmt_to_intcable_ = {}
         self._pmt_to_channel_ = {}
+        self._mode_ = "intcable"
         return
- 
+
+    def set_mode(self, mode_):
+        if mode_ != "intcable" and mode_ != "hvchannel" :
+            raise Exception("CaloHVCablingMapPrint.set_mode: Invalid mode '%s'!" % mode_)
+        self._mode_ = mode_
+        return
+    
     def _load(self):
         sys.stderr.write("[info] Loading CSV file...\n")
         lines = self._fcsv_.readlines()
@@ -41,16 +48,16 @@ class CaloHVCablingMapPrint:
             intcableaddr = CaloHVInternalCableAddress(intcable_label)
             pmtaddr.print_me(sys.stderr, "PMT address: ", "[debug] ")
             intcableaddr.print_me(sys.stderr, "Internal HV cable address: ", "[debug] ")
-            self._pmt_to_cable_[pmt_label]   = intcable_label
+            self._pmt_to_intcable_[pmt_label]   = intcable_label
             self._pmt_to_channel_[pmt_label] = channel_label
-        print(self._pmt_to_cable_)
+        print(self._pmt_to_intcable_)
         print(self._pmt_to_channel_)
         return
     
     def _mktable_calo(self, side_):
         ncols=20
         nrows=13
-        foutname = "{:s}/calohv_main_{:d}.tex".format(self._printpath_, side_)
+        foutname = "{:s}/calohv_main_{:s}_{:d}.tex".format(self._printpath_, self._mode_, side_)
         fout = open(foutname, "w") 
         sys.stderr.write("[info] Generating LaTeX table...\n")
         fout.write("\\begin{tabular}{|");
@@ -98,13 +105,21 @@ class CaloHVCablingMapPrint:
                 pmt_label = "{:s}:{:d}.{:d}.{:d}".format("M", side, column, row)
                 pmt_addr = OMaddress(pmt_label)
                 pmt_addr.print_me(sys.stderr, "PMT address: ", "[info] ")
-                if pmt_label in self._pmt_to_cable_ :
+                if pmt_label in self._pmt_to_intcable_ :
                     print("Found PMT label '{:s}' with CaloHV cable ".format(pmt_label))
                 else:
                     print("Cannot found PMT label '{:s}' with CaloHV cable ".format(pmt_label))
-                cable_label = self._pmt_to_cable_[pmt_label]
+                cable_label = self._pmt_to_intcable_[pmt_label]
+                channel_label = self._pmt_to_channel_[pmt_label]
+                label = cable_label
+                txtsize = "normalsize" 
+                if self._mode_ == "hvchannel" :
+                    label = channel_label
+                    txtsize = "small"
                 pmt_addr.print_me(sys.stderr, "PMT address: ", "[info] ")
-                fout.write("\\newline  \\cellcolor{%s}\\textcolor{%s}{\\texttt{%s}} \\newline " % (backcolor, textcolor, cable_label));
+                # fout.write("\\newline  \\cellcolor{%s}\\textcolor{%s}{\\texttt{%s}} " % (backcolor, textcolor, cable_label));
+                # fout.write("\\newline  \\cellcolor{%s}{\\small \\textcolor{%s}{\\texttt{%s}}} " % (backcolor, textcolor, channel_label));
+                fout.write("\\newline  \\cellcolor{%s}{\\%s \\textcolor{%s}{\\texttt{%s}}} \\newline" % (backcolor, txtsize, textcolor, label));
                 if icol + 1 != ncols :
                     fout.write(" & ")               
             fout.write("& \\textcolor{blue}{\\small %s}" % (row));
@@ -130,7 +145,7 @@ class CaloHVCablingMapPrint:
     def _mktable_xcalo(self, side_, wall_):
         nrows=16
         ncols=2
-        foutname = "{:s}/calohv_xcalo_{:d}-{:d}.tex".format(self._printpath_, side_, wall_)
+        foutname = "{:s}/calohv_xcalo_{:s}_{:d}-{:d}.tex".format(self._printpath_, self._mode_, side_, wall_)
         fout = open(foutname, "w") 
         sys.stderr.write("[info] Generating LaTeX table...\n")
         fout.write("\\begin{tabular}{|");
@@ -172,13 +187,21 @@ class CaloHVCablingMapPrint:
                 pmt_label = "{:s}:{:d}.{:d}.{:d}.{:d}".format("X", side, wall, column, row)
                 pmt_addr = OMaddress(pmt_label)
                 pmt_addr.print_me(sys.stderr, "PMT address: ", "[info] ")
-                if pmt_label in self._pmt_to_cable_ :
+                if pmt_label in self._pmt_to_intcable_ :
                     print("Found PMT label '{:s}' with CaloHV cable ".format(pmt_label))
                 else:
                     print("Cannot found PMT label '{:s}' with CaloHV fiber ".format(pmt_label))
-                cable_label = self._pmt_to_cable_[pmt_label]
+                cable_label = self._pmt_to_intcable_[pmt_label]
+                channel_label = self._pmt_to_channel_[pmt_label]
                 pmt_addr.print_me(sys.stderr, "PMT address: ", "[info] ")
-                fout.write("\\newline  \\cellcolor{%s}\\textcolor{%s}{\\texttt{%s}} \\newline " % (backcolor, textcolor, cable_label));
+                label = cable_label
+                txtsize = "normalsize" 
+                if self._mode_ == "hvchannel" :
+                    label = channel_label
+                    txtsize = "footnotesize"
+                # fout.write("\\newline  \\cellcolor{%s}\\textcolor{%s}{\\texttt{%s}} " % (backcolor, textcolor, cable_label));
+                # fout.write("\\newline  \\cellcolor{%s}{\\footnotesize \\textcolor{%s}{\\texttt{%s}}} " % (backcolor, textcolor, channel_label));
+                fout.write("\\newline  \\cellcolor{%s}{\\%s \\textcolor{%s}{\\texttt{%s}}} \\newline" % (backcolor, txtsize, textcolor, label));
                 if icol + 1 != ncols :
                     fout.write(" & ")               
             fout.write("& \\textcolor{blue}{\\small %s}" % (row));
@@ -207,7 +230,7 @@ class CaloHVCablingMapPrint:
     def _mktable_gveto(self, side_, wall_):
         nrows=1
         ncols=16
-        foutname = "{:s}/calohv_gveto_{:d}-{:d}.tex".format(self._printpath_, side_, wall_)
+        foutname = "{:s}/calohv_gveto_{:s}_{:d}-{:d}.tex".format(self._printpath_, self._mode_, side_, wall_)
         fout = open(foutname, "w") 
         sys.stderr.write("[info] Generating LaTeX table...\n")
         fout.write("\\begin{tabular}{");
@@ -242,13 +265,20 @@ class CaloHVCablingMapPrint:
                 pmt_label = "{:s}:{:d}.{:d}.{:d}".format("G", side, wall, column)
                 pmt_addr = OMaddress(pmt_label)
                 pmt_addr.print_me(sys.stderr, "OM address: ", "[info] ")
-                if pmt_label in self._pmt_to_cable_ :
+                if pmt_label in self._pmt_to_intcable_ :
                     print("Found OM label '{:s}' with CaloHV cable ".format(pmt_label))
                 else:
                     print("Cannot found OM label '{:s}' with CaloHV cable ".format(pmt_label))
-                cable_label = self._pmt_to_cable_[pmt_label]
+                cable_label = self._pmt_to_intcable_[pmt_label]
+                channel_label = self._pmt_to_channel_[pmt_label]
+                label = cable_label
+                txtsize = "normalsize" 
+                if self._mode_ == "hvchannel" :
+                    label = channel_label
+                    txtsize = "footnotesize"
                 pmt_addr.print_me(sys.stderr, "OM address: ", "[info] ")
-                fout.write("\\newline  \\cellcolor{%s}\\textcolor{%s}{\\texttt{%s}} \\newline " % (backcolor, textcolor, cable_label));
+                #fout.write("\\newline  \\cellcolor{%s}\\textcolor{%s}{\\texttt{%s}} " % (backcolor, textcolor, cable_label));
+                fout.write("\\newline  \\cellcolor{%s}{\\%s \\textcolor{%s}{\\texttt{%s}}} \\newline" % (backcolor, txtsize, textcolor, label));
                 if icol + 1 != ncols :
                     fout.write(" & ")               
             fout.write("\\\\\n");
@@ -294,6 +324,9 @@ if __name__ == "__main__" :
     sys.stderr.write("CaloHV map file : '{:s}'\n".format(calohvmap))
     sys.stderr.write("Work directory  : '{:s}'\n".format(workdir)) 
     pm = CaloHVCablingMapPrint(calohvmap, workdir)
+    pm.set_mode("intcable")
+    error_code = pm.run()
+    pm.set_mode("hvchannel")
     error_code = pm.run()
     sys.exit(error_code)
 
