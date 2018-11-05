@@ -68,6 +68,7 @@ number  of  the  output  connector   of  the  CAEN  HV  board.   Table
 CAEN HV board channel numbers and Radial connector pins.
 
 \begin{table}[h!]
+\begin{center}
   \begin{tabular}{|c|c|}
     \hline
     HV channel & Radial connector pin \\
@@ -109,8 +110,8 @@ CAEN HV board channel numbers and Radial connector pins.
     \end{tabular}
   \caption{Associative map between HV board channels and 
     Radial connector's pins}\label{calohv:channel_pin_map}
+\end{center}
 \end{table}
-
 
 
 \subsection{Harnesses and cables}
@@ -165,5 +166,34 @@ is  associated  to.   \par\noindent  Examples:  \fbox{\texttt{A:0.3}},
 \subsection{Optical modules}
 
 \input{../../common/om_addressing.tex}
+
+\subsection{Summary}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+  \hline
+  Category & Symbol & Depth \\
+  \hline
+  \hline
+  \textbf{C}rate & \texttt{C} & 1 \\
+  \hline
+  \textbf{B}oard & \texttt{B} & 2 \\
+  \hline
+  C\textbf{h}annel & \texttt{H} & 3 \\
+  \hline
+  \textbf{E}xternal harness & \texttt{E} & 1 \\
+  \hline
+  \textbf{I}nternal harness & \texttt{I} & 1 \\
+  \hline
+  Internal c\textbf{A}ble & \texttt{A} & 2 \\
+  \hline
+  \textbf{M}ain wall PMT & \texttt{M} & 3 \\
+  \hline
+  \textbf{X}-wall PMT & \texttt{X} & 4 \\
+  \hline
+  \textbf{G}amma veto PMT & \texttt{G} & 3 \\
+  \hline
+\end{tabular}
+\end{center}
 
 %% end
