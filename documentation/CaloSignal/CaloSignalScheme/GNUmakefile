@@ -4,7 +4,7 @@ THE_DIR=.
 XFIG_DIR=$(THE_DIR)/fig
 PDFTEX_DIR=$(THE_DIR)/pdftex
 PDFTEX_T_DIR=$(THE_DIR)/pdftex_t
-DOCVER=0.1
+DOCVER=0.2
 
 MAIN=main
 FILE_LABEL=SuperNEMO_CaloSignal_CablingScheme-$(DOCVER)
@@ -52,7 +52,7 @@ clean_pdftex :
 clean_pdftex_t :
 	@$(RM) $(addprefix $(PDFTEX_T_DIR)/,$(fig2pdftex_t_files))
 
-tex_sources=calosignal_crates.tex calosignal_cabling_table.tex
+tex_sources=calosignal_pp.tex calosignal_racks.tex calosignal_crates.tex calosignal_cabling_table.tex
 
 .PHONY : pdf
 pdf : $(MAIN).pdf 
