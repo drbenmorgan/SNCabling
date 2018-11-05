@@ -17,7 +17,7 @@ cp calosignal_mapping-skel.csv ${target_dir}/
 
 cd ../documentation/CaloSignal/CaloSignalScheme/
 make final
-cp SuperNEMO_CaloSignal_CablingScheme-0.1.pdf ${target_dir}/
+cp SuperNEMO_CaloSignal_CablingScheme-0.2.pdf ${target_dir}/
 
 cd ${opwd}
 tree ${target_dir}
