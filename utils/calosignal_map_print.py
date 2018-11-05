@@ -24,6 +24,14 @@ class CaloSignalCablingMapPrint:
         self._pmt_to_intcable_ = {}
         self._channel_to_extcable_ = {}
         self._pmt_to_channel_ = {}
+        self._channel_to_pmt_ = {}
+        self._mode_ = "cable"
+        return
+ 
+    def set_mode(self, mode_):
+        if mode_ != "cable" and mode_ != "other" :
+            raise Exception("CaloSignalCablingMapPrint.set_mode: Invalid mode '%s'!" % mode_)
+        self._mode_ = mode_
         return
  
     def _load(self):
@@ -47,6 +55,7 @@ class CaloSignalCablingMapPrint:
             self._channel_to_extcable_[channel_label] = extcable_label
             self._pmt_to_intcable_[pmt_label] = intcable_label
             self._pmt_to_channel_[pmt_label] = channel_label
+            self._channel_to_pmt_[channel_label] = pmt_label
         print(self._channel_to_extcable_)
         print(self._pmt_to_intcable_)
         print(self._pmt_to_channel_)
@@ -55,7 +64,7 @@ class CaloSignalCablingMapPrint:
     def _mktable_calo(self, side_):
         ncols=20
         nrows=13
-        foutname = "{:s}/calosignal_main_{:d}.tex".format(self._printpath_, side_)
+        foutname = "{:s}/calosignal_main_{:s}_{:d}.tex".format(self._printpath_, self._mode_, side_)
         fout = open(foutname, "w") 
         sys.stderr.write("[info] Generating LaTeX table...\n")
         fout.write("\\begin{tabular}{|");
@@ -96,11 +105,8 @@ class CaloSignalCablingMapPrint:
                     backcolor = "blue!75"
                     backcolor = "MainTopBlue"
                 else:
-                    # if row % 2 == 0:
-                    #     backcolor = "yellow!75" 
-                    if row in [ 0,1,4,5,8,9]:
+                    if row in [0,1,4,5,8,9]:
                         backcolor = "yellow!75" 
-                        backcolor = "yellow!75"
                 pmt_label = "{:s}:{:d}.{:d}.{:d}".format("M", side, column, row)
                 pmt_addr = OMaddress(pmt_label)
                 pmt_addr.print_me(sys.stderr, "PMT address: ", "[info] ")
@@ -109,8 +115,14 @@ class CaloSignalCablingMapPrint:
                 else:
                     print("Cannot found PMT label '{:s}' with CaloSignal cable ".format(pmt_label))
                 cable_label = self._pmt_to_intcable_[pmt_label]
+                channel_label = self._pmt_to_channel_[pmt_label]
+                label = cable_label
+                txtsize = "normalsize" 
+                if self._mode_ == "other" :
+                    label = channel_label
+                    txtsize = "footnotesize"
                 pmt_addr.print_me(sys.stderr, "PMT address: ", "[info] ")
-                fout.write("\\newline  \\cellcolor{%s}\\textcolor{%s}{\\texttt{%s}} \\newline " % (backcolor, textcolor, cable_label));
+                fout.write("\\newline  \\cellcolor{%s}{\\%s \\textcolor{%s}{\\texttt{%s}}} \\newline " % (backcolor, txtsize, textcolor, label));
                 if icol + 1 != ncols :
                     fout.write(" & ")               
             fout.write("& \\textcolor{blue}{\\small %s}" % (row));
@@ -136,7 +148,7 @@ class CaloSignalCablingMapPrint:
     def _mktable_xcalo(self, side_, wall_):
         nrows=16
         ncols=2
-        foutname = "{:s}/calosignal_xcalo_{:d}-{:d}.tex".format(self._printpath_, side_, wall_)
+        foutname = "{:s}/calosignal_xcalo_{:s}_{:d}-{:d}.tex".format(self._printpath_, self._mode_, side_, wall_)
         fout = open(foutname, "w") 
         sys.stderr.write("[info] Generating LaTeX table...\n")
         fout.write("\\begin{tabular}{|");
@@ -149,11 +161,14 @@ class CaloSignalCablingMapPrint:
         fout.write("\\hline\n");    
         side = side_
         wall = wall_
-        textcolor = "white"
+        #textcolor = "white"
+        textcolor = "black"
         backcolor = "XwallGreen"
         if side == SuperNEMO.side_italy and wall == SuperNEMO.side_tunnel :
+            textcolor = "white"
             backcolor = "XwallViolet"
         if side == SuperNEMO.side_france and wall == SuperNEMO.side_tunnel :
+            textcolor = "white"
             backcolor = "XwallViolet"
         fout.write(" & ")
         for icol in range(ncols) :
@@ -175,6 +190,10 @@ class CaloSignalCablingMapPrint:
             fout.write("\\textcolor{blue}{\\small %s} &" % (row));
             for icol in range(ncols) :
                 column = icol
+                if side == SuperNEMO.side_italy and wall == SuperNEMO.side_edelweiss:
+                    column = ncols - 1 - icol
+                if side == SuperNEMO.side_france and wall == SuperNEMO.side_tunnel:
+                    column = ncols - 1 - icol
                 pmt_label = "{:s}:{:d}.{:d}.{:d}.{:d}".format("X", side, wall, column, row)
                 pmt_addr = OMaddress(pmt_label)
                 pmt_addr.print_me(sys.stderr, "PMT address: ", "[info] ")
@@ -183,8 +202,14 @@ class CaloSignalCablingMapPrint:
                 else:
                     print("Cannot found PMT label '{:s}' with CaloSignal fiber ".format(pmt_label))
                 cable_label = self._pmt_to_intcable_[pmt_label]
+                channel_label = self._pmt_to_channel_[pmt_label]
+                label = cable_label
+                txtsize = "normalsize" 
+                if self._mode_ == "other" :
+                    label = channel_label
+                    txtsize = "footnotesize"
                 pmt_addr.print_me(sys.stderr, "PMT address: ", "[info] ")
-                fout.write("\\newline  \\cellcolor{%s}\\textcolor{%s}{\\texttt{%s}} \\newline " % (backcolor, textcolor, cable_label));
+                fout.write("\\newline  \\cellcolor{%s}{\\%s \\textcolor{%s}{\\texttt{%s}}} \\newline " % (backcolor, txtsize, textcolor, label));
                 if icol + 1 != ncols :
                     fout.write(" & ")               
             fout.write("& \\textcolor{blue}{\\small %s}" % (row));
@@ -211,12 +236,11 @@ class CaloSignalCablingMapPrint:
   
     def _mktable_gveto(self, side_, wall_):
         ncols=16
-        foutname = "{:s}/calosignal_gveto_{:d}-{:d}.tex".format(self._printpath_, side_, wall_)
+        foutname = "{:s}/calosignal_gveto_{:s}_{:d}-{:d}.tex".format(self._printpath_, self._mode_, side_, wall_)
         fout = open(foutname, "w") 
         sys.stderr.write("[info] Generating LaTeX table...\n")
         fout.write("\\begin{tabular}{");
         for icol in range(ncols) :
-            #fout.write("|c");
             fout.write("|C{1.2cm}");
         fout.write("|}\n");
         fout.write("\\hline\n");    
@@ -249,8 +273,14 @@ class CaloSignalCablingMapPrint:
             else:
                 print("Cannot find PMT label '{:s}' with CaloSignal internal cable ".format(pmt_label))
             cable_label = self._pmt_to_intcable_[pmt_label]
+            channel_label = self._pmt_to_channel_[pmt_label]
+            label = cable_label
+            txtsize = "normalsize" 
+            if self._mode_ == "other" :
+                label = channel_label
+                txtsize = "footnotesize"
             pmt_addr.print_me(sys.stderr, "OM address: ", "[info] ")
-            fout.write("\\newline  \\cellcolor{%s}\\textcolor{%s}{\\texttt{%s}} \\newline " % (backcolor, textcolor, cable_label));
+            fout.write("\\newline  \\cellcolor{%s}{\\%s \\textcolor{%s}{\\texttt{%s}}} \\newline " % (backcolor, txtsize, textcolor, label));
             if icol + 1 != ncols :
                 fout.write(" & ")               
         fout.write("\\\\\n");    
@@ -274,8 +304,9 @@ class CaloSignalCablingMapPrint:
     def _mktable_crate(self, crate_num_):
         nboards=21
         cb_slot=10
+        tb_slot=20
         nchannels=16
-        foutname = "{:s}/calosignal_crate-{:d}.tex".format(self._printpath_, crate_num_)
+        foutname = "{:s}/calosignal_crate-{:d}_{:s}.tex".format(self._printpath_, crate_num_, self._mode_)
         fout = open(foutname, "w") 
         sys.stderr.write("[info] Generating LaTeX table...\n")
         fout.write("\\begin{tabular}{|");
@@ -302,14 +333,17 @@ class CaloSignalCablingMapPrint:
                 channel_addr = CaloSignalChannelAddress(channel_label)
                 channel_addr.print_me(sys.stderr, "Channel address: ", "[info] ")
                 extcable_label = ""
+                pmt_label = ""
                 if channel_label in self._channel_to_extcable_ :
                     print("Found channel label '{:s}' with CaloSignal external cable ".format(channel_label))
                     extcable_label = self._channel_to_extcable_[channel_label]
+                    pmt_label = self._channel_to_pmt_[channel_label]
                     extcable_addr = CaloSignalExternalCableAddress(extcable_label)
                     harness_num = extcable_addr.harness
                     if crate_num_ < 2 :
                         if harness_num in [6, 17]:
                             backcolor = "MainTopBlue"
+                            textcolor = "white"
                         elif harness_num in [0, 2, 4, 11, 13, 15]:
                             backcolor = "yellow!75"
                         elif harness_num in [1, 3, 5, 12, 14, 16]:
@@ -317,18 +351,35 @@ class CaloSignalCablingMapPrint:
                     else:
                         if harness_num in [9, 10, 20, 21]:
                             backcolor = "GvetoBlue"
+                            textcolor = "white"
                         elif harness_num in [7, 18]:
                             backcolor = "XwallGreen"
+                            textcolor = "black"
                         elif harness_num in [8, 19]:
                             backcolor = "XwallViolet"
-                        textcolor = "white"
+                            textcolor = "white"
                 else:
                     print("Cannot find channel label '{:s}' with CaloSignal external cable ".format(channel_label))
+                label = extcable_label
+                txtsize = "normalsize"
+                hshift=""
+                if self._mode_ == "other" :
+                    label = pmt_label
+                    txtsize = "footnotesize"
                 if iboard == cb_slot:
-                     backcolor = "gray"
+                    backcolor = "gray"
+                elif crate_num_ == 2 and iboard == tb_slot:
+                    backcolor = "gray"
+                elif crate_num_ == 2 and (iboard < 4 or iboard > 16):
+                    backcolor = "white"
                 elif len(extcable_label) == 0:
-                     backcolor = "lightgray"
-                fout.write("\\newline  \\cellcolor{%s}\\textcolor{%s}{\\texttt{%s}} \\newline " % (backcolor, textcolor, extcable_label));
+                    backcolor = "lightgray"
+                hshift=""
+                if len(label)>=10:
+                    #txtsize = "small" 
+                    txtsize = "footnotesize"
+                    hshift="~\\hskip -6pt" 
+                fout.write("\\newline  \\cellcolor{%s}{\\%s \\textcolor{%s}{%s\\texttt{%s}}} \\newline " % (backcolor, txtsize, textcolor, hshift, label));
                 if iboard + 1 != nboards :
                     fout.write(" & ")
             fout.write("& \\textcolor{blue}{\\small %s}" % (ichannel));
@@ -370,6 +421,9 @@ if __name__ == "__main__" :
     sys.stderr.write("CaloSignal map file : '{:s}'\n".format(calosignalmap))
     sys.stderr.write("Work directory  : '{:s}'\n".format(workdir)) 
     pm = CaloSignalCablingMapPrint(calosignalmap, workdir)
+    pm.set_mode("cable")
+    error_code = pm.run()
+    pm.set_mode("other")
     error_code = pm.run()
     sys.exit(error_code)
 

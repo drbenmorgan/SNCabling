@@ -111,6 +111,12 @@ class CaloSignalCablingMapSkelGen:
                     cable_num = om_row
                     if om_column == 1:
                         cable_num += 16
+                    # if harness_num == 18 or harness_num == 8 :
+                    #     if om_column == 1:
+                    #         cable_num += 16
+                    # if harness_num == 18 andom_wall == SuperNEMO.side_tunnel :
+                    #     if om_column == 1:
+                    #         cable_num += 16
                     channel_num = om_row
                     if self._debug_ :
                         sys.stderr.write("\tCrate    # ={:d}\n".format(crate_num))

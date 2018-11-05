@@ -8,106 +8,187 @@
 
 \usepackage[a4paper, landscape, vmargin=1.25cm, hmargin=1cm]{geometry}
 
-
 \newcommand{\calosignalTabDir}{__WORKDIR__}
 %%\newcolumntype{C}[1]{>{\centering}m{#1}}
 %%\definecolor{XwallGreen}{rgb}{1,50,32}
-\definecolor{XwallGreen}{rgb}{0.01,0.5,0.10}
-\definecolor{XwallViolet}{rgb}{0.5,0.1,0.50}
-\definecolor{MainTopBlue}{rgb}{0.1,0.3,0.70}
-\definecolor{GvetoBlue}{rgb}{0.3,0.5,0.80}
+\definecolor{XwallGreen}{rgb}{0.1,0.8,0.1}
+\definecolor{XwallViolet}{rgb}{0.8,0.2,0.8}
+\definecolor{MainTopBlue}{rgb}{0.0,0.0,1.0}
+%\definecolor{GvetoBlue}{rgb}{0.3,0.6,0.8}
+\definecolor{GvetoBlue}{rgb}{0.1,0.5,0.9}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{CaloSignal detector cabling table (Italy)}
+\section{CaloSignal detector cabling table (Italy) : internal signal cable $\leftrightarrow$ PMT}
 \vfill
 \vskip 1cm
 \noindent\begin{center}
-  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_gveto_0-1.tex}}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_gveto_cable_0-1.tex}}
   \vskip 40pt
   \noindent
   \begin{minipage}{3cm}
   \begin{center}
-    \scalebox{0.5}{\input{\calosignalTabDir/calosignal_xcalo_0-1.tex}}
+    \scalebox{0.5}{\input{\calosignalTabDir/calosignal_xcalo_cable_0-1.tex}}
   \end{center}
   \end{minipage}
   \begin{minipage}{21cm}
     \begin{center}
-      \scalebox{0.6}{\input{\calosignalTabDir/calosignal_main_0.tex}}
+      \scalebox{0.6}{\input{\calosignalTabDir/calosignal_main_cable_0.tex}}
     \end{center}
   \end{minipage}
   \begin{minipage}{3cm}
     \begin{center}
-      \scalebox{0.5}{\input{\calosignalTabDir/calosignal_xcalo_0-0.tex}}
+      \scalebox{0.5}{\input{\calosignalTabDir/calosignal_xcalo_cable_0-0.tex}}
     \end{center}
   \end{minipage}
   \vskip 40pt
-  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_gveto_0-0.tex}}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_gveto_cable_0-0.tex}}
 \end{center}
 
 \pagebreak
-\section{CaloSignal detector cabling table (France)}
+\section{CaloSignal detector cabling table (France) : internal signal cable $\leftrightarrow$ PMT}
 \vfill
 \vskip 1cm
 \noindent\begin{center}
-  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_gveto_1-1.tex}}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_gveto_cable_1-1.tex}}
   \vskip 40pt
   \noindent
   \begin{minipage}{3cm}
     \begin{center}
-      \scalebox{0.5}{\input{\calosignalTabDir/calosignal_xcalo_1-0.tex}}
+      \scalebox{0.5}{\input{\calosignalTabDir/calosignal_xcalo_cable_1-0.tex}}
     \end{center}
   \end{minipage}
   \begin{minipage}{21cm}
     \begin{center}
-      \scalebox{0.6}{\input{\calosignalTabDir/calosignal_main_1.tex}}
+      \scalebox{0.6}{\input{\calosignalTabDir/calosignal_main_cable_1.tex}}
     \end{center}
   \end{minipage}
   \begin{minipage}{3cm}
     \begin{center}
-      \scalebox{0.5}{\input{\calosignalTabDir/calosignal_xcalo_1-1.tex}}
+      \scalebox{0.5}{\input{\calosignalTabDir/calosignal_xcalo_cable_1-1.tex}}
     \end{center}
   \end{minipage}
   \vskip 40pt
-  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_gveto_1-0.tex}}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_gveto_cable_1-0.tex}}
+\end{center}
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CaloSignal detector cabling table (Italy) : readout board channel $\leftrightarrow$ PMT}
+\vfill
+\vskip 1cm
+\noindent\begin{center}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_gveto_other_0-1.tex}}
+  \vskip 40pt
+  \noindent
+  \begin{minipage}{3cm}
+  \begin{center}
+    \scalebox{0.5}{\input{\calosignalTabDir/calosignal_xcalo_other_0-1.tex}}
+  \end{center}
+  \end{minipage}
+  \begin{minipage}{21cm}
+    \begin{center}
+      \scalebox{0.6}{\input{\calosignalTabDir/calosignal_main_other_0.tex}}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{3cm}
+    \begin{center}
+      \scalebox{0.5}{\input{\calosignalTabDir/calosignal_xcalo_other_0-0.tex}}
+    \end{center}
+  \end{minipage}
+  \vskip 40pt
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_gveto_other_0-0.tex}}
+\end{center}
+
+\pagebreak
+\section{CaloSignal detector cabling table (France) : readout board channel $\leftrightarrow$ PMT}
+\vfill
+\vskip 1cm
+\noindent\begin{center}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_gveto_other_1-1.tex}}
+  \vskip 40pt
+  \noindent
+  \begin{minipage}{3cm}
+    \begin{center}
+      \scalebox{0.5}{\input{\calosignalTabDir/calosignal_xcalo_other_1-0.tex}}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{21cm}
+    \begin{center}
+      \scalebox{0.6}{\input{\calosignalTabDir/calosignal_main_other_1.tex}}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{3cm}
+    \begin{center}
+      \scalebox{0.5}{\input{\calosignalTabDir/calosignal_xcalo_other_1-1.tex}}
+    \end{center}
+  \end{minipage}
+  \vskip 40pt
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_gveto_other_1-0.tex}}
 \end{center}
 
 \pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{CaloSignal crate 0 cabling table}
+\section{CaloSignal crate 0 cabling table : readout channel $\leftrightarrow$ external signal cable}
 \vfill
 \vskip 1cm
 \noindent
 \begin{center}
-  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_crate-0.tex}}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_crate-0_cable.tex}}
 \end{center}
-
 
 \pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{CaloSignal crate 1 cabling table}
+\section{CaloSignal crate 1 cabling table : readout channel $\leftrightarrow$ external signal cable}
 \vfill
 \vskip 1cm
 \noindent
 \begin{center}
-  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_crate-1.tex}}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_crate-1_cable.tex}}
 \end{center}
-
-
 
 \pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{CaloSignal crate 2 cabling table}
+\section{CaloSignal crate 2 cabling table : readout channel $\leftrightarrow$ external signal cable}
 \vfill
 \vskip 1cm
 \noindent
 \begin{center}
-  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_crate-2.tex}}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_crate-2_cable.tex}}
 \end{center}
 
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CaloSignal crate 0 cabling table : readout channel $\leftrightarrow$ PMT}
+\vfill
+\vskip 1cm
+\noindent
+\begin{center}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_crate-0_other.tex}}
+\end{center}
+
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CaloSignal crate 1 cabling table: readout channel $\leftrightarrow$ PMT}
+\vfill
+\vskip 1cm
+\noindent
+\begin{center}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_crate-1_other.tex}}
+\end{center}
+
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CaloSignal crate 2 cabling table: readout channel $\leftrightarrow$ PMT}
+\vfill
+\vskip 1cm
+\noindent
+\begin{center}
+  \scalebox{0.75}{\input{\calosignalTabDir/calosignal_crate-2_other.tex}}
+\end{center}
 
 \end{document}
 %%%

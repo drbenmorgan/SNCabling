@@ -122,7 +122,7 @@ class CaloSignalCablingPrintLabels:
             sl = sorted(labels_per_harness[harness_num], key=lambda record: record[0]) 
             for record in sl :
                 fout.write("%s -> %s\n" % (record[0].to_string(), record[1].to_string())) 
-                fout2.write("%ss\n" % (record[0].to_string())) 
+                fout2.write("%s\n" % (record[0].to_string())) 
             self._freadme_.write("* ``%s`` : List of labels for associations of internal cables and PMTs (harness %d).\n" % (basename, harness_num))
             self._freadme_.write("* ``%s`` : List of labels for internal cables (harness %d).\n" % (basename2, harness_num))
         return
