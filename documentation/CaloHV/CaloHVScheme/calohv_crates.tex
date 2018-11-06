@@ -4,21 +4,39 @@
 
 Figures  \ref{fig:calohv:crates:0} and  \ref{fig:calohv:crates:1} show
  the repartition  of HV boards  respectively within the CAEN  HV power
- supply crates 0 (Italy) and 1 (France).
+ supply crates 0 (Italy) and 1 (France). The HV boards are connected to
+ specific harnesses and do not use all HV channels. The following table
+ shows the number of channels used per board:
+ \vskip 5pt
+ \begin{center}
+ \begin{tabular}{|c|c|c|}
+ \hline
+ Boards & Number of channels & Pins\\
+ \hline
+ \hline
+ 0-7    & 30 & 3-48\\
+ \hline
+ 8      & 16 & 3-30\\
+ \hline
+ 9-11   & 32 & 3-50\\
+ \hline
+ \end{tabular}
+ \end{center}
+ 
 
 \begin{figure}[h!]
   \begin{center}
-    \scalebox{0.6}{\input{\pdftextimgpath/fig-calohv-2-italy.pdftex_t}}
+    \scalebox{0.6}{\input{\pdftextimgpath/fig-calohv-2-italy-a.pdftex_t}}
   \end{center}
-  \caption{CaloHV crate 0 (Italy).}
+  \caption{CaloHV crate 0 (Italy). Not all channels are used for every boards.}
   \label{fig:calohv:crates:0}
 \end{figure}
 
 \begin{figure}[h!]
   \begin{center}
-    \scalebox{0.6}{\input{\pdftextimgpath/fig-calohv-2-france.pdftex_t}}
+    \scalebox{0.6}{\input{\pdftextimgpath/fig-calohv-2-france-a.pdftex_t}}
   \end{center}
-  \caption{CaloHV crate 1 (France).}
+  \caption{CaloHV crate 1 (France). Not all channels are used for every boards.}
   \label{fig:calohv:crates:1}
 \end{figure}
 
