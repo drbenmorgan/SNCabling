@@ -5,17 +5,17 @@
 \usepackage[table]{xcolor}
 \usepackage{amsmath}
 \usepackage{array}
-
+\usepackage{multirow}
 \usepackage[a4paper, landscape, vmargin=1.25cm, hmargin=1cm]{geometry}
 
 
 \newcommand{\calohvTabDir}{__WORKDIR__}
-%%\newcolumntype{C}[1]{>{\centering}m{#1}}
-%%\definecolor{XwallGreen}{rgb}{1,50,32}
-\definecolor{XwallGreen}{rgb}{0.01,0.5,0.10}
-\definecolor{XwallViolet}{rgb}{0.5,0.1,0.50}
-\definecolor{MainTopBlue}{rgb}{0.1,0.3,0.70}
-\definecolor{GvetoBlue}{rgb}{0.3,0.5,0.80}
+\definecolor{MainWallYellow}{rgb}{1.0,1.0,0}
+\definecolor{MainWallOrange}{rgb}{1.0,0.5,0}
+\definecolor{MainWallTopBlue}{rgb}{0.0,0.25,1.0}
+\definecolor{XwallGreen}{rgb}{0.0,0.5,0.0}
+\definecolor{XwallViolet}{rgb}{0.5,0.0,1.0}
+\definecolor{GvetoBlue}{rgb}{0.0,0.75,1.0}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,26 +26,26 @@
 \vfill
 \vskip 1cm
 \noindent\begin{center}
-  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_intcable_0-1.tex}}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_cable_0-1.tex}}
   \vskip 40pt
   \noindent
   \begin{minipage}{3cm}
   \begin{center}
-    \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_intcable_0-1.tex}}
+    \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_cable_0-1.tex}}
   \end{center}
   \end{minipage}
   \begin{minipage}{21cm}
     \begin{center}
-      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_intcable_0.tex}}
+      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_cable_0.tex}}
     \end{center}
   \end{minipage}
   \begin{minipage}{3cm}
     \begin{center}
-      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_intcable_0-0.tex}}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_cable_0-0.tex}}
     \end{center}
   \end{minipage}
   \vskip 40pt
-  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_intcable_0-0.tex}}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_cable_0-0.tex}}
 \end{center}
 \pagebreak
 
@@ -53,26 +53,26 @@
 \vfill
 \vskip 1cm
 \noindent\begin{center}
-  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_intcable_1-1.tex}}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_cable_1-1.tex}}
   \vskip 40pt
   \noindent
   \begin{minipage}{3cm}
     \begin{center}
-      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_intcable_1-0.tex}}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_cable_1-0.tex}}
     \end{center}
   \end{minipage}
   \begin{minipage}{21cm}
     \begin{center}
-      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_intcable_1.tex}}
+      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_cable_1.tex}}
     \end{center}
   \end{minipage}
   \begin{minipage}{3cm}
     \begin{center}
-      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_intcable_1-1.tex}}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_cable_1-1.tex}}
     \end{center}
   \end{minipage}
   \vskip 40pt
-  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_intcable_1-0.tex}}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_cable_1-0.tex}}
 \end{center}
 \pagebreak
 
@@ -81,26 +81,26 @@
 \vfill
 \vskip 1cm
 \noindent\begin{center}
-  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_hvchannel_0-1.tex}}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_other_0-1.tex}}
   \vskip 40pt
   \noindent
   \begin{minipage}{3cm}
   \begin{center}
-    \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_hvchannel_0-1.tex}}
+    \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_other_0-1.tex}}
   \end{center}
   \end{minipage}
   \begin{minipage}{21cm}
     \begin{center}
-      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_hvchannel_0.tex}}
+      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_other_0.tex}}
     \end{center}
   \end{minipage}
   \begin{minipage}{3cm}
     \begin{center}
-      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_hvchannel_0-0.tex}}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_other_0-0.tex}}
     \end{center}
   \end{minipage}
   \vskip 40pt
-  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_hvchannel_0-0.tex}}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_other_0-0.tex}}
 \end{center}
 \pagebreak
 
@@ -108,27 +108,48 @@
 \vfill
 \vskip 1cm
 \noindent\begin{center}
-  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_hvchannel_1-1.tex}}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_other_1-1.tex}}
   \vskip 40pt
   \noindent
   \begin{minipage}{3cm}
     \begin{center}
-      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_hvchannel_1-0.tex}}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_other_1-0.tex}}
     \end{center}
   \end{minipage}
   \begin{minipage}{21cm}
     \begin{center}
-      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_hvchannel_1.tex}}
+      \scalebox{0.6}{\input{\calohvTabDir/calohv_main_other_1.tex}}
     \end{center}
   \end{minipage}
   \begin{minipage}{3cm}
     \begin{center}
-      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_hvchannel_1-1.tex}}
+      \scalebox{0.5}{\input{\calohvTabDir/calohv_xcalo_other_1-1.tex}}
     \end{center}
   \end{minipage}
   \vskip 40pt
-  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_hvchannel_1-0.tex}}
+  \scalebox{0.75}{\input{\calohvTabDir/calohv_gveto_other_1-0.tex}}
 \end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CaloHV crate 0 (Italy) : HV channel $\leftrightarrow$ PMT}
+\vskip 1cm
+\noindent
+\begin{center}
+\scalebox{0.7}{\input{\calohvTabDir/calohv_crate-0_other.tex}}
+\end{center}
+\vfill
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CaloHV crate 1 (France) : HV channel $\leftrightarrow$ PMT}
+\vskip 1cm
+\noindent
+\begin{center}
+\scalebox{0.7}{\input{\calohvTabDir/calohv_crate-1_other.tex}}
+\end{center}
+\vfill
+\pagebreak
+
 
 \end{document}
 %%%

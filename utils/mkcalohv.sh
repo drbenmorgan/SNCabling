@@ -5,8 +5,11 @@ opwd=$(pwd)
 bash calohv_map_print.sh
 bash calohv_print_labels.sh
 
-target_dir=${opwd}/SNCaloHVCabling/
+target_dir=${opwd}/SNCaloHVCabling
 
+if [ -d ${target_dir} ]; then
+    rm -fr ${target_dir}
+fi
 mkdir ${target_dir}
 mkdir ${target_dir}/Labels
 mkdir ${target_dir}/Tables
