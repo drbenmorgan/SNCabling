@@ -20,7 +20,7 @@ cp calohv_mapping-skel.csv ${target_dir}/
 
 cd ../documentation/CaloHV/CaloHVScheme/
 make final
-cp SuperNEMO_CaloHV_CablingScheme-0.2.pdf ${target_dir}/
+cp SuperNEMO_CaloHV_CablingScheme-0.3.pdf ${target_dir}/
 
 cd ${opwd}
 tree ${target_dir}
