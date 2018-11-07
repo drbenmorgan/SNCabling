@@ -5,11 +5,13 @@ Scripts to generate cabling documents
 
 The scripts in this folder are dedicated to the generation of useful documents
 that describe the cabling scheme and rules and provide cabling tables.
+Once generated, the output files can be versioned and stored in the ``resources/`` folder
+and also published on DocDB.
 
 Build documents
 ===============
 
-Build ``SNCaloHVCabling.tar.gz`` and ``SNCaloSignalCabling.tar.gz``
+Build ``SNCaloHVCabling.tar.gz`` (DocDB #4760)  and ``SNCaloSignalCabling.tar.gz`` (DocDB #4761)
 archive files:
 
 .. code:: bash
