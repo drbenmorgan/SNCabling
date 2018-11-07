@@ -5,8 +5,9 @@ Scripts to generate cabling documents
 
 The scripts in this folder are dedicated to the generation of useful documents
 that describe the cabling scheme and rules and provide cabling tables.
+
 Once generated, the output files can be versioned and stored in the ``resources/`` folder
-and also published on DocDB.
+and also published on DocDB as archives.
 
 Build documents
 ===============
