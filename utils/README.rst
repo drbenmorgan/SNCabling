@@ -3,6 +3,9 @@ Scripts to generate cabling documents
 =========================================
 
 
+The scripts in this folder are dedicated to the generation of useful documents
+that describe the cabling scheme and rules and provide cabling tables.
+
 Build documents
 ===============
 
