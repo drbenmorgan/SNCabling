@@ -24,6 +24,7 @@ cp SuperNEMO_CaloHV_CablingScheme-0.3.pdf ${target_dir}/
 
 cd ${opwd}
 tree ${target_dir}
+tar cvzf ./SNCaloHVCabling.tar.gz  ${target_dir}/
 
 exit 0
 

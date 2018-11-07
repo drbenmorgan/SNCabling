@@ -21,6 +21,7 @@ cp SuperNEMO_CaloSignal_CablingScheme-0.2.pdf ${target_dir}/
 
 cd ${opwd}
 tree ${target_dir}
+tar cvzf ./SNCaloSignalCabling.tar.gz  ${target_dir}/
 
 exit 0
 
