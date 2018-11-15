@@ -1,5 +1,5 @@
-//! \file    sncabling/calo_hv_cabling.h
-//! \brief   Calorimeter HV system cabling table
+//! \file    sncabling/calo_signal_cabling.h
+//! \brief   Calorimeter signal readout system cabling table
 //! \details
 //
 // Copyright (c) 2018 by Francois Mauger <mauger@lpccaen.in2p3.fr>
@@ -19,8 +19,8 @@
 // You should have received a copy of the GNU General Public License
 // along with SNCabling.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SNCABLING_CALO_HV_CABLING_H
-#define SNCABLING_CALO_HV_CABLING_H
+#ifndef SNCABLING_CALO_SIGNAL_CABLING_H
+#define SNCABLING_CALO_SIGNAL_CABLING_H
 
 // Standard Library:
 #include <map>
@@ -32,49 +32,53 @@
 
 // This project:
 #include <sncabling/om_id.h>
-#include <sncabling/calo_hv_id.h>
+#include <sncabling/calo_signal_id.h>
 
 namespace sncabling {
 
-  /// \brief Calorimeter HV cabling
+  /// \brief Calorimeter signal readout system cabling
   ///
   ///
-  class calo_hv_cabling
+  class calo_signal_cabling
   {
   public:
 
-    struct hv_connections {
-      calo_hv_id channel;
-      calo_hv_id extharness;
-      calo_hv_id intcable;
+    struct signal_connections {
+      calo_signal_id channel;
+      calo_signal_id extcable;
+      calo_signal_id intcable;
     };
     
-    typedef std::map<om_id, hv_connections> hv_cabling_map_type;
-    typedef std::map<calo_hv_id, om_id>     reverse_hv_cabling_map_type;
+    typedef std::map<om_id, signal_connections> signal_cabling_map_type;
+    typedef std::map<calo_signal_id, om_id>     reverse_signal_cabling_map_type;
 
-    calo_hv_cabling();
+    calo_signal_cabling();
 
     bool has_om(const om_id &) const;
 
-    bool has_channel(const calo_hv_id &) const;
+    bool has_channel(const calo_signal_id &) const;
 
     void add(const om_id & om_,
-             const calo_hv_id & channel_,
-             const calo_hv_id & extharness_,
-             const calo_hv_id & intcable_);
+             const calo_signal_id & channel_,
+             const calo_signal_id & extcable_,
+             const calo_signal_id & intcable_);
 
-    const calo_hv_id & get_channel(const om_id & om_) const;
+    const calo_signal_id & get_channel(const om_id & om_) const;
 
-    const calo_hv_id & get_int_cable(const om_id & om_) const;
-        
-    const om_id & get_om(const calo_hv_id & channel_) const;
+    const calo_signal_id & get_int_cable(const om_id & om_) const;
  
-    const hv_cabling_map_type & get_table() const;
+    const calo_signal_id & get_ext_cable(const om_id & om_) const;
+        
+    const om_id & get_om(const calo_signal_id & channel_) const;
+ 
+    const signal_cabling_map_type & get_table() const;
 
-    void build_om_from_board(const calo_hv_id & board_,
+    const reverse_signal_cabling_map_type & get_reverse_table() const;
+
+    void build_om_from_board(const calo_signal_id & board_,
                              std::vector<om_id> & list_) const;
 
-    void build_om_from_crate(const calo_hv_id & crate_,
+    void build_om_from_crate(const calo_signal_id & crate_,
                              std::vector<om_id> & list_) const;
 
     void print(std::ostream & out_ = std::clog) const;
@@ -84,19 +88,19 @@ namespace sncabling {
     };
     
     void load(const std::string & filename_, const unsigned int tags_ = 0);
-
+  
     void clear();
     
   private:
     
-    hv_cabling_map_type         _table_;         ///< Main HV cabling map
-    reverse_hv_cabling_map_type _reverse_table_; ///< Slave reverse HV cabling map
+    signal_cabling_map_type         _table_;         ///< Main signal readout cabling map
+    reverse_signal_cabling_map_type _reverse_table_; ///< Slave reverse signal readout cabling map
     
   };
   
 } // namespace sncabling
 
-#endif // SNCABLING_CALO_HV_CABLING_H
+#endif // SNCABLING_CALO_SIGNAL_CABLING_H
 
 // Local Variables: --
 // mode: c++ --

@@ -32,6 +32,15 @@ int main(void)
     } else {
       std::cerr << "Label #4 cannot be parsed from " << word << std::endl;
     }
+
+    word = "H:0.0.23";
+    sncabling::label lbl5;
+    if (lbl5.parse_from(word)) {
+      std::cout << "Label #5 = " << lbl5 << std::endl;
+    } else {
+      std::cerr << "Label #5 cannot be parsed from " << word << std::endl;
+    }
+    
   } catch (std::exception & err) {
     std::cerr << "[error] " << err.what() << std::endl;
   } catch (...) {

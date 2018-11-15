@@ -58,6 +58,8 @@ namespace sncabling {
     bool parse_from(const std::string & token_,
                     const char symbol_ = '\0',
                     const std::size_t & depth_ = 0);
+
+    std::string to_string() const;
     
   private:
     

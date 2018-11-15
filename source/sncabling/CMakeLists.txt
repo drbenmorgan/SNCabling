@@ -45,10 +45,14 @@ set(SNCablingLibrary_HEADERS
   sncabling_library.h
   om_id.h
   lis_id.h
-  calo_feb_id.h
   calo_hv_id.h
+  calo_signal_id.h
   lis_cabling.h
   calo_hv_cabling.h
+  calo_signal_cabling.h
+  service.h
+  utils.h
+  time_mark.h
   )
 
 #-----------------------------------------------------------------------
@@ -62,6 +66,7 @@ set(MANGLE_BINRELOC "SNCABLINGMB${MANGLE_BINRELOC_MAIN}")
 configure_file(sncabling_binreloc.h.in sncabling_binreloc.h @ONLY)
 
 set(SNCablingLibrary_SOURCES
+  service.cc
   version.cc
   ${CMAKE_CURRENT_BINARY_DIR}/sncabling.cc
   ${CMAKE_CURRENT_BINARY_DIR}/resource_files.cc
@@ -72,9 +77,12 @@ set(SNCablingLibrary_SOURCES
   om_id.cc
   lis_id.cc
   lis_cabling.cc
-  calo_feb_id.cc
   calo_hv_id.cc
+  calo_signal_id.cc
   calo_hv_cabling.cc
+  calo_signal_cabling.cc
+  utils.cc
+  time_mark.cc
   )
 
 # - Publish headers

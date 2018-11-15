@@ -26,6 +26,7 @@
 
 // Third party Library:
 #include <boost/algorithm/string.hpp>
+#include <bayeux/datatools/logger.h>
 
 namespace sncabling {
 
@@ -112,16 +113,22 @@ namespace sncabling {
     std::string token;
     in >> token;
     if (token.size() == 0) {
+      DT_LOG_ERROR(datatools::logger::PRIO_ERROR,
+                   "Zero length string!");
       return false;
     }
     std::size_t nsemicolon = token.find(':');
     if (nsemicolon != 1) {
+      DT_LOG_ERROR(datatools::logger::PRIO_ERROR,
+                   "Missing semicolon in '" << token << "!");
       return false;
     }
     // Extract symbol:
     char symbol = token[0];
     // Check mandatory symbol:
     if (symbol_ != '\0' && symbol_ != symbol) {
+      DT_LOG_ERROR(datatools::logger::PRIO_ERROR,
+                   "Symbol '" << symbol << "' does not match the expected '" << symbol_ << "'!");
       return false;
     }
     // Extract address:
@@ -134,14 +141,20 @@ namespace sncabling {
       std::istringstream ss(saddr[i]);
       ss >> addr;
       if (!ss) {
+        DT_LOG_ERROR(datatools::logger::PRIO_ERROR,
+                     "Cannot parse an address segment from '" << saddr[i] << "!");
         return false;
       }
       if (addr < 0) {
-        return true;
+        DT_LOG_ERROR(datatools::logger::PRIO_ERROR,
+                     "Invalid (<0) address segment [" << addr << "]!");
+        return false;
       }
       address.push_back(addr);
     }
     if (depth_ && address.size() != depth_) {
+      DT_LOG_ERROR(datatools::logger::PRIO_ERROR,
+                   "Address depth [" << address.size() << "] does not match the expected [" << depth_ << "]!");
       return false;
     }
     set_symbol(symbol);
@@ -149,16 +162,25 @@ namespace sncabling {
     return true;
   }
 
+  std::string label::to_string() const
+  {
+    std::ostringstream sout;
+    sout << *this;
+    return sout.str();
+  }
+
   // friend
   std::ostream & operator<<(std::ostream & out_, const label & label_)
   {
-    out_ << label_._symbol_ << ':';
+    std::ostringstream strout;
+    strout << label_._symbol_ << ':';
     for (std::size_t i = 0; i < label_._address_.size(); i++) {
       if (i > 0) {
-        out_ << '.';
+        strout << '.';
       }
-      out_ << label_._address_[i];
+      strout << label_._address_[i];
     }
+    out_ << strout.str();
     return out_;
   }
   

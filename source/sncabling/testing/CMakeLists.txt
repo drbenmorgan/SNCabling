@@ -1,11 +1,15 @@
 list(APPEND SNCabling_TESTS
+  test-utils.cxx
+  test-time_mark.cxx
   test-label.cxx
   test-om_id.cxx
   test-lis_id.cxx
-  test-calo_feb_id.cxx
   test-calo_hv_id.cxx
+  test-calo_signal_id.cxx
   test-lis_cabling.cxx
   test-calo_hv_cabling.cxx
+  test-calo_signal_cabling.cxx
+  test-service.cxx
   )
 
 if (SNCABLING_ENABLE_TESTING)

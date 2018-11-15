@@ -15,10 +15,13 @@ int main(void)
 {
   int error_code = EXIT_SUCCESS;
   try {
+
     std::cerr << "[info] " << "run 1..." << std::endl;
     run1();
-    // std::cerr << "[info] " << "run 2." << std::endl;
-    // run2();
+
+    std::cerr << "[info] " << "run 2." << std::endl;
+    run2();
+
   } catch (std::exception & err) {
     std::cerr << "[error] " << err.what() << std::endl;
   } catch (...) {
@@ -114,11 +117,42 @@ void run2()
   {
     sncabling::calo_hv_cabling cabling;
     std::string calo_hv_map_filename
-      = "${SNCABLING_RESOURCE_FILES_DIR}/snemo/demonstrator/cabling/CaloHV/0.1/calo_hv_mapping.csv";
-    unsigned int load_tags
-      = sncabling::calo_hv_cabling::LOAD_DEBUG;
+      = "${SNCABLING_RESOURCE_FILES_DIR}/snemo/demonstrator/cabling/CaloHV/0.3/CaloHVCabling/calohv_mapping-skel.csv";
+    unsigned int load_tags = sncabling::calo_hv_cabling::LOAD_DEBUG;
     cabling.load(calo_hv_map_filename, load_tags);
     cabling.print(std::cout);
+
+    {
+      sncabling::om_id calo_id(sncabling::OM_MAIN, 0, 3, 1);
+      if (cabling.has_om(calo_id)) {
+        const sncabling::calo_hv_id & hv_channel = cabling.get_channel(calo_id);
+        std::cout << "OM [" << calo_id.to_label() << "] has a HV channel: "
+                  << "[" << hv_channel.to_label() << "]." << std::endl;
+      } else {
+        std::cout << "OM [" << calo_id.to_label() << "] has no HV connection." << std::endl;
+      }
+    }
+    {
+      sncabling::om_id calo_id(sncabling::OM_GVETO, 1, 1, 14);
+      if (cabling.has_om(calo_id)) {
+        const sncabling::calo_hv_id & hv_channel = cabling.get_channel(calo_id);
+        std::cout << "OM [" << calo_id.to_label() << "] has a HV channel: "
+                  << "[" << hv_channel.to_label() << "]." << std::endl;
+      } else {
+        std::cout << "OM [" << calo_id.to_label() << "] has no HV connection." << std::endl;
+      }
+    }
+    {
+      sncabling::om_id calo_id(sncabling::OM_MAIN, 0, 0, 16);
+      if (cabling.has_om(calo_id)) {
+        const sncabling::calo_hv_id & hv_channel = cabling.get_channel(calo_id);
+        std::cout << "OM [" << calo_id.to_label() << "] has a HV channel: "
+                  << "[" << hv_channel.to_label() << "]." << std::endl;
+      } else {
+        std::cout << "OM [" << calo_id.to_label() << "] has no HV connection." << std::endl;
+      }
+    }
+
   }
 
   std::cout << std::endl;
