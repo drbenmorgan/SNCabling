@@ -7,6 +7,7 @@
 #include <sncabling/calo_hv_cabling.h>
 #include <sncabling/calo_signal_cabling.h>
 #include <sncabling/om_id.h>
+#include <sncabling/calo_signal_id.h>
 #include <sncabling/label.h>
 
 void run1();
@@ -31,7 +32,7 @@ int main(void)
   return error_code;
 }
 
-void run1()
+void run2()
 {
   sncabling::service cabling;
 
@@ -39,9 +40,9 @@ void run1()
   cabling_config.store_path("logging.priority", "debug");
   // Force specific cabling maps:
   cabling_config.store_path("CaloHV.default_map",
-                            "${SNCABLING_RESOURCE_FILES_DIR}/snemo/demonstrator/cabling/CaloHV/0.3/CaloHVCabling/calohv_mapping.csv");
+                            "${SNCABLING_RESOURCE_FILES_DIR}/config/snemo/demonstrator/cabling/CaloHV/0.3/CaloHVCabling/calohv_mapping.csv");
   cabling_config.store_path("CaloSignal.default_map",
-                            "${SNCABLING_RESOURCE_FILES_DIR}/snemo/demonstrator/cabling/CaloSignal/0.2/CaloSignalCabling/calosignal_mapping.csv");
+                            "${SNCABLING_RESOURCE_FILES_DIR}/config/snemo/demonstrator/cabling/CaloSignal/0.2/CaloSignalCabling/calosignal_mapping.csv");
 
   // Cabling service uses default cabling map (CaloHV, CaloSignal) if none are specified:
   cabling.initialize_standalone(cabling_config);
@@ -61,7 +62,7 @@ void run1()
   return;
 }
 
-void run2()
+void run1()
 {
   // Instantiate and initialize the cabling service:
   sncabling::service snCabling;
@@ -78,6 +79,17 @@ void run2()
               << "[" << signal_channel.to_label() << "].\n";
   }
 
+  // Access to the calorimeter signal readout cabling map:
+  sncabling::calo_signal_id readout_id(sncabling::CALOSIGNAL_CHANNEL,
+                                       2, 15, 5);
+  // Search the OM associated to a given readout channel:
+  if (caloSignalCabling.has_channel(readout_id)) {
+    const sncabling::om_id & calo_id = caloSignalCabling.get_om(readout_id);
+    std::cout << "WaveCatcher readout channel [" << readout_id.to_label() << "] is associated to the OM "
+              << "[" << calo_id.to_label() << "].\n";
+  }
+
+ 
   // Terminate the cabling service:
   snCabling.reset();
   return;

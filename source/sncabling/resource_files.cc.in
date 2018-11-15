@@ -60,11 +60,6 @@ namespace {
     return "@SNCABLING_LIBDIR_TO_RESOURCEDIR@";
   }
 
-  //! Return relative path from application directory to root of plugin/module DLL dir
-  std::string relative_path_to_plugin_lib_dir() {
-    return "@SNCABLING_LIBDIR_TO_PLUGINDIR@";
-  }
-
   std::string get_library_dir() {
     char* exePath(0);
     exePath = br_find_exe_dir("");
@@ -78,18 +73,10 @@ namespace {
 
 namespace sncabling {
 
-  std::string get_plugin_lib_dir(bool overriden_env_)
-  {
-    boost::filesystem::path tmpPath(get_library_dir());
-    // std::cerr << "[devel] " << relative_path_to_plugin_lib_dir() << std::endl;
-    tmpPath /= relative_path_to_plugin_lib_dir();
-    boost::filesystem::path absPath = boost::filesystem::canonical(tmpPath);
-    return absPath.string();
-  }
-
   std::string get_resource_files_dir(bool /* overriden_env_ */)
   {
     boost::filesystem::path tmpPath(get_library_dir());
+    // std::cerr << "[devel] ******* sncabling::relative_path_to_resource_dir = '" << relative_path_to_resource_dir() << "'" << std::endl;
     tmpPath /= relative_path_to_resource_dir();
     boost::filesystem::path absPath = boost::filesystem::canonical(tmpPath);
     return absPath.string();
@@ -107,54 +94,6 @@ namespace sncabling {
                 "Requested resource '"
                 << rname_
                 << "' does not exists at resolved path '"
-                << expectedResource << "'");
-    std::string fullpath = expectedResource.string();
-    {
-      std::ifstream check(fullpath.c_str());
-      DT_THROW_IF(!check.good(),
-                  std::runtime_error,
-                  "Unreadable resource file '" << fullpath << "'");
-    }
-    return fullpath;
-  }
-
-  // std::string get_plugin_resource_files_base_dir(const std::string & plugin_name_,
-  //                                                bool overriden_env_)
-  // {
-  //   boost::filesystem::path tmpPath(get_library_dir());
-  //   tmpPath /= get_resource_files_dir();
-  //   tmpPath /= "plugins";
-  //   tmpPath /= plugin_name_;
-  //   boost::filesystem::path absPath = boost::filesystem::canonical(tmpPath);
-  //   return absPath.string();
-  // }
-
-  std::string get_plugin_resource_files_dir(const std::string & plugin_name_,
-                                            bool overriden_env_)
-  {
-    boost::filesystem::path tmpPath(get_resource_files_dir(overriden_env_));
-    tmpPath /= "plugins";
-    tmpPath /= plugin_name_;
-    boost::filesystem::path absPath = boost::filesystem::canonical(tmpPath);
-    return absPath.string();
-  }
-
-  std::string get_plugin_resource_file(const std::string & plugin_name_,
-                                       const std::string & rname_,
-                                       bool overriden_env_)
-  {
-    boost::filesystem::path rnamePath(rname_);
-    DT_THROW_IF(rnamePath.is_absolute(),
-                std::logic_error,
-                "resource name cannot be absolute");
-    boost::filesystem::path expectedResource
-      = get_plugin_resource_files_dir(plugin_name_, overriden_env_);
-    expectedResource /= rnamePath;
-    DT_THROW_IF(!boost::filesystem::exists(expectedResource),
-                std::runtime_error,
-                "Requested resource '"
-                << rname_
-                << "' from plugin '" << plugin_name_ << "' does not exists at resolved path '"
                 << expectedResource << "'");
     std::string fullpath = expectedResource.string();
     {

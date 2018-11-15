@@ -117,7 +117,7 @@ void run2()
   {
     sncabling::calo_hv_cabling cabling;
     std::string calo_hv_map_filename
-      = "${SNCABLING_RESOURCE_FILES_DIR}/snemo/demonstrator/cabling/CaloHV/0.3/CaloHVCabling/calohv_mapping-skel.csv";
+      = "${SNCABLING_RESOURCE_FILES_DIR}/config/snemo/demonstrator/cabling/CaloHV/0.3/CaloHVCabling/calohv_mapping-skel.csv";
     unsigned int load_tags = sncabling::calo_hv_cabling::LOAD_DEBUG;
     cabling.load(calo_hv_map_filename, load_tags);
     cabling.print(std::cout);

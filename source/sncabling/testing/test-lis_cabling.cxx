@@ -123,7 +123,7 @@ void run2()
   {
       sncabling::lis_cabling cabling;
       std::string lis_map_filename
-        = "${SNCABLING_RESOURCE_FILES_DIR}/snemo/demonstrator/cabling/LIS/0.1/lis_mapping.csv";
+        = "${SNCABLING_RESOURCE_FILES_DIR}/config/snemo/demonstrator/cabling/LIS/0.1/lis_mapping.csv";
       unsigned int load_tags
         = sncabling::lis_cabling::LOAD_DEBUG
         | sncabling::lis_cabling::LOAD_LED_BUNDLE_MATCH;

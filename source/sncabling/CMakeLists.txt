@@ -6,7 +6,6 @@ message(STATUS "[info] Begin of 'source/sncabling/CMakeLists.txt'")
 #
 
 message(STATUS "[debug] SNCABLING_LIBDIR_TO_RESOURCEDIR = '${SNCABLING_LIBDIR_TO_RESOURCEDIR}'")
-message(STATUS "[debug] SNCABLING_LIBDIR_TO_PLUGINDIR   = '${SNCABLING_LIBDIR_TO_PLUGINDIR}'")
 # set(SNCABLING_DATAROOTDIR ${SNCABLING_BUILD_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${SNCABLING_TAG})
 # set(SNCABLING_DATAROOTDIR ${PROJECT_BUILD_DATAROOTDIR}/${SNCABLING_TAG})
 # message(STATUS "[debug] SNCABLING_DATAROOTDIR           = '${SNCABLING_DATAROOTDIR}'")
@@ -53,6 +52,7 @@ set(SNCablingLibrary_HEADERS
   service.h
   utils.h
   time_mark.h
+  sncabling.h
   )
 
 #-----------------------------------------------------------------------
@@ -71,8 +71,6 @@ set(SNCablingLibrary_SOURCES
   ${CMAKE_CURRENT_BINARY_DIR}/sncabling.cc
   ${CMAKE_CURRENT_BINARY_DIR}/resource_files.cc
   ${CMAKE_CURRENT_BINARY_DIR}/sncabling_binreloc.h
-  sncabling_binreloc.c
-  sncabling_library.cc
   label.cc
   om_id.cc
   lis_id.cc
@@ -83,6 +81,9 @@ set(SNCablingLibrary_SOURCES
   calo_signal_cabling.cc
   utils.cc
   time_mark.cc
+  sncabling.h
+  sncabling_binreloc.c
+  sncabling_library.cc
   )
 
 # - Publish headers

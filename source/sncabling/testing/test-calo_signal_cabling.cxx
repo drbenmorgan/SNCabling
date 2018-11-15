@@ -59,7 +59,7 @@ void run2()
   {
     sncabling::calo_signal_cabling cabling;
     std::string calo_signal_map_filename
-      = "${SNCABLING_RESOURCE_FILES_DIR}/snemo/demonstrator/cabling/CaloSignal/0.2/CaloSignalCabling/calosignal_mapping-skel.csv";
+      = "${SNCABLING_RESOURCE_FILES_DIR}/config/snemo/demonstrator/cabling/CaloSignal/0.2/CaloSignalCabling/calosignal_mapping-skel.csv";
     unsigned int load_tags = sncabling::calo_signal_cabling::LOAD_DEBUG;
     cabling.load(calo_signal_map_filename, load_tags);
     cabling.print(std::cout);

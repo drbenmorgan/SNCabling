@@ -37,15 +37,8 @@ namespace sncabling {
     : public std::runtime_error
   {
   public:
-    unknown_resource_exception(const std::string& msg) : std::runtime_error(msg) {}
+    unknown_resource_exception(const std::string & msg) : std::runtime_error(msg) {}
   };
-
-  //! Return URL, i.e. a path, to the  base directory where plugin DLL are installed
-  //! \param overriden_env_ If set this flag trigger the search for the
-  //!        environment variable SNCABLING_RESOURCE_FILES_DIR as a directory path on the filesystem
-  //!        as an alternative base directory for resources in place of the
-  //!        standard installation path
-  std::string get_plugin_lib_dir(bool overriden_env_ = false);
 
   //! Return URL, i.e. a path, to the  base directory where resource files are installed
   //! \param overriden_env_ If set this flag trigger the search for the
@@ -64,28 +57,6 @@ namespace sncabling {
   //!        resource root.
   //! \param overriden_env_ flag to allow path overriding by the SNCABLING_RESOURCE_FILES_DIR environment variable.
   std::string get_resource_file(const std::string & rname_, bool overriden_env_ = false);
-
-  //! Return URL, i.e. a path, to the  base directory where a given plugin's resource files are installed
-  //! \param plugin_name_ name of the plugin
-  //! \param overriden_env_ If set this flag trigger the search for the
-  //!        environment variable SNCABLING_RESOURCE_FILES_DIR as a directory path on the filesystem
-  //!        as an alternative base directory for resources in place of the
-  //!        standard installation path
-  std::string get_plugin_resource_files_dir(const std::string & plugin_name_,
-                                            bool overriden_env_ = false);
-
-  //! Return URL, i.e. a path, to named plugin resource
-  //! By default the encoded resource root, determined at compile time
-  //! is used to search for the resource. This can be overriden by setting
-  //! the SNCABLING_RESOURCE_FILES_DIR environment variable to a path holding custom
-  //! resources.
-  //! \param plugin_name_ name of the plugin
-  //! \param rname_ name of resource, given as a path relative to
-  //!        resource root.
-  //! \param overriden_env_ flag to allow path overriding by the SNCABLING_RESOURCE_FILES_DIR environment variable.
-  std::string get_plugin_resource_file(const std::string & plugin_name_,
-                                       const std::string & rname_,
-                                       bool overriden_env_ = false);
 
 } // namespace sncabling
 

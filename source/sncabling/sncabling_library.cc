@@ -15,8 +15,8 @@
 // Bayeux:
 #include <bayeux/datatools/kernel.h>
 #include <bayeux/datatools/library_info.h>
-#include <bayeux/datatools/urn_to_path_resolver_service.h>
-#include <bayeux/datatools/urn_db_service.h>
+// #include <bayeux/datatools/urn_to_path_resolver_service.h>
+// #include <bayeux/datatools/urn_db_service.h>
 
 // This project;
 #include "sncabling/version.h"
@@ -251,6 +251,7 @@ namespace sncabling {
       DT_LOG_TRACE(_logging_, "SNCabling library entry is now registered in the Bayeux/datatools' kernel.");
 
       // Register the SNCabling resource path in the datatools' kernel:
+      // std::cerr << "[devel] ******* sncabling_library::_libinfo_registration_ = '" << sncabling::get_resource_files_dir() << "'" << std::endl;
       sncabling_lib_infos.store_string(datatools::library_info::keys::install_resource_dir(),
                                        sncabling::get_resource_files_dir());
       DT_LOG_TRACE(_logging_, "SNCabling resource files dir is documented.");
@@ -295,6 +296,7 @@ namespace sncabling {
     DT_LOG_TRACE_ENTERING(_logging_);
     if (_services_.is_initialized()) {
 
+      /*
       // Activate an URN info DB service:
       {
         datatools::urn_db_service & urnSetupDb =
@@ -332,6 +334,7 @@ namespace sncabling {
         urnResourceResolver.kernel_push();
         DT_LOG_TRACE(_logging_, "URN path resolver has been plugged in the Bayeux/datatools' kernel.");
       }
+      */
     }
 
     DT_LOG_TRACE_EXITING(_logging_);
@@ -344,6 +347,7 @@ namespace sncabling {
 
     if (_services_.is_initialized()) {
 
+      /*
       // Deactivate the URN resolver:
       if (_services_.has(resource_resolver_name())) {
         DT_LOG_TRACE(_logging_, "Accessing URN path resolver...");
@@ -365,6 +369,7 @@ namespace sncabling {
         DT_LOG_TRACE(_logging_, "URN info setup DB has been removed from the Bayeux/datatools kernel.");
         urnSetupDb.reset();
       }
+      */
     }
 
     DT_LOG_TRACE_EXITING(_logging_);

@@ -1,4 +1,5 @@
 list(APPEND SNCabling_TESTS
+  test-sncabling.cxx
   test-utils.cxx
   test-time_mark.cxx
   test-label.cxx

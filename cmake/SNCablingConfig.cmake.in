@@ -2,9 +2,6 @@
 # It defines the following variables
 #  SNCabling_VERSION            - SNCabling version
 #  SNCabling_VERSION_REVISION   - SNCabling version revision
-#  SNCabling_WITH_QT_GUI        - SNCabling is built with Qt support
-#  SNCabling_WITH_PLUGINS       - SNCabling is built with plugin
-#  SNCabling_WITH_PROTOBUF_JAVA - SNCabling is built with protobuf java support
 #  SNCabling_WITH_DEVELOPER_TOOLS - SNCabling is built with development tools
 #  SNCabling_INCLUDE_DIRS       - SNCabling include directories
 #  SNCabling_CMAKE_CONFIG_DIR   - SNCabling CMake config path
@@ -31,11 +28,6 @@ message(STATUS "[info] SNCablingConfig.cmake: Entering...")
 set(SNCabling_VERSION "@SNCabling_VERSION@")
 # - Development Tag
 set(SNCabling_VERSION_REVISION "@SNCabling_VERSION_REVISION@")
-set(SNCabling_WITH_QT_GUI "@SNCABLING_WITH_QT_GUI@")
-set(SNCabling_WITH_PLUGINS "@SNCABLING_WITH_PLUGINS@")
-set(SNCabling_PLUGINS "@_vire_PLUGINS@")
-set(SNCabling_WITH_JAVA "@SNCABLING_WITH_JAVA@")
-set(SNCabling_WITH_PROTOBUF_JAVA "@SNCABLING_WITH_PROTOBUF_JAVA@")
 # - SNCabling cmake-config path is stored to help explicit path resolution in client packages:
 set(SNCabling_CMAKE_CONFIG_DIR "${CMAKE_CURRENT_LIST_DIR}")
 set(SNCabling_WITH_DEVELOPER_TOOLS "@SNCABLING_WITH_DEVELOPER_TOOLS@")
@@ -43,8 +35,6 @@ set(SNCabling_DOCS_FOUND            "@SNCABLING_WITH_DOCS@")
 
 message(STATUS "[info] SNCablingConfig.cmake: SNCabling_VERSION                      = '${SNCabling_VERSION}'")
 message(STATUS "[info] SNCablingConfig.cmake: SNCabling_VERSION_REVISION             = '${SNCabling_VERSION_REVISION}'")
-message(STATUS "[info] SNCablingConfig.cmake: SNCabling_WITH_QT_GUI                  = '${SNCabling_WITH_QT_GUI}'")
-message(STATUS "[info] SNCablingConfig.cmake: SNCabling_WITH_PROTOBUF_JAVA           = '${SNCabling_WITH_PROTOBUF_JAVA}'")
 
 # Component Availability
 
@@ -64,16 +54,6 @@ set_and_check(SNCabling_INCLUDE_DIR
   "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@"
   )
 message(STATUS "[info] SNCablingConfig.cmake: SNCabling_INCLUDE_DIR = '@SNCabling_INCLUDE_DIR@'")
-set_and_check(SNCabling_PROTOBUF_INCLUDE_DIR
-  "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@/protobuf/cpp"
-  )
-message(STATUS "[info] SNCablingConfig.cmake: SNCabling_PROTOBUF_INCLUDE_DIR = '@SNCabling_PROTOBUF_INCLUDE_DIR@'")
-if (SNCabling_WITH_PROTOBUF_JAVA)
-  set_and_check(SNCabling_JAVA_CLASSPATH
-    "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@/protobuf/java"
-    )
-  message(STATUS "[info] SNCablingConfig.cmake: SNCabling_JAVA_CLASSPATH               = '${SNCabling_JAVA_CLASSPATH}'")
-endif()
 
 #set_and_check(SNCabling_RESOURCE_DIR "@PACKAGE_CMAKE_INSTALL_DATAROOTDIR@/resources")
 

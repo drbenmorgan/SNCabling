@@ -68,6 +68,9 @@ if(SNCabling_DIRECTORY_IS_WC)
   set(SNCabling_VERSION_REVISION ${SNCabling_WC_REVISION})
 endif()
 
+
+message (STATUS "[info] SNCABLING_LIBDIR_TO_RESOURCEDIR = '${SNCABLING_LIBDIR_TO_RESOURCEDIR}'")
+ 
 #-----------------------------------------------------------------------
 # Useful variables
 set(SNCABLING_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
@@ -166,10 +169,6 @@ install(
 #-----------------------------------------------------------------------
 # Resource installation
 add_subdirectory(resources)
-# message(STATUS "[devel] PROJECT_BUILD_DATAROOTDIR = '${PROJECT_BUILD_DATAROOTDIR}'")
-# install(DIRECTORY ${PROJECT_BUILD_DATAROOTDIR}/
-#   DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}
-#   )
 
 message (STATUS "[info] End of 'CMakeLists.txt'.")
 
