@@ -16,16 +16,25 @@ Introduction
 ============
 
 This project  aims to describe the  cabling rules and schemes  for all
-submodules in  the SuperNEMO Demonstrator: calorimeter  signal and HV cables,
-tracker signal & HV cables, Light Injection System (LIS)...
+submodules in  the SuperNEMO  Demonstrator: calorimeter signal  and HV
+cables, tracker signal & HV cables, Light Injection System (LIS)...
 
-Expert tools (Python) are also provided to generate cabling tables and labels to help
-cabling operations at LSM.
+The ``SNCabling`` C++ library
+=============================
 
-A C++ library, namely ``SNCabling`` is also built and provides a service
-which hosts all searchable cabling tables of interest.
+The  ``SNCabling`` C++  library  provides a  service  which hosts  all
+searchable cabling tables of interest:
 
-Example:
+- ``CaloHV`` : SuperNEMO calorimeter HV system 
+- ``CaloSignal`` : SuperNEMO calorimeter signal readout system
+- ``TrackerHV`` : SuperNEMO tracker HV system  (*not implemented yet*)
+- ``TrackerSignal`` : SuperNEMO tracker signal readout system  (*not implemented yet*)
+- ``LIS`` : SuperNEMO light injection system  (*work in progress*)
+
+  
+**Example**: the following example illustrates how to, from the SuperNEMO
+cabling API, search and find the identifier of a readout channel from the identifier
+of a calorimeter optical module.
 
 .. code:: c++
 
@@ -59,6 +68,18 @@ Example:
 	          << "[" << readout_channel.to_label() << "].\n";
      }
 
+     // Instantiate the identifier of a calorimeter signal readout channel:
+     sncabling::calo_signal_id readout_id(sncabling::CALOSIGNAL_CHANNEL, 2, 15, 5);
+
+     // Search the identifier of the OM associated to the readout channel identifier:
+     if (caloSignalCabling.has_channel(readout_id)) {
+
+	const sncabling::om_id & calo_id = caloSignalCabling.get_om(readout_id);
+        std::cout << "WaveCatcher readout channel [" << readout_id.to_label() << "] "
+	          << "is associated to the OM "
+                  << "[" << calo_id.to_label() << "].\n";
+     }
+
      // Terminate the cabling service:
      snCabling.reset();
      return 0;
@@ -70,6 +91,12 @@ Output is then:
 .. code:: bash
 
    OM [M:0.3.1] is associated to the WaveCatcher readout channel [H:0.3.1]
+   WaveCatcher readout channel [H:2.15.5] is associated to the OM [G:1.1.5].
 ..
 
+Expert tools
+============
+
+Expert tools (Python  3) are also provided to  generate cabling tables
+and labels to help cabling operations at LSM.
 
