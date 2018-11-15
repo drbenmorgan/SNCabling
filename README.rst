@@ -43,9 +43,9 @@ Example:
 	  // Search the readout channel associated to a given OM:
 	  sncabling::om_id calo_id(sncabling::OM_MAIN, 0, 3, 1);
 	  if (caloSignalCabling.has_om(calo_id)) {
- 	  const sncabling::calo_signal_id & signal_channel = caloSignalCabling.get_channel(calo_id);
-	  std::cout << "OM [" << calo_id.to_label() << "] is associated to the WaveCatcher readout channel "
-	            << "[" << signal_channel.to_label() << "].\n";
+ 	         const sncabling::calo_signal_id & signal_channel = caloSignalCabling.get_channel(calo_id);
+	         std::cout << "OM [" << calo_id.to_label() << "] is associated to the WaveCatcher readout channel "
+	                   << "[" << signal_channel.to_label() << "].\n";
 	  }
 
 	  // Terminate the cabling service:
@@ -54,5 +54,6 @@ Example:
    }
 ..
 
+Output is then: ``OM [M:0.3.1] is associated to the WaveCatcher readout channel [H:0.3.1]``
 
 
