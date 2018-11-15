@@ -65,7 +65,7 @@ of a calorimeter optical module.
 	  
 	std::cout << "OM [" << calo_id.to_label() << "] "
 	          << "is associated to the WaveCatcher readout channel "
-	          << "[" << readout_channel.to_label() << "].\n";
+	          << "[" << readout_channel.to_label() << "]\n";
      }
 
      // Instantiate the identifier of a calorimeter signal readout channel:
@@ -77,7 +77,7 @@ of a calorimeter optical module.
 	const sncabling::om_id & calo_id = caloSignalCabling.get_om(readout_id);
         std::cout << "WaveCatcher readout channel [" << readout_id.to_label() << "] "
 	          << "is associated to the OM "
-                  << "[" << calo_id.to_label() << "].\n";
+                  << "[" << calo_id.to_label() << "]\n";
      }
 
      // Terminate the cabling service:
@@ -91,12 +91,13 @@ Output is then:
 .. code:: bash
 
    OM [M:0.3.1] is associated to the WaveCatcher readout channel [H:0.3.1]
-   WaveCatcher readout channel [H:2.15.5] is associated to the OM [G:1.1.5].
+   WaveCatcher readout channel [H:2.15.5] is associated to the OM [G:1.1.5]
 ..
 
 Expert tools
 ============
 
 Expert tools (Python  3) are also provided to  generate cabling tables
-and labels to help cabling operations at LSM.
+and  labels to  help cabling  operations at  LSM. However  no publicly
+available Python API is provided for now.
 
