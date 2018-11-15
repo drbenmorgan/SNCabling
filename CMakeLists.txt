@@ -115,10 +115,6 @@ add_subdirectory(source)
 # endif()
 
 #-----------------------------------------------------------------------
-# Resource installation
-# add_subdirectory(resources)
-
-#-----------------------------------------------------------------------
 # - CMake Support files
 include(CMakePackageConfigHelpers)
 
@@ -166,6 +162,10 @@ install(
 
 #-----------------------------------------------------------------------
 # - Install published resources and documentation
+
+#-----------------------------------------------------------------------
+# Resource installation
+add_subdirectory(resources)
 # message(STATUS "[devel] PROJECT_BUILD_DATAROOTDIR = '${PROJECT_BUILD_DATAROOTDIR}'")
 # install(DIRECTORY ${PROJECT_BUILD_DATAROOTDIR}/
 #   DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}
