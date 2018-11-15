@@ -12,6 +12,8 @@ SuperNEMO Demonstrator Cabling
 .. role:: bash(code)
    :language: bash
 
+.. contents::
+	      
 Introduction
 ============
 
@@ -25,16 +27,18 @@ The ``SNCabling`` C++ library
 The  ``SNCabling`` C++  library  provides a  service  which hosts  all
 searchable cabling tables of interest:
 
-- ``CaloHV`` : SuperNEMO calorimeter HV system 
+- ``CaloHV`` : SuperNEMO calorimeter HV system
 - ``CaloSignal`` : SuperNEMO calorimeter signal readout system
-- ``TrackerHV`` : SuperNEMO tracker HV system  (*not implemented yet*)
-- ``TrackerSignal`` : SuperNEMO tracker signal readout system  (*not implemented yet*)
-- ``LIS`` : SuperNEMO light injection system  (*work in progress*)
+- ``TrackerHV`` : SuperNEMO tracker HV system (*not implemented yet*)
+- ``TrackerSignal`` :  SuperNEMO tracker  signal readout  system (*not
+  implemented yet*)
+- ``LIS`` : SuperNEMO light injection system (*work in progress*)
 
   
-**Example**: the following example illustrates how to, from the SuperNEMO
-cabling API, search and find the identifier of a readout channel from the identifier
-of a calorimeter optical module.
+**Example**:  the  following  example  illustrates how  to,  from  the
+SuperNEMO cabling API, search and find the identifier of a WaveCatcher
+board readout  channel from  the identifier  of a  calorimeter optical
+module.
 
 .. code:: c++
 
@@ -94,10 +98,95 @@ Output is then:
    WaveCatcher readout channel [H:2.15.5] is associated to the OM [G:1.1.5]
 ..
 
+Installing SNCabling
+====================
+
+
+#. First make sure a recent version (>=3.4) of Bayeux_ is installed on
+   your system.
+#. Clone the ``SNCabling`` source repository from GitLab IN2P3 to some
+   directory of your own:
+
+   .. code:: bash
+
+      $ git clone https://gitlab.in2p3.fr/SuperNEMO-DBD/SNCabling
+      $ cd SNCabling/
+	     
+#. From the  ``SNCabling`` source  directory, create a  separate build
+   directory:
+
+   .. code:: bash
+
+      $ mkdir _build
+      $ cd _build
+   ..
+	     
+#. Configure ``SNCabling``:
+
+
+   .. code:: bash
+
+      $ cmake \
+          -DCMAKE_BUILD_TYPE:STRING="Release" \
+          -DCMAKE_INSTALL_PREFIX:PATH="/opt/sw/SuperNEMO-DBD/SNCabling" \
+	  -GNinja \
+	  ..
+      $ ninja -j 6
+      $ ninja test
+      $ ninja install
+   ..
+   
+   where ``/opt/sw/SuperNEMO-DBD/SNCabling`` is an arbitrary directory where to install
+   ``SNCabling``.
+	     
+#. Cleaning:
+
+   You can safely remove the build directory:
+ 
+   .. code:: bash
+
+      $ cd ..
+      $ rm -fr _build
+   ..
+   
+   
+Using SNCabling
+===============
+
+You must update your ``PATH`` environment variable:
+
+.. code:: bash
+
+   $ export PATH="/opt/sw/SuperNEMO-DBD/SNCabling/bin:${PATH}"
+..
+
+The   ``sncablingquery``  utility   script  is   provided  to   locate
+``SNCabling``  components  (shared  library,  header  files,  resource
+files) in the installation directory:
+
+.. code:: bash
+
+   $ sncablingquery --help	  
+..
+
+``SNCabling``  is provided  with  CMake support.  To  build a  package
+depending  on  ``SNCabling``,  you   may  indicate  the  ``SNCabling``
+location to CMake with a command like:
+
+.. code:: bash
+
+   $ cmake -DSNCabling_DIR=$(sncablingquery --cmakedir) ...	  
+..
+
+
 Expert tools
 ============
 
-Expert tools (Python  3) are also provided to  generate cabling tables
-and  labels to  help cabling  operations at  LSM. However  no publicly
-available Python API is provided for now.
+Expert tools  (Python 3) are  provided to generate  (template) cabling
+tables  and labels  to  help  cabling operations  at  LSM. However  no
+publicly available Python API is provided for now.
 
+
+
+
+.. _Bayeux: https://github.com/BxCppDev/Bayeux
