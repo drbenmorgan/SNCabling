@@ -6,7 +6,8 @@ SuperNEMO Demonstrator Cabling
 :Author: F.Mauger, Y.Lemière
 :Date: 2018-10-08
 
-
+.. role:: c++(code)
+   :language: c++
 
 Introduction
 ============
