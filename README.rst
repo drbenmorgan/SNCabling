@@ -43,12 +43,15 @@ module.
 .. code:: c++
 
    #include <iostream>
+   #include <sncabling/sncabling.h>
    #include <sncabling/service.h>
    #include <sncabling/calo_signal_cabling.h>
    #include <sncabling/om_id.h>
    #include <sncabling/label.h>
 
-   int main() {
+   int main()
+   {
+     sncabling::initialize();
      // Instantiate and initialize the cabling service:
      sncabling::service snCabling;
      snCabling.initialize_simple();
@@ -86,6 +89,7 @@ module.
 
      // Terminate the cabling service:
      snCabling.reset();
+     sncabling::terminate();
      return 0;
    }
 ..

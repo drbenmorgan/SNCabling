@@ -14,7 +14,7 @@ int main()
   
   // Instantiate and initialize the cabling service:
   sncabling::service snCabling;
-  snCabling.initialize_simple();
+  snCabling.initialize_simple(); // Use default configuration
 
   // Access to the calorimeter signal readout cabling map:
   const sncabling::calo_signal_cabling & caloSignalCabling
@@ -24,7 +24,11 @@ int main()
   std::clog << std::endl;
   
   // Instantiate the identifier of an optical module (OM):
-  sncabling::om_id calo_id(sncabling::OM_MAIN, 0, 3, 1);
+  int16_t wall_num   = 0;
+  int16_t column_num = 3;
+  int16_t row_num    = 1;
+  sncabling::om_id calo_id(sncabling::OM_MAIN,
+                           wall_num, column_num, row_num);
 
   // Search the identifier of the readout channel associated
   // to the OM identifier:
@@ -39,7 +43,11 @@ int main()
   }
 
   // Instantiate the identifier of a calorimeter signal readout channel:
-  sncabling::calo_signal_id readout_id(sncabling::CALOSIGNAL_CHANNEL, 2, 15, 5);
+  int16_t crate_num   = 2;
+  int16_t board_num   = 15;
+  int16_t channel_num = 5;
+  sncabling::calo_signal_id readout_id(sncabling::CALOSIGNAL_CHANNEL,
+                                       crate_num, board_num, channel_num);
 
   // Search the identifier of the OM associated to the readout channel identifier:
   if (caloSignalCabling.has_channel(readout_id)) {
