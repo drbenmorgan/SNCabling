@@ -37,6 +37,7 @@
 namespace {
 
   static bool _sncablingInit = false;
+  static bool _bayeuxInitMaster = false;
 
   void sncabling_initialize_impl()
   {
@@ -84,7 +85,10 @@ namespace sncabling {
   {
     if (! ::_sncablingInit) {
       // Wrap Bayeux initialization because we need resources from various Bayeux's modules:
-      ::bayeux::initialize(argc_,argv_, flags_);
+      if (!::bayeux::is_initialized()) {
+        ::bayeux::initialize(argc_,argv_, flags_);
+        ::_bayeuxInitMaster = true;
+      }
       // Initialization code from SNCabling itself:
       sncabling_initialize_impl();
       ::_sncablingInit = true;
@@ -103,7 +107,10 @@ namespace sncabling {
       sncabling_terminate_impl();
 
       // Wrap Bayeux termination:
-      ::bayeux::terminate();
+      if (::bayeux::is_initialized() and ::_bayeuxInitMaster) {
+        ::bayeux::terminate();
+        ::_bayeuxInitMaster = false;
+      }
     } else {
         DT_THROW(std::logic_error,
                  "Attempt to terminate the already terminated SNCabling library!");

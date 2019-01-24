@@ -117,13 +117,13 @@ if [ $? -ne 0 ]; then
 fi
 
 bxversion=$(bxquery --version)
-if [ "${bxversion}" != "${bayeux_version}" ]; then
-    echo >&2 "[error] Bayeux's version ${bxversion} is not supported!"
-    my_exit 1
-else
-    echo >&2 "[info] Found Bayeux ${bxversion}"
-fi
-
+# if [ "${bxversion}" != "${bayeux_version}" ]; then
+#     echo >&2 "[error] Bayeux's version ${bxversion} is not supported!"
+#     my_exit 1
+# else
+#     echo >&2 "[info] Found Bayeux ${bxversion}"
+# fi
+echo >&2 "[info] Found Bayeux ${bxversion}"
 if [ -d ${install_dir} ]; then
     rm -fr ${install_dir}
 fi
