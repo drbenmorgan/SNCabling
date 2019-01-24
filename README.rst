@@ -2,9 +2,8 @@
 SuperNEMO Demonstrator Cabling
 ========================================
 
-
 :Author: F.Mauger, Y.Lemière
-:Date: 2018-10-08
+:Date: 2019-01-24
 
 .. role:: cpp(code)
    :language: cpp
@@ -20,6 +19,7 @@ Introduction
 This project  aims to describe the  cabling rules and schemes  for all
 submodules in  the SuperNEMO  Demonstrator: calorimeter signal  and HV
 cables, tracker signal & HV cables, Light Injection System (LIS)...
+
 
 The ``SNCabling`` C++ library
 =============================
@@ -102,9 +102,9 @@ Output is then:
    WaveCatcher readout channel [H:2.15.5] is associated to the OM [G:1.1.5]
 ..
 
+
 Installing SNCabling
 ====================
-
 
 #. First make sure a recent version (>=3.4) of Bayeux_ is installed on
    your system.
@@ -189,8 +189,6 @@ Expert tools
 Expert tools  (Python 3) are  provided to generate  (template) cabling
 tables  and labels  to  help  cabling operations  at  LSM. However  no
 publicly available Python API is provided for now.
-
-
 
 
 .. _Bayeux: https://github.com/BxCppDev/Bayeux
