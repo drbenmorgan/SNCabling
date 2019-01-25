@@ -16,11 +16,12 @@ mkdir ${target_dir}/Tables
 cp _calohv_labels_out.d/*.pdf ${target_dir}/Labels/
 cp _calohv_labels_out.d/*.lis ${target_dir}/Labels/
 cp _calohv_table_out.d/*.pdf ${target_dir}/Tables/
-cp calohv_mapping-skel.csv ${target_dir}/
+# cp calohv_mapping-skel.csv ${target_dir}/
+cp calohv_mapping.csv ${target_dir}/
 
 cd ../documentation/CaloHV/CaloHVScheme/
 make final
-cp SuperNEMO_CaloHV_CablingScheme-0.3.pdf ${target_dir}/
+cp SuperNEMO_CaloHV_CablingScheme-0.4.pdf ${target_dir}/
 
 cd ${opwd}
 tree ${target_dir}

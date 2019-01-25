@@ -4,7 +4,7 @@ THE_DIR=.
 XFIG_DIR=$(THE_DIR)/fig
 PDFTEX_DIR=$(THE_DIR)/pdftex
 PDFTEX_T_DIR=$(THE_DIR)/pdftex_t
-DOCVER=0.3
+DOCVER=0.4
 
 MAIN=main
 FILE_LABEL=SuperNEMO_CaloHV_CablingScheme-$(DOCVER)
@@ -52,7 +52,7 @@ clean_pdftex :
 clean_pdftex_t :
 	@$(RM) $(addprefix $(PDFTEX_T_DIR)/,$(fig2pdftex_t_files))
 
-tex_sources=calohv_crates.tex calohv_rack.tex calohv_addressing.tex calohv_pp.tex calohv_cabling_table.tex
+tex_sources=calohv_crates.tex calohv_rack.tex calohv_addressing.tex calohv_pp.tex calohv_cabling_table.tex calohv_cabling_history.tex
 
 .PHONY : pdf
 pdf : $(MAIN).pdf 

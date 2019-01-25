@@ -33,7 +33,7 @@ namespace sncabling {
         sd.label       = "CaloHV";
         sd.description = "SuperNEMO calorimeter HV system";
         sd.id          = SYSTEM_CALOHV;
-        sd.default_map = "@sncabling:config/snemo/demonstrator/cabling/CaloHV/tags/ideal/CaloHVCabling/calohv_mapping.csv";
+        sd.default_map = "@sncabling:config/snemo/demonstrator/cabling/CaloHV/tags/original/CaloHVCabling/calohv_mapping.csv";
         sysmap[sd.id]  = sd;
       }
       {

@@ -2,13 +2,13 @@
 
 opwd=$(pwd)
 
-test=true
 
 calohvmap="calohv_mapping.csv"
-if [ $test ] ; then
-    python3 ${opwd}/calohv_map_skel_gen.py
-    calohvmap="${opwd}/calohv_mapping-skel.csv"
-fi
+# test=false
+# if [ $test ] ; then
+#     python3 ${opwd}/calohv_map_skel_gen.py
+#     calohvmap="${opwd}/calohv_mapping-skel.csv"
+# fi
 
 if [ ! -f ${calohvmap} ]; then
     echo >&2 "[error] Missing CaloHV mapping file! Abort!"
@@ -22,6 +22,10 @@ fi
 mkdir -p ${workdir}
 
 python3 ./calohv_map_print.py ${calohvmap} ${workdir}
+if [ $? -ne 0 ]; then
+    echo >&2 "[error] Abort!"
+    exit 1
+fi
 
 tree ${workdir}
 
