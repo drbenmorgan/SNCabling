@@ -42,9 +42,9 @@ void run2()
   cabling_config.store_path("logging.priority", "debug");
   // Force specific cabling maps:
   cabling_config.store_path("CaloHV.default_map",
-                            "${SNCABLING_RESOURCE_FILES_DIR}/config/snemo/demonstrator/cabling/CaloHV/0.3/CaloHVCabling/calohv_mapping.csv");
+                            "${SNCABLING_RESOURCE_FILES_DIR}/config/snemo/demonstrator/cabling/CaloHV/tags/original/CaloHVCabling/calohv_mapping.csv");
   cabling_config.store_path("CaloSignal.default_map",
-                            "${SNCABLING_RESOURCE_FILES_DIR}/config/snemo/demonstrator/cabling/CaloSignal/0.2/CaloSignalCabling/calosignal_mapping.csv");
+                            "${SNCABLING_RESOURCE_FILES_DIR}/config/snemo/demonstrator/cabling/CaloSignal/tags/original/CaloSignalCabling/calosignal_mapping.csv");
 
   // Cabling service uses default cabling map (CaloHV, CaloSignal) if none are specified:
   cabling.initialize_standalone(cabling_config);
