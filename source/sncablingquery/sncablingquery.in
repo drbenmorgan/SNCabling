@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2015 François Mauger <mauger@lpccaen.in2p3.fr>
+# Copyright 2018-2019 François Mauger <mauger@lpccaen.in2p3.fr>
 #
 # This file is part of SNCabling.
 #
@@ -23,6 +23,8 @@
 # batch system on a computin farm).
 # Note: this is a not relocatable version.
 
+APPNAME="sncablingquery"
+
 prefix_dir="@CMAKE_INSTALL_PREFIX@"
 version_str="@SNCabling_VERSION@"
 lib_dir="${prefix_dir}/@CMAKE_INSTALL_LIBDIR@"
@@ -31,12 +33,7 @@ inc_dir="${prefix_dir}/@CMAKE_INSTALL_INCLUDEDIR@"
 data_dir="${prefix_dir}/@CMAKE_INSTALL_DATADIR@/SNCabling-@SNCabling_VERSION@"
 doc_dir="${data_dir}/Documentation"
 resource_dir="${data_dir}/resources"
-# plugin_dir="${lib_dir}/@SNCabling_PLUGINLIBDIR@"
 cmake_dir="${prefix_dir}/@CMAKE_INSTALL_LIBDIR@/cmake/SNCabling-@SNCabling_VERSION@"
-APPNAME="sncablingquery"
-
-# Experimental:
-# plugins="$(find ${plugin_dir} -name lib*.* -exec basename \{\} \; | cut -d. -f1 | sed -e 's/lib//g')"
 
 function print_usage()
 {

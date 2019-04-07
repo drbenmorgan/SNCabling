@@ -3,7 +3,7 @@ SuperNEMO Demonstrator Cabling
 ========================================
 
 :Author: F.Mauger, Y.Lemière
-:Date: 2019-01-24
+:Date: 2019-04-08
 
 .. role:: cpp(code)
    :language: cpp
@@ -27,18 +27,20 @@ The ``SNCabling`` C++ library
 The  ``SNCabling`` C++  library  provides a  service  which hosts  all
 searchable cabling tables of interest:
 
-- ``CaloHV`` : SuperNEMO calorimeter HV system
-- ``CaloSignal`` : SuperNEMO calorimeter signal readout system
+- ``CaloHV`` : SuperNEMO calorimeter HV system (*to be fixed with final cabling*)
+- ``CaloSignal`` : SuperNEMO calorimeter signal readout system (*to be checked*)
 - ``TrackerHV`` : SuperNEMO tracker HV system (*not implemented yet*)
 - ``TrackerSignal`` :  SuperNEMO tracker  signal readout  system (*not
   implemented yet*)
-- ``LIS`` : SuperNEMO light injection system (*work in progress*)
+- ``LIS`` : SuperNEMO light injection system (*to be checked*)
 
   
 **Example**:  the  following  example  illustrates how  to,  from  the
 SuperNEMO cabling API, search and find the identifier of a WaveCatcher
 board readout  channel from  the identifier  of a  calorimeter optical
-module.
+module. The SNCabling must be built using the ``-DSNCABLING_WITH_SERVICE=ON``
+options with explicit dependency on Bayeux in order to implement the
+``sncabling::service`` class:
 
 .. code:: c++
 
@@ -103,11 +105,18 @@ Output is then:
 ..
 
 
+Dependencies
+============
+
+* Boost
+* Bayeux for *service* support
+
+
 Installing SNCabling
 ====================
 
 #. First make sure a recent version (>=3.4) of Bayeux_ is installed on
-   your system.
+   your system in order to support the *service* object.
 #. Clone the ``SNCabling`` source repository from GitLab IN2P3 to some
    directory of your own:
 
@@ -125,7 +134,7 @@ Installing SNCabling
       $ cd _build
    ..
 	     
-#. Configure ``SNCabling``:
+#. Configure ``SNCabling`` without *service* support:
 
 
    .. code:: bash
@@ -142,6 +151,22 @@ Installing SNCabling
    
    where ``/opt/sw/SuperNEMO-DBD/SNCabling`` is an arbitrary directory where to install
    ``SNCabling``.
+
+
+   With *service* support, you need to specify the Bayeux installation prefix path:
+
+ 
+   .. code:: bash
+
+      $ which bxquery
+      $ cmake \
+          -DCMAKE_BUILD_TYPE:STRING="Release" \
+          -DCMAKE_INSTALL_PREFIX:PATH="/opt/sw/SuperNEMO-DBD/SNCabling" \
+	  -DSNCABLING_WITH_SERVICE=ON \
+	  -DBayeux_DIR:PATH=$(bxquery --cmakedir) \
+	  -GNinja \
+	  ..
+   ..  
 	     
 #. Cleaning:
 

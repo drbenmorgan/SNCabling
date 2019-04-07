@@ -150,8 +150,8 @@ else
     fi
 fi
 
-linuxbrew_prefix=$(brew --prefix)
-echo >&2 "[info] Linuxbrew prefix : '${linuxbrew_prefix}'"
+# linuxbrew_prefix=$(brew --prefix)
+# echo >&2 "[info] Linuxbrew prefix : '${linuxbrew_prefix}'"
 
 service_options=
 if [ ${with_service} == true ]; then
