@@ -27,6 +27,7 @@ Options:
    --help               : print help
    --debug              : activate debug mode
    --only-configure     : perform configuration stage only
+   --with-service       : buold with service support (and Bayeux dep)
 
 EOF
     return
@@ -37,10 +38,12 @@ only_configure=0
 debug=0
 sncabling_source_dir="${opwd}"
 sncabling_version="develop"
-bayeux_version="3.4.0"
 install_dir=$(pwd)/_install.d
 build_dir=$(pwd)/_build.d
 with_tests=false
+with_service=false
+with_bayeux=false
+bayeux_version="3.4.0"
 
 function cl_parse()
 {
@@ -60,6 +63,8 @@ function cl_parse()
 	elif [ "${arg}" = "--source-dir" ]; then
 	    shift 1
 	    sncabling_source_dir="$1"
+	elif [ "${arg}" = "--with-service" ]; then
+	    with_service=true
 	elif [ "${arg}" = "--develop" ]; then
 	    sncabling_version="develop"
 	elif [ "${arg}" = "--bayeux-version" ]; then
@@ -95,35 +100,42 @@ else
     echo >&2 "[info] Found Ubuntu Linux ${distrib_release}"
 fi
 
-# Check:
-which brew > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-    echo >&2 "[error] Linuxbrew is not setup! Please run linuxbrew_setup! Abort!"
-    my_exit 1
-else
-    echo >&2 "[info] Found Linuxbrew : $(which brew)"
-fi
+# # Check:
+# which brew > /dev/null 2>&1
+# if [ $? -ne 0 ]; then
+#     echo >&2 "[error] Linuxbrew is not setup! Please run linuxbrew_setup! Abort!"
+#     my_exit 1
+# else
+#     echo >&2 "[info] Found Linuxbrew : $(which brew)"
+# fi
 
 if [ ! -d ${sncabling_source_dir} ]; then
     echo >&2 "[error] SNCabling source directory '${sncabling_source_dir}' does not exist! Abort!"
     my_exit 1
 fi
 
-# Checks:
-which bxquery > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-    echo >&2 "[error] Bayeux is not setup!"
-    my_exit 1
+if [ ${with_service} == true ]; then
+    with_bayeux=true
 fi
 
-bxversion=$(bxquery --version)
-# if [ "${bxversion}" != "${bayeux_version}" ]; then
-#     echo >&2 "[error] Bayeux's version ${bxversion} is not supported!"
-#     my_exit 1
-# else
-#     echo >&2 "[info] Found Bayeux ${bxversion}"
-# fi
-echo >&2 "[info] Found Bayeux ${bxversion}"
+# Checks:
+if [ ${with_bayeux} == true ]; then
+    which bxquery > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+	echo >&2 "[error] Bayeux is not setup!"
+	my_exit 1
+    fi
+    
+    bxversion=$(bxquery --version)
+    # if [ "${bxversion}" != "${bayeux_version}" ]; then
+    #     echo >&2 "[error] Bayeux's version ${bxversion} is not supported!"
+    #     my_exit 1
+    # else
+    #     echo >&2 "[info] Found Bayeux ${bxversion}"
+    # fi
+    echo >&2 "[info] Found Bayeux ${bxversion}"
+fi
+
 if [ -d ${install_dir} ]; then
     rm -fr ${install_dir}
 fi
@@ -141,14 +153,22 @@ fi
 linuxbrew_prefix=$(brew --prefix)
 echo >&2 "[info] Linuxbrew prefix : '${linuxbrew_prefix}'"
 
+service_options=
+if [ ${with_service} == true ]; then
+    service_options="-DBayeux_DIR:PATH=$(bxquery --cmakedir) -DSNCABLING_WITH_SERVICE=ON"
+fi
+
+special_options=
+### special_options="-DCMAKE_FIND_ROOT_PATH:PATH=${linuxbrew_prefix}"
+											  
 cd ${build_dir}
 echo >&2 ""
 echo >&2 "[info] Configuring..."
 cmake \
     -DCMAKE_BUILD_TYPE:STRING="Release" \
     -DCMAKE_INSTALL_PREFIX:PATH="${install_dir}" \
-    -DCMAKE_FIND_ROOT_PATH:PATH="${linuxbrew_prefix}" \
-    -DBayeux_DIR:PATH="$(bxquery --cmakedir)" \
+    ${special_options} \
+    ${service_options} \
     -DSNCABLING_COMPILER_ERROR_ON_WARNING=ON \
     -DSNCABLING_CXX_STANDARD="11" \
     -DSNCABLING_ENABLE_TESTING=ON \

@@ -27,12 +27,13 @@
 
 // Third Party:
 #include <boost/algorithm/string.hpp>
-#include <bayeux/datatools/exception.h>
-#include <bayeux/datatools/logger.h>
-#include <bayeux/datatools/utils.h>
+// #include <bayeux/datatools/utils.h>
 
 // This project:
 #include <sncabling/label.h>
+#include <sncabling/exception.h>
+#include <sncabling/logger.h>
+#include <sncabling/utils.h>
 
 namespace sncabling {
 
@@ -52,7 +53,7 @@ namespace sncabling {
                               const om_id & to_om_)
   {
     const auto & found = _table_.find(fiber_);
-    DT_THROW_IF(found != _table_.end(), std::logic_error,
+    SN_THROW_IF(found != _table_.end(), std::logic_error,
                 "Fiber '" << fiber_.to_label() << "' already connected!");
     fiber_connections conn;
     conn.om = to_om_;
@@ -64,7 +65,7 @@ namespace sncabling {
   const om_id & lis_cabling::get_om(const lis_id & fiber_) const
   {
     const auto & found = _table_.find(fiber_);
-    DT_THROW_IF(found == _table_.end(), std::logic_error,
+    SN_THROW_IF(found == _table_.end(), std::logic_error,
                 "Missing fiber!");
     return found->second.om;
   }
@@ -72,7 +73,7 @@ namespace sncabling {
   const lis_id & lis_cabling::get_led(const lis_id & fiber_) const
   {
     const auto & found = _table_.find(fiber_);
-    DT_THROW_IF(found == _table_.end(), std::logic_error,
+    SN_THROW_IF(found == _table_.end(), std::logic_error,
                 "Missing fiber!");
     return found->second.led;
   }
@@ -156,19 +157,18 @@ namespace sncabling {
 
   void lis_cabling::load(const std::string & filename_, const unsigned int tags_)
   {
-    datatools::logger::priority logging = datatools::logger::PRIO_FATAL;
+    bool debug = false;
     bool led_bundle_match = false;
     if (tags_ & LOAD_DEBUG) {
-      logging = datatools::logger::PRIO_DEBUG;
+      debug = true;
     }
     if (tags_ & LOAD_LED_BUNDLE_MATCH) {
       led_bundle_match = true;
     }
-    if (datatools::logger::is_debug(logging)) {
-      DT_LOG_DEBUG(logging,"Loading file '" << filename_ << "'...");
-    }
+    SN_LOG_DEBUG(debug, "Loading file '" << filename_ << "'...");
     std::string filename = filename_;
-    datatools::fetch_path_with_env(filename);
+    // datatools::fetch_path_with_env(filename);
+    filename = resolve_path(filename_);
     std::ifstream fin(filename.c_str());
     std::size_t line_counter = 0;
     while (fin) {
@@ -179,38 +179,32 @@ namespace sncabling {
       if (raw_line.size() == 0 || raw_line[0] == '#') {
         continue;
       }
-      if (datatools::logger::is_debug(logging)) {
-        std::cerr << "[debug] Raw line: '" << raw_line << "'" << std::endl;
-      }
+      SN_LOG_DEBUG(debug,"Raw line: '" << raw_line << "'");
       std::vector<std::string> tokens;
       
       boost::split(tokens, raw_line, boost::is_any_of(";"));
-      DT_THROW_IF(tokens.size() != 2, std::logic_error,
+      SN_THROW_IF(tokens.size() != 2, std::logic_error,
                   "Invalid format!");
       std::string fiber_repr = tokens[0];
       std::string om_repr = tokens[1];
      
       label fiber_lbl;
-      DT_THROW_IF(!fiber_lbl.parse_from(fiber_repr),
+      SN_THROW_IF(!fiber_lbl.parse_from(fiber_repr),
                   std::logic_error,
                   "Invalid LIS label format '" << fiber_repr << "'!");
-      if (datatools::logger::is_debug(logging)) {
-        std::cerr << "[debug] LIS fiber label: '" << fiber_lbl << "'" << std::endl;
-      }
+      SN_LOG_DEBUG(debug, "LIS fiber label: '" << fiber_lbl << "'");
       label om_lbl;
-      DT_THROW_IF(!om_lbl.parse_from(om_repr),
+      SN_THROW_IF(!om_lbl.parse_from(om_repr),
                   std::logic_error,
                   "Invalid OM label format '" << om_repr << "'!");
-      if (datatools::logger::is_debug(logging)) {
-        std::cerr << "[debug] OM label: '" << om_lbl << "'" << std::endl;
-      }
+      SN_LOG_DEBUG(debug, "OM label: '" << om_lbl << "'");
 
       lis_id fiber;
-      DT_THROW_IF(!fiber.from_label(fiber_lbl),
+      SN_THROW_IF(!fiber.from_label(fiber_lbl),
                   std::logic_error,
                   "Invalid LIS fiber identifier '" << fiber_lbl << "'!");
       om_id om;
-      DT_THROW_IF(!om.from_label(om_lbl),
+      SN_THROW_IF(!om.from_label(om_lbl),
                   std::logic_error,
                   "Invalid OM identifier '" << om_lbl << "'!");
 

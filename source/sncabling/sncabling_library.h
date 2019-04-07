@@ -19,7 +19,6 @@
 // You should have received a copy of the GNU General Public License
 // along with SNCabling.  If not, see <http://www.gnu.org/licenses/>.
 
-
 #ifndef SNCABLING_SNCABLING_LIBRARY_H
 #define SNCABLING_SNCABLING_LIBRARY_H
 
@@ -29,8 +28,10 @@
 
 // Third party:
 #include <boost/core/noncopyable.hpp>
-#include <bayeux/datatools/logger.h>
+
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
 #include <bayeux/datatools/service_manager.h>
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
 
 namespace sncabling {
 
@@ -58,17 +59,16 @@ namespace sncabling {
     /// Return the name of the SNCabling library's URN to resource path resolver service
     static const std::string & resource_resolver_name();
 
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
     /// Extract the verbosity from the SNCABLING_LIBRARY_LOGGING environment variable (if any)
     static datatools::logger::priority process_logging_env();
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
 
     /// Default constructor
     sncabling_library();
 
     /// Destructor
     virtual ~sncabling_library();
-
-    /// Return the logging priority
-    datatools::logger::priority get_logging() const;
 
     /// Check initialization flag
     bool is_initialized() const;
@@ -79,11 +79,13 @@ namespace sncabling {
     /// Shutdown
     void shutdown();
 
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
     /// Return a mutable reference to the embedded service manager
     datatools::service_manager & grab_services();
 
     /// Return a non mutable reference to the embedded service manager
     const datatools::service_manager & get_services() const;
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
 
     /// Check if the SNCabling system singleton is instantiated
     static bool is_instantiated();
@@ -99,6 +101,7 @@ namespace sncabling {
 
   private:
 
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
     void _libinfo_registration_();
 
     void _libinfo_deregistration_();
@@ -106,15 +109,17 @@ namespace sncabling {
     void _initialize_urn_services_();
 
     void _shutdown_urn_services_();
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
 
   private:
 
     // Management:
     bool _initialized_ = false;            //!< Initialization flag
-    datatools::logger::priority _logging_ = datatools::logger::PRIO_FATAL; //!< Logging priority threshold
 
     // Working internal data:
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
     datatools::service_manager _services_; //!< Embedded services
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
 
     // Singleton:
     static sncabling_library * _instance_;  //!< SNCabling library system singleton handle

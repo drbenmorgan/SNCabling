@@ -25,14 +25,13 @@
 
 // Third party:
 // - Bayeux:
-#include <bayeux/bayeux.h>
-// - Bayeux/datatools
-#include <datatools/exception.h>
+//#include <bayeux/bayeux.h>
 
 // This project:
 #include <sncabling/version.h>
 #include <sncabling/resource_files.h>
 #include <sncabling/sncabling_library.h>
+#include <sncabling/exception.h>
 
 namespace {
 
@@ -41,34 +40,24 @@ namespace {
 
   void sncabling_initialize_impl()
   {
-   ::datatools::logger::priority logging = ::sncabling::sncabling_library::process_logging_env();
-    DT_LOG_TRACE_ENTERING(logging);
     // sncabling::init_resources();
 
     if (!::sncabling::sncabling_library::is_instantiated()) {
-      DT_LOG_TRACE(logging, "Instantiating SNCabling system singleton...");
       ::sncabling::sncabling_library & sncablingLib = ::sncabling::sncabling_library::instantiate();
-      DT_LOG_TRACE(logging, "Initializing SNCabling system singleton with specific internals...");
       sncablingLib.initialize();
     }
 
-    DT_LOG_TRACE_EXITING(logging);
     return;
   }
 
   void sncabling_terminate_impl()
   {
-   ::datatools::logger::priority logging = ::sncabling::sncabling_library::process_logging_env();
-    DT_LOG_TRACE_ENTERING(logging);
     if (::sncabling::sncabling_library::is_instantiated()) {
-      DT_LOG_TRACE(logging, "Shutdown SNCabling system singleton specific internals...");
       ::sncabling::sncabling_library & sncablingLib = ::sncabling::sncabling_library::instance();
       if (sncablingLib.is_initialized()) {
         sncablingLib.shutdown();
       }
-      DT_LOG_TRACE(logging, "SNCabling system singleton have been terminated.");
     }
-    DT_LOG_TRACE_EXITING(logging);
     return;
   }
 
@@ -85,15 +74,15 @@ namespace sncabling {
   {
     if (! ::_sncablingInit) {
       // Wrap Bayeux initialization because we need resources from various Bayeux's modules:
-      if (!::bayeux::is_initialized()) {
-        ::bayeux::initialize(argc_,argv_, flags_);
-        ::_bayeuxInitMaster = true;
-      }
+      // if (!::bayeux::is_initialized()) {
+      //   ::bayeux::initialize(argc_,argv_, flags_);
+      //   ::_bayeuxInitMaster = true;
+      // }
       // Initialization code from SNCabling itself:
       sncabling_initialize_impl();
       ::_sncablingInit = true;
     } else {
-      DT_THROW_IF(true, std::logic_error,
+      SN_THROW_IF(true, std::logic_error,
                   "Attempt to initialize the already initialized SNCabling library!");
     }
     return;
@@ -107,12 +96,12 @@ namespace sncabling {
       sncabling_terminate_impl();
 
       // Wrap Bayeux termination:
-      if (::bayeux::is_initialized() and ::_bayeuxInitMaster) {
-        ::bayeux::terminate();
-        ::_bayeuxInitMaster = false;
-      }
+      // if (::bayeux::is_initialized() and ::_bayeuxInitMaster) {
+      //   ::bayeux::terminate();
+      //   ::_bayeuxInitMaster = false;
+      // }
     } else {
-        DT_THROW(std::logic_error,
+        SN_THROW(std::logic_error,
                  "Attempt to terminate the already terminated SNCabling library!");
     }
     return;

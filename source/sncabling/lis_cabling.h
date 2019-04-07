@@ -27,22 +27,21 @@
 #include <vector>
 #include <iostream>
 
-// Third Party:
-#include <bayeux/datatools/bit_mask.h>
-
 // This project:
 #include <sncabling/om_id.h>
 #include <sncabling/lis_id.h>
 
 namespace sncabling {
 
+  /// \brief Light Injection System Cabling 
   class lis_cabling
   {
   public:
 
+    /// \brief Connections at both terminations of a fiber
     struct fiber_connections {
-      om_id  om;
-      lis_id led;
+      om_id  om;  ///< Optical module ID
+      lis_id led; ///< LED ID
     };
     
     typedef std::map<lis_id, fiber_connections> fiber_cabling_map_type;
@@ -70,9 +69,10 @@ namespace sncabling {
     bool build_led_from_om(const om_id & om_, lis_id & led_, const bool secondary_ = false) const;
 
     enum load_tag {
-      LOAD_DEBUG = datatools::bit_mask::bit00,
-      LOAD_LED_BUNDLE_MATCH = datatools::bit_mask::bit01
+      LOAD_DEBUG            = 0x0,
+      LOAD_LED_BUNDLE_MATCH = 0x1
     };
+    
     void load(const std::string & filename_, const unsigned int tags_ = 0);
     
   private:

@@ -49,8 +49,9 @@ set(SNCablingLibrary_HEADERS
   lis_cabling.h
   calo_hv_cabling.h
   calo_signal_cabling.h
-  service.h
   utils.h
+  logger.h
+  exception.h
   time_mark.h
   sncabling.h
   )
@@ -66,7 +67,6 @@ set(MANGLE_BINRELOC "SNCABLINGMB${MANGLE_BINRELOC_MAIN}")
 configure_file(sncabling_binreloc.h.in sncabling_binreloc.h @ONLY)
 
 set(SNCablingLibrary_SOURCES
-  service.cc
   version.cc
   ${CMAKE_CURRENT_BINARY_DIR}/sncabling.cc
   ${CMAKE_CURRENT_BINARY_DIR}/resource_files.cc
@@ -85,6 +85,17 @@ set(SNCablingLibrary_SOURCES
   sncabling_binreloc.c
   sncabling_library.cc
   )
+
+if (SNCABLING_WITH_SERVICE)
+
+  list(APPEND SNCablingLibrary_HEADERS
+    service.h
+    )
+  list(APPEND SNCablingLibrary_SOURCES
+    service.cc
+    )  
+
+endif()
 
 # - Publish headers
 foreach(_hdrin ${SNCablingLibrary_HEADERS})
@@ -141,8 +152,14 @@ target_include_directories(SNCabling
   )
 
 message( STATUS "[debug] SNCabling_Boost_LIBRARIES    = '${SNCabling_Boost_LIBRARIES}'")
+
+set(_SNCabling_SPECIAL_LINKS)
+if (SNCABLING_WITH_BAYEUX_DEPENDENCY)
+  set(_SNCabling_SPECIAL_LINKS Bayeux::Bayeux)
+endif()
+
 target_link_libraries(SNCabling PUBLIC
-  Bayeux::Bayeux
+  ${_SNCabling_SPECIAL_LINKS}
   ${SNCabling_Boost_LIBRARIES}
   )
 

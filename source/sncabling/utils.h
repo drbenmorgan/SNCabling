@@ -27,6 +27,11 @@
 #include <set>
 #include <map>
 #include <memory>
+#include <iostream>
+#include <sstream>
+
+// - Boost:
+#include <boost/current_function.hpp>
 
 namespace sncabling {
 
@@ -42,7 +47,7 @@ namespace sncabling {
 
   struct system_description {
     std::string     label;
-    std::string     description ;
+    std::string     description;
     system_tag_type id;
     std::string     default_map; 
   };
@@ -54,6 +59,8 @@ namespace sncabling {
   const system_map_type & systems_map();
 
   const std::set<system_tag_type> & list_of_system_tags();
+
+  std::string resolve_path(const std::string & path_);
 
 } // namespace sncabling
 

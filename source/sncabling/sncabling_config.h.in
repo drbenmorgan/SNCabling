@@ -28,6 +28,12 @@
 //! Evaluates to true if SNCabling was built with documentation
 #cmakedefine01 SNCABLING_WITH_PLUGINS
 
+//! Evaluates to true if SNCabling was built with service support
+#cmakedefine01 SNCABLING_WITH_SERVICE
+
+//! Evaluates to true if SNCabling was built with Bayeux dependency
+#cmakedefine01 SNCABLING_WITH_BAYEUX_DEPENDENCY
+
 #endif // SNCABLING_SNCABLING_CONFIG_H
 
 // Local Variables: --

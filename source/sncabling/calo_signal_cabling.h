@@ -27,9 +27,6 @@
 #include <vector>
 #include <iostream>
 
-// Third Party:
-#include <bayeux/datatools/bit_mask.h>
-
 // This project:
 #include <sncabling/om_id.h>
 #include <sncabling/calo_signal_id.h>
@@ -84,7 +81,7 @@ namespace sncabling {
     void print(std::ostream & out_ = std::clog) const;
     
     enum load_tag {
-      LOAD_DEBUG = datatools::bit_mask::bit00
+      LOAD_DEBUG = 0x0
     };
     
     void load(const std::string & filename_, const unsigned int tags_ = 0);

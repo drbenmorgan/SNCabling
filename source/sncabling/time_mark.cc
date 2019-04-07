@@ -23,8 +23,8 @@
 // Standard Library:
 #include <sstream>
 
-// Third party:
-#include <bayeux/datatools/exception.h>
+// This project:
+#include <sncabling/exception.h>
 
 namespace sncabling {
 
@@ -65,7 +65,7 @@ namespace sncabling {
   void time_mark::make_period(const int32_t period_id_)
   {
     _mode_ = TIME_MARK_PERIOD;
-    DT_THROW_IF(period_id_ < 0, std::logic_error, "Invalid period ID [" << period_id_ << "]!");
+    SN_THROW_IF(period_id_ < 0, std::logic_error, "Invalid period ID [" << period_id_ << "]!");
     _period_id_ = period_id_;
     _time_ = boost::posix_time::not_a_date_time;
     return;
@@ -75,7 +75,7 @@ namespace sncabling {
   {
     _mode_ = TIME_MARK_TIMEPOINT;
     _period_id_ = INVALID_PERIOD;
-    DT_THROW_IF(pt_.is_not_a_date_time(), std::logic_error, "Invalid time point!");
+    SN_THROW_IF(pt_.is_not_a_date_time(), std::logic_error, "Invalid time point!");
     _time_ = pt_;
     return;
   }
@@ -106,7 +106,7 @@ namespace sncabling {
         } catch (...) {
         }
       }
-      DT_THROW_IF(!success, std::logic_error, "Invalid time representation '" << time_repr_ << "'!");
+      SN_THROW_IF(!success, std::logic_error, "Invalid time representation '" << time_repr_ << "'!");
     }
     return;
   }

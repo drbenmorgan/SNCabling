@@ -28,12 +28,12 @@
 
 // Third Party:
 #include <boost/algorithm/string.hpp>
-#include <bayeux/datatools/exception.h>
-#include <bayeux/datatools/logger.h>
-#include <bayeux/datatools/utils.h>
 
 // This project:
 #include <sncabling/label.h>
+#include <sncabling/exception.h>
+#include <sncabling/logger.h>
+#include <sncabling/utils.h>
 
 namespace sncabling {
 
@@ -59,13 +59,13 @@ namespace sncabling {
                             const calo_hv_id & extharness_,
                             const calo_hv_id & intcable_)
   {
-    DT_THROW_IF(!om_.is_valid(), std::logic_error,
+    SN_THROW_IF(!om_.is_valid(), std::logic_error,
                 "Not an optical module ID!");
-    DT_THROW_IF(!channel_.is_channel(), std::logic_error,
+    SN_THROW_IF(!channel_.is_channel(), std::logic_error,
                 "Not a calorimeter HV channel ID!");
-    DT_THROW_IF(!extharness_.is_external_harness(), std::logic_error,
+    SN_THROW_IF(!extharness_.is_external_harness(), std::logic_error,
                 "Not a calorimeter HV external harness ID!");
-    DT_THROW_IF(!intcable_.is_internal_cable(), std::logic_error,
+    SN_THROW_IF(!intcable_.is_internal_cable(), std::logic_error,
                 "Not a calorimeter HV internal cable ID!");
     hv_connections conn;
     conn.channel = channel_;
@@ -79,7 +79,7 @@ namespace sncabling {
   const calo_hv_id & calo_hv_cabling::get_channel(const om_id & om_) const
   {
     const auto & found = _table_.find(om_);
-    DT_THROW_IF(found == _table_.end(), std::logic_error,
+    SN_THROW_IF(found == _table_.end(), std::logic_error,
                 "Missing OM!");
     return found->second.channel;
   }
@@ -87,7 +87,7 @@ namespace sncabling {
   const calo_hv_id & calo_hv_cabling::get_int_cable(const om_id & om_) const
   {
     const auto & found = _table_.find(om_);
-    DT_THROW_IF(found == _table_.end(), std::logic_error,
+    SN_THROW_IF(found == _table_.end(), std::logic_error,
                 "Missing OM!");
     return found->second.intcable;
   }
@@ -95,7 +95,7 @@ namespace sncabling {
   const om_id & calo_hv_cabling::get_om(const calo_hv_id & channel_) const
   {
     const auto & found = _reverse_table_.find(channel_);
-    DT_THROW_IF(found == _reverse_table_.end(), std::logic_error,
+    SN_THROW_IF(found == _reverse_table_.end(), std::logic_error,
                 "Missing HV channel!");
     return found->second;
   }
@@ -109,7 +109,7 @@ namespace sncabling {
   void calo_hv_cabling::build_om_from_board(const calo_hv_id & board_,
                                             std::vector<om_id> & list_) const
   {
-    DT_THROW_IF(!board_.is_board(), std::logic_error,
+    SN_THROW_IF(!board_.is_board(), std::logic_error,
                 "Not a calorimeter HV board ID!");
     list_.clear();
     for (const auto & p : _table_) {
@@ -124,7 +124,7 @@ namespace sncabling {
   void calo_hv_cabling::build_om_from_crate(const calo_hv_id & crate_,
                                             std::vector<om_id> & list_) const
   {
-    DT_THROW_IF(!crate_.is_crate(), std::logic_error,
+    SN_THROW_IF(!crate_.is_crate(), std::logic_error,
                 "Not a calorimeter HV crate ID!");
     list_.clear();
     for (const auto & p : _table_) {
@@ -161,19 +161,18 @@ namespace sncabling {
   
   void calo_hv_cabling::load(const std::string & filename_, const unsigned int tags_)
   {
-    datatools::logger::priority logging = datatools::logger::PRIO_FATAL;
+    bool debug = false;
     // bool led_harness_match = false;
     if (tags_ & LOAD_DEBUG) {
-      logging = datatools::logger::PRIO_DEBUG;
+      debug = true;
     }
     // if (tags_ & LOAD_LED_HARNESS_MATCH) {
     //   led_harness_match = true;
     // }
-    if (datatools::logger::is_debug(logging)) {
-      DT_LOG_DEBUG(logging,"Loading file '" << filename_ << "'...");
-    }
+    SN_LOG_DEBUG(debug, "Loading file '" << filename_ << "'...");
     std::string filename = filename_;
-    datatools::fetch_path_with_env(filename);
+    // datatools::fetch_path_with_env(filename);
+    filename = resolve_path(filename_);
     std::ifstream fin(filename.c_str());
     std::size_t line_counter = 0;
     while (fin) {
@@ -184,13 +183,11 @@ namespace sncabling {
       if (raw_line.size() == 0 || raw_line[0] == '#') {
         continue;
       }
-      if (datatools::logger::is_debug(logging)) {
-        std::cerr << "[debug] Raw line: '" << raw_line << "'" << std::endl;
-      }
+      SN_LOG_DEBUG(debug, "Raw line: '" << raw_line << "'");
       std::vector<std::string> tokens;
       
       boost::split(tokens, raw_line, boost::is_any_of(";"));
-      DT_THROW_IF(tokens.size() != 4, std::logic_error,
+      SN_THROW_IF(tokens.size() != 4, std::logic_error,
                   "Invalid format!")
       for (int i = 0; i < 4; i++) {
         boost::trim(tokens[i]);
@@ -201,63 +198,55 @@ namespace sncabling {
       std::string om_repr = tokens[3];
      
       label channel_lbl;
-      DT_THROW_IF(!channel_lbl.parse_from(channel_repr, 'H', 3),
+      SN_THROW_IF(!channel_lbl.parse_from(channel_repr, 'H', 3),
                   std::logic_error,
                   "Invalid CaloHV label format '" << channel_repr << "'!");
-      if (datatools::logger::is_debug(logging)) {
-        std::cerr << "[debug] CaloHV channel label: '" << channel_lbl << "'" << std::endl;
-      }
+      SN_LOG_DEBUG(debug, "CaloHV channel label: '" << channel_lbl << "'");
      
       label extharness_lbl;
-      DT_THROW_IF(!extharness_lbl.parse_from(extharness_repr, 'E', 1),
+      SN_THROW_IF(!extharness_lbl.parse_from(extharness_repr, 'E', 1),
                   std::logic_error,
                   "Invalid CaloHV label format '" << extharness_repr << "'!");
-      if (datatools::logger::is_debug(logging)) {
-        std::cerr << "[debug] CaloHV external harness label: '" << extharness_lbl << "'" << std::endl;
-      }
+      SN_LOG_DEBUG(debug, "CaloHV external harness label: '" << extharness_lbl << "'");
      
       label intcable_lbl;
-      DT_THROW_IF(!intcable_lbl.parse_from(intcable_repr, 'A', 2),
+      SN_THROW_IF(!intcable_lbl.parse_from(intcable_repr, 'A', 2),
                   std::logic_error,
                   "Invalid CaloHV label format '" << intcable_repr << "'!");
-      if (datatools::logger::is_debug(logging)) {
-        std::cerr << "[debug] CaloHV internal cable label: '" << intcable_lbl << "'" << std::endl;
-      }
-      
+      SN_LOG_DEBUG(debug, "CaloHV internal cable label: '" << intcable_lbl << "'");
+            
       label om_lbl;
-      DT_THROW_IF(!om_lbl.parse_from(om_repr),
+      SN_THROW_IF(!om_lbl.parse_from(om_repr),
                   std::logic_error,
                   "Invalid OM label format '" << om_repr << "'!");
-      if (datatools::logger::is_debug(logging)) {
-        std::cerr << "[debug] OM label: '" << om_lbl << "'" << std::endl;
-      }
+      SN_LOG_DEBUG(debug, "OM label: '" << om_lbl << "'");
 
       calo_hv_id channel;
-      DT_THROW_IF(!channel.from_label(channel_lbl),
+      SN_THROW_IF(!channel.from_label(channel_lbl),
                   std::logic_error,
                   "Invalid CaloHV channel identifier '" << channel_lbl << "'!");
-      DT_THROW_IF(!channel.is_channel(),
+      SN_THROW_IF(!channel.is_channel(),
                   std::logic_error,
                   "Not a CaloHV channel identifier '" << channel_lbl << "'!");
 
       calo_hv_id extharness;
-      DT_THROW_IF(!extharness.from_label(extharness_lbl),
+      SN_THROW_IF(!extharness.from_label(extharness_lbl),
                   std::logic_error,
                   "Invalid CaloHV external harness identifier '" << extharness_lbl << "'!");
-      DT_THROW_IF(!extharness.is_external_harness(),
+      SN_THROW_IF(!extharness.is_external_harness(),
                   std::logic_error,
                   "Not a CaloHV external harness identifier '" << extharness_lbl << "'!");
 
       calo_hv_id intcable;
-      DT_THROW_IF(!intcable.from_label(intcable_lbl),
+      SN_THROW_IF(!intcable.from_label(intcable_lbl),
                   std::logic_error,
                   "Invalid CaloHV internal cable identifier '" << intcable_lbl << "'!");
-      DT_THROW_IF(!intcable.is_internal_cable(),
+      SN_THROW_IF(!intcable.is_internal_cable(),
                   std::logic_error,
                   "Not a CaloHV internal harness identifier '" << extharness_lbl << "'!");
       
       om_id om;
-      DT_THROW_IF(!om.from_label(om_lbl),
+      SN_THROW_IF(!om.from_label(om_lbl),
                   std::logic_error,
                   "Invalid OM identifier '" << om_lbl << "'!");
       add(om, channel, extharness, intcable);

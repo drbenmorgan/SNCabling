@@ -12,16 +12,23 @@
 // Third party:
 // Boost:
 #include <boost/filesystem.hpp>
+
+// This project;
+#include "sncabling/sncabling_config.h"
+
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
 // Bayeux:
 #include <bayeux/datatools/kernel.h>
 #include <bayeux/datatools/library_info.h>
 // #include <bayeux/datatools/urn_to_path_resolver_service.h>
 // #include <bayeux/datatools/urn_db_service.h>
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
 
 // This project;
 #include "sncabling/version.h"
 #include "sncabling/resource_files.h"
 #include "sncabling_binreloc.h"
+#include "sncabling/exception.h"
 
 namespace {
   //! Convert BrInitError code to a string describing the error
@@ -48,15 +55,15 @@ namespace {
 
 namespace sncabling {
 
-  directories_initialization_exception::directories_initialization_exception(const std::string& msg)
-    : std::runtime_error(msg)
+  directories_initialization_exception::directories_initialization_exception(const std::string & msg_)
+    : std::runtime_error(msg_)
   {
   }
 
   void init_directories() {
     BrInitError err;
     int initSuccessful = br_init_lib(&err);
-    DT_THROW_IF(initSuccessful != 1,
+    SN_THROW_IF(initSuccessful != 1,
                 sncabling::directories_initialization_exception,
                 "Initialization of SNCabling library's directories failed : "
                 << err
@@ -79,6 +86,7 @@ namespace sncabling {
     return _n;
   }
 
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
   datatools::logger::priority sncabling_library::process_logging_env()
   {
     datatools::logger::priority logging = datatools::logger::PRIO_FATAL;
@@ -93,46 +101,46 @@ namespace sncabling {
     }
     return logging;
   }
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
 
   // static
   sncabling_library * sncabling_library::_instance_ = nullptr;
 
   sncabling_library::sncabling_library()
   {
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
     _logging_ = sncabling_library::process_logging_env();
     if (_logging_ == ::datatools::logger::PRIO_UNDEFINED) {
       DT_LOG_WARNING(::datatools::logger::PRIO_WARNING,
                      "Ignoring invalid SNCABLING_LIBRARY_LOGGING=\"" << getenv("SNCABLING_LIBRARY_LOGGING") << "\" environment!");
       _logging_ = ::datatools::logger::PRIO_FATAL;
     }
-    DT_LOG_TRACE_ENTERING(_logging_);
     DT_LOG_TRACE(_logging_, "Initializing SNCabling library's resource files directories...");
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
     sncabling::init_directories();
 
-    DT_THROW_IF(sncabling_library::_instance_ != nullptr,
+    SN_THROW_IF(sncabling_library::_instance_ != nullptr,
                 std::logic_error,
                 "SNCabling library system singleton is already set!");
     sncabling_library::_instance_ = this;
-    DT_LOG_TRACE_EXITING(_logging_);
     return;
   }
 
   sncabling_library::~sncabling_library()
   {
-    DT_LOG_TRACE_ENTERING(_logging_);
     if (is_initialized()) {
-      DT_LOG_TRACE(_logging_, "Shuting down SNCabling library system singleton...");
       shutdown();
     }
     sncabling_library::_instance_ = nullptr;
-    DT_LOG_TRACE_EXITING(_logging_);
     return;
   }
 
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
   datatools::logger::priority sncabling_library::get_logging() const
   {
     return _logging_;
   }
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
 
   bool sncabling_library::is_initialized() const
   {
@@ -141,8 +149,8 @@ namespace sncabling {
 
   void sncabling_library::initialize()
   {
-    DT_LOG_TRACE_ENTERING(_logging_);
-    DT_THROW_IF(is_initialized(), std::logic_error, "SNCabling library system singleton is already initialized!");
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
+    SN_THROW_IF(is_initialized(), std::logic_error, "SNCabling library system singleton is already initialized!");
 
     // Register library informations in the Bayeux/datatools' kernel:
     _libinfo_registration_();
@@ -157,16 +165,16 @@ namespace sncabling {
     // Start URN services:
     _initialize_urn_services_();
 
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
     _initialized_ = true;
-    DT_LOG_TRACE_EXITING(_logging_);
     return;
   }
 
   void sncabling_library::shutdown()
   {
-    DT_LOG_TRACE_ENTERING(_logging_);
-    DT_THROW_IF(!is_initialized(), std::logic_error, "SNCabling library system singleton is not initialized!");
     _initialized_ = false;
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
+    SN_THROW_IF(!is_initialized(), std::logic_error, "SNCabling library system singleton is not initialized!");
 
     // Terminate services:
     if (_services_.is_initialized()) {
@@ -178,10 +186,11 @@ namespace sncabling {
     // Deregister library informations from the Bayeux/datatools' kernel:
     _libinfo_deregistration_();
 
-    DT_LOG_TRACE_EXITING(_logging_);
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
     return;
   }
 
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
   datatools::service_manager & sncabling_library::grab_services()
   {
     return _services_;
@@ -191,6 +200,7 @@ namespace sncabling {
   {
     return _services_;
   }
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
 
   // static
   bool sncabling_library::is_instantiated()
@@ -223,11 +233,10 @@ namespace sncabling {
     return sncabling_library::instance();
   }
 
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
   void sncabling_library::_libinfo_registration_()
   {
-    DT_LOG_TRACE_ENTERING(_logging_);
-
-    DT_THROW_IF(!datatools::kernel::is_instantiated(),
+    SN_THROW_IF(!datatools::kernel::is_instantiated(),
                 std::runtime_error,
                 "The Bayeux/datatools' kernel is not instantiated !");
     datatools::kernel & krnl = datatools::kernel::instance();
@@ -239,7 +248,7 @@ namespace sncabling {
     {
       DT_LOG_TRACE(_logging_, "Registration of SNCabling library in the Bayeux/datatools' kernel...");
       // SNCabling itself:
-      DT_THROW_IF (lib_info_reg.has("sncabling"),
+      SN_THROW_IF (lib_info_reg.has("sncabling"),
                    std::logic_error,
                    "SNCabling is already registered !");
       datatools::properties & sncabling_lib_infos
@@ -265,14 +274,11 @@ namespace sncabling {
       DT_LOG_TRACE(_logging_, "SNCabling library has been registered in the Bayeux/datatools' kernel.");
     }
 
-    DT_LOG_TRACE_EXITING(_logging_);
     return;
   }
 
   void sncabling_library::_libinfo_deregistration_()
   {
-    DT_LOG_TRACE_ENTERING(_logging_);
-
     if (datatools::kernel::is_instantiated()) {
       datatools::kernel & krnl = datatools::kernel::instance();
       if (krnl.has_library_info_register()) {
@@ -286,14 +292,11 @@ namespace sncabling {
         }
       }
     }
-
-    DT_LOG_TRACE_EXITING(_logging_);
     return;
   }
 
   void sncabling_library::_initialize_urn_services_()
   {
-    DT_LOG_TRACE_ENTERING(_logging_);
     if (_services_.is_initialized()) {
 
       /*
@@ -336,15 +339,11 @@ namespace sncabling {
       }
       */
     }
-
-    DT_LOG_TRACE_EXITING(_logging_);
     return;
   }
 
   void sncabling_library::_shutdown_urn_services_()
   {
-    DT_LOG_TRACE_ENTERING(_logging_);
-
     if (_services_.is_initialized()) {
 
       /*
@@ -371,9 +370,8 @@ namespace sncabling {
       }
       */
     }
-
-    DT_LOG_TRACE_EXITING(_logging_);
     return;
   }
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
 
 } // namespace sncabling

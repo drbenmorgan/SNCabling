@@ -20,6 +20,16 @@
 // Ourselves:
 #include <sncabling/utils.h>
 
+// Third party:
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/filesystem.hpp>
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
+#include <bayeux/datatools/utils.h>
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
+
+// This project:
+#include <sncabling/resource_files.h>
+
 namespace sncabling {
 
   const system_map_type & systems_map() 
@@ -63,6 +73,7 @@ namespace sncabling {
         sd.label       = "LIS";
         sd.description = "SuperNEMO light injection system";
         sd.id          = SYSTEM_LIS;
+        sd.default_map = "@sncabling:config/snemo/demonstrator/cabling/LIS/tags/original/lis_mapping_1.csv";
         sysmap[sd.id]  = sd;
       }
       {
@@ -98,6 +109,24 @@ namespace sncabling {
       }
     }
     return _syslis;
+  }
+
+  std::string resolve_path(const std::string & path_)
+  {
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
+    std::string pp = path_;
+    datatools::fetch_path_with_env(pp);
+    return pp;
+#else
+    if (boost::starts_with(path_, "@sncabling:")) {
+      std::string path_end = path_.substr(11);
+      std::string path_begin = sncabling::get_resource_files_dir();
+      boost::filesystem::path pb = path_begin;
+      boost::filesystem::path p = pb / path_end;
+      return p.string();
+    }
+    return path_;
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
   }
 
 } // namespace sncabling

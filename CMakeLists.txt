@@ -93,6 +93,11 @@ mark_as_advanced(SNCABLING_WITH_DEVELOPER_TOOLS)
 #-----------------------------------------------------------------------
 # Optional build of documentation
 #
+option(SNCABLING_WITH_SERVICE "Build service support for SNCabling (depends on Bayeux)" OFF)
+
+#-----------------------------------------------------------------------
+# Optional build of documentation
+#
 option(SNCABLING_WITH_DOCS "Build documentation for SNCabling" ON)
 
 #-----------------------------------------------------------------------

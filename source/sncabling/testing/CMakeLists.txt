@@ -10,8 +10,13 @@ list(APPEND SNCabling_TESTS
   test-lis_cabling.cxx
   test-calo_hv_cabling.cxx
   test-calo_signal_cabling.cxx
-  test-service.cxx
   )
+
+if (SNCABLING_WITH_SERVICE)
+  list(APPEND SNCabling_TESTS
+    test-service.cxx
+    )
+endif()
 
 if (SNCABLING_ENABLE_TESTING)
   foreach(_testsource ${SNCabling_TESTS})

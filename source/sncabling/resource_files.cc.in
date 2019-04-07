@@ -45,12 +45,11 @@
 #if defined (__clang__)
 #pragma clang diagnostic pop
 #endif
-// - datatools
-#include <datatools/exception.h>
-#include <datatools/logger.h>
+// #include <datatools/logger.h>
 
 // This Project
 #include <sncabling/version.h>
+#include <sncabling/exception.h>
 #include "sncabling_binreloc.h"
 
 namespace {
@@ -78,6 +77,7 @@ namespace sncabling {
     boost::filesystem::path tmpPath(get_library_dir());
     // std::cerr << "[devel] ******* sncabling::relative_path_to_resource_dir = '" << relative_path_to_resource_dir() << "'" << std::endl;
     tmpPath /= relative_path_to_resource_dir();
+    // std::cerr << "[devel] ******* tmpPath = '" << tmpPath.string() << "'" << std::endl;
     boost::filesystem::path absPath = boost::filesystem::canonical(tmpPath);
     return absPath.string();
   }
@@ -85,11 +85,11 @@ namespace sncabling {
   std::string get_resource_file(const std::string & rname_, bool overriden_env_)
   {
     boost::filesystem::path rnamePath(rname_);
-    DT_THROW_IF(rnamePath.is_absolute(),
+    SN_THROW_IF(rnamePath.is_absolute(),
                 std::logic_error,
                 "resource name cannot be absolute");
     boost::filesystem::path expectedResource = get_resource_files_dir() / rnamePath;
-    DT_THROW_IF(!boost::filesystem::exists(expectedResource),
+    SN_THROW_IF(!boost::filesystem::exists(expectedResource),
                 std::runtime_error,
                 "Requested resource '"
                 << rname_
@@ -98,7 +98,7 @@ namespace sncabling {
     std::string fullpath = expectedResource.string();
     {
       std::ifstream check(fullpath.c_str());
-      DT_THROW_IF(!check.good(),
+      SN_THROW_IF(!check.good(),
                   std::runtime_error,
                   "Unreadable resource file '" << fullpath << "'");
     }
