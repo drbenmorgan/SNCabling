@@ -30,13 +30,13 @@ namespace sncabling {
   class label;
 
   enum calohv_type {
-    CALOHV_UNDEF   = -1,
-    CALOHV_CRATE   =  0,
-    CALOHV_BOARD   =  1,
-    CALOHV_CHANNEL =  2,
+    CALOHV_UNDEF      = -1,
+    CALOHV_CRATE      =  0,
+    CALOHV_BOARD      =  1,
+    CALOHV_CHANNEL    =  2,
     CALOHV_EXTHARNESS = 3,
     CALOHV_INTHARNESS = 4,
-    CALOHV_INTCABLE  = 5
+    CALOHV_INTCABLE   = 5
   };
   
   class calo_hv_id

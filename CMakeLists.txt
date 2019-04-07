@@ -118,9 +118,9 @@ include(SNCablingDependencies)
 message( STATUS "[info] Adding subdirectory 'source'...")
 add_subdirectory(source)
 
-# if(SNCABLING_WITH_DOCS)
-#   add_subdirectory(documentation)
-# endif()
+if(SNCABLING_WITH_DOCS)
+  add_subdirectory(documentation)
+endif()
 
 #-----------------------------------------------------------------------
 # - CMake Support files
