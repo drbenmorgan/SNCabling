@@ -27,7 +27,9 @@ Options:
    --help               : print help
    --debug              : activate debug mode
    --only-configure     : perform configuration stage only
-   --with-service       : buold with service support (and Bayeux dep)
+   --with-service       : build with service support (and Bayeux dep)
+   --with-tests         : build with testing support 
+
 
 EOF
     return

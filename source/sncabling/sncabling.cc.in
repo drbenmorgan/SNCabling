@@ -23,13 +23,19 @@
 // Standard library
 #include <iostream>
 
+// This project:
+#include <sncabling/sncabling_config.h>
+
 // Third party:
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
 // - Bayeux:
-//#include <bayeux/bayeux.h>
+#include <bayeux/bayeux.h>
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
 
 // This project:
 #include <sncabling/version.h>
 #include <sncabling/resource_files.h>
+#include <sncabling/sncabling_config.h>
 #include <sncabling/sncabling_library.h>
 #include <sncabling/exception.h>
 
@@ -73,11 +79,13 @@ namespace sncabling {
   void initialize(int argc_, char * argv_[], uint32_t flags_)
   {
     if (! ::_sncablingInit) {
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
       // Wrap Bayeux initialization because we need resources from various Bayeux's modules:
-      // if (!::bayeux::is_initialized()) {
-      //   ::bayeux::initialize(argc_,argv_, flags_);
-      //   ::_bayeuxInitMaster = true;
-      // }
+      if (!::bayeux::is_initialized()) {
+        ::bayeux::initialize(argc_,argv_, flags_);
+        ::_bayeuxInitMaster = true;
+      }
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
       // Initialization code from SNCabling itself:
       sncabling_initialize_impl();
       ::_sncablingInit = true;
@@ -95,11 +103,13 @@ namespace sncabling {
       ::_sncablingInit = false;
       sncabling_terminate_impl();
 
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
       // Wrap Bayeux termination:
-      // if (::bayeux::is_initialized() and ::_bayeuxInitMaster) {
-      //   ::bayeux::terminate();
-      //   ::_bayeuxInitMaster = false;
-      // }
+      if (::bayeux::is_initialized() and ::_bayeuxInitMaster) {
+        ::bayeux::terminate();
+        ::_bayeuxInitMaster = false;
+      }
+#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
     } else {
         SN_THROW(std::logic_error,
                  "Attempt to terminate the already terminated SNCabling library!");

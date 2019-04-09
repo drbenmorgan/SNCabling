@@ -118,7 +118,6 @@ namespace sncabling {
     DT_LOG_TRACE(_logging_, "Initializing SNCabling library's resource files directories...");
 #endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
     sncabling::init_directories();
-
     SN_THROW_IF(sncabling_library::_instance_ != nullptr,
                 std::logic_error,
                 "SNCabling library system singleton is already set!");
@@ -149,9 +148,9 @@ namespace sncabling {
 
   void sncabling_library::initialize()
   {
-#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
     SN_THROW_IF(is_initialized(), std::logic_error, "SNCabling library system singleton is already initialized!");
 
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
     // Register library informations in the Bayeux/datatools' kernel:
     _libinfo_registration_();
 
@@ -166,16 +165,17 @@ namespace sncabling {
     _initialize_urn_services_();
 
 #endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
+    
     _initialized_ = true;
     return;
   }
 
   void sncabling_library::shutdown()
   {
-    _initialized_ = false;
-#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
     SN_THROW_IF(!is_initialized(), std::logic_error, "SNCabling library system singleton is not initialized!");
+    _initialized_ = false;
 
+#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
     // Terminate services:
     if (_services_.is_initialized()) {
       _shutdown_urn_services_();
@@ -185,8 +185,8 @@ namespace sncabling {
 
     // Deregister library informations from the Bayeux/datatools' kernel:
     _libinfo_deregistration_();
-
 #endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
+    
     return;
   }
 

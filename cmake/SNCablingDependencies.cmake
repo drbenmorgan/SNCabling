@@ -7,6 +7,7 @@ endif()
 
 # Default Boost version:
 set(SNCABLING_BOOST_MIN_VERSION "1.53")
+set(SNCABLING_BOOST_COMPONENTS "filesystem" "date_time" )
 
 if (SNCABLING_WITH_BAYEUX_DEPENDENCY)
   #-------------------------------------------------------
@@ -33,6 +34,9 @@ if (SNCABLING_WITH_BAYEUX_DEPENDENCY)
     message( STATUS "[info] BAYEUX_BOOST_COMPONENTS = '${BAYEUX_BOOST_COMPONENTS}'")
     message( STATUS "[info] Bayeux_CMAKE_CONFIG_DIR = '${Bayeux_CMAKE_CONFIG_DIR}'")
     set(SNCABLING_BOOST_MIN_VERSION ${BAYEUX_BOOST_VERSION})
+    list(APPEND SNCABLING_BOOST_COMPONENTS
+      ${BAYEUX_BOOST_COMPONENTS}
+      )
   endif()
 endif()
 
@@ -40,10 +44,6 @@ endif()
 # - Boost:
 message( STATUS "[info] Searching Boost for SNCabling...")
 set(Boost_NO_BOOST_CMAKE ON)
-set(SNCABLING_BOOST_COMPONENTS
-  ${BAYEUX_BOOST_COMPONENTS}
-  )
-list(APPEND SNCABLING_BOOST_COMPONENTS log)
 message( STATUS "[info] SNCABLING_BOOST_COMPONENTS   = '${SNCABLING_BOOST_COMPONENTS}'")
 message( STATUS "[info] Finding Boost with specific libraries...")
 find_package(Boost ${SNCABLING_BOOST_MIN_VERSION} REQUIRED

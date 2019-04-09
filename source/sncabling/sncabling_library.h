@@ -29,7 +29,11 @@
 // Third party:
 #include <boost/noncopyable.hpp>
 
+// This project;
+#include "sncabling/sncabling_config.h"
+
 #if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
+#include <bayeux/datatools/logger.h>
 #include <bayeux/datatools/service_manager.h>
 #endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
 
@@ -59,11 +63,6 @@ namespace sncabling {
     /// Return the name of the SNCabling library's URN to resource path resolver service
     static const std::string & resource_resolver_name();
 
-#if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
-    /// Extract the verbosity from the SNCABLING_LIBRARY_LOGGING environment variable (if any)
-    static datatools::logger::priority process_logging_env();
-#endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
-
     /// Default constructor
     sncabling_library();
 
@@ -80,6 +79,12 @@ namespace sncabling {
     void shutdown();
 
 #if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
+    /// Extract the verbosity from the SNCABLING_LIBRARY_LOGGING environment variable (if any)
+    static datatools::logger::priority process_logging_env();
+
+    /// Return logging priority 
+    datatools::logger::priority get_logging() const;
+
     /// Return a mutable reference to the embedded service manager
     datatools::service_manager & grab_services();
 
@@ -118,6 +123,7 @@ namespace sncabling {
 
     // Working internal data:
 #if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
+    datatools::logger::priority _logging_ = datatools::logger::PRIO_FATAL;
     datatools::service_manager _services_; //!< Embedded services
 #endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
 
