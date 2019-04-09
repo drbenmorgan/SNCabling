@@ -29,7 +29,7 @@ Options:
    --only-configure     : perform configuration stage only
    --with-service       : build with service support (and Bayeux dep)
    --with-tests         : build with testing support 
-
+   --boost-prefix path  : set the Boost installation prefix (not with service and Bayeux dep)
 
 EOF
     return
@@ -46,6 +46,7 @@ with_tests=false
 with_service=false
 with_bayeux=false
 bayeux_version="3.4.0"
+boost_prefix=
 
 function cl_parse()
 {
@@ -72,6 +73,9 @@ function cl_parse()
 	elif [ "${arg}" = "--bayeux-version" ]; then
 	    shift 1
 	    bayeux_version="$1"
+	elif [ "${arg}" = "--boost-prefix" ]; then
+	    shift 1
+	    boost_prefix="$1"
 	fi
 	shift 1
     done
@@ -138,6 +142,13 @@ if [ ${with_bayeux} == true ]; then
     echo >&2 "[info] Found Bayeux ${bxversion}"
 fi
 
+if [ "x${boost_prefix}" != "x" ]; then
+    if [ ! -d ${boost_prefix} ]; then
+	echo >&2 "[error] Boost prefix directory '${boost_prefix}' does not exist!"
+	my_exit 1
+    fi
+fi
+
 if [ -d ${install_dir} ]; then
     rm -fr ${install_dir}
 fi
@@ -155,13 +166,16 @@ fi
 # linuxbrew_prefix=$(brew --prefix)
 # echo >&2 "[info] Linuxbrew prefix : '${linuxbrew_prefix}'"
 
+special_options=
 service_options=
 if [ ${with_service} == true ]; then
     service_options="-DBayeux_DIR:PATH=$(bxquery --cmakedir) -DSNCABLING_WITH_SERVICE=ON"
 fi
-
-special_options=
+if [ "x${boost_prefix}" != "x" ]; then
+    special_options="-DBOOST_ROOT:PATH=${boost_prefix}"
+fi
 ### special_options="-DCMAKE_FIND_ROOT_PATH:PATH=${linuxbrew_prefix}"
+### special_options="-DBOOST_ROOT:PATH=${boost_prefix}"
 											  
 cd ${build_dir}
 echo >&2 ""
