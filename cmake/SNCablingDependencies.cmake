@@ -6,7 +6,7 @@ if (SNCABLING_WITH_SERVICE)
 endif()
 
 # Default Boost version:
-set(SNCABLING_BOOST_MIN_VERSION "1.60")
+set(SNCABLING_BOOST_MIN_VERSION "1.53")
 
 if (SNCABLING_WITH_BAYEUX_DEPENDENCY)
   #-------------------------------------------------------

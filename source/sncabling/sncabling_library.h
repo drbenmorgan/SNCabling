@@ -27,7 +27,7 @@
 #include <stdexcept>
 
 // Third party:
-#include <boost/core/noncopyable.hpp>
+#include <boost/noncopyable.hpp>
 
 #if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
 #include <bayeux/datatools/service_manager.h>
