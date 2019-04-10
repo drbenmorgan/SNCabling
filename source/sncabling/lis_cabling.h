@@ -45,6 +45,7 @@ namespace sncabling {
     };
     
     typedef std::map<lis_id, fiber_connections> fiber_cabling_map_type;
+    typedef std::map<om_id, lis_id> reverse_fiber_cabling_map_type;
 
     lis_cabling();
 
@@ -74,10 +75,13 @@ namespace sncabling {
     };
     
     void load(const std::string & filename_, const unsigned int tags_ = 0);
+
+    void clear();
     
   private:
     
-    fiber_cabling_map_type _table_;
+    fiber_cabling_map_type         _table_;         ///< Main LIS cabling map
+    reverse_fiber_cabling_map_type _reverse_table_; ///< Slave reverse HV cabling map
     
   };
   

@@ -23,6 +23,7 @@
 // This project;
 #include <sncabling/calo_hv_cabling.h>
 #include <sncabling/calo_signal_cabling.h>
+#include <sncabling/lis_cabling.h>
 #include <sncabling/utils.h>
 
 namespace sncabling {
@@ -34,6 +35,7 @@ namespace sncabling {
   {
     std::unique_ptr<calo_hv_cabling>     default_calo_hv_ptr;
     std::unique_ptr<calo_signal_cabling> default_calo_signal_ptr;
+    std::unique_ptr<lis_cabling>         default_lis_ptr;
   };
 
   service::service()
@@ -66,6 +68,7 @@ namespace sncabling {
 
     std::string calohv_default_map;
     std::string calosignal_default_map;
+    std::string lis_default_map;
     
     if (config_.has_key("CaloHV.default_map")) {
       calohv_default_map = config_.fetch_path("CaloHV.default_map");
@@ -74,6 +77,10 @@ namespace sncabling {
     if (config_.has_key("CaloSignal.default_map")) {
       calosignal_default_map = config_.fetch_path("CaloSignal.default_map");
      }
+
+    if (config_.has_key("LIS.default_map")) {
+      lis_default_map = config_.fetch_path("LIS.default_map");
+    }
 
     if (calohv_default_map.empty()) {
       const ::sncabling::system_description & sysdesc
@@ -94,6 +101,16 @@ namespace sncabling {
         calosignal_default_map = sysdesc.default_map;
       }
     }
+
+    if (lis_default_map.empty()) {
+      const ::sncabling::system_description & sysdesc
+        = ::sncabling::systems_map().find(::sncabling::SYSTEM_LIS)->second;
+      if (!sysdesc.default_map.empty()) {
+        DT_LOG_DEBUG(get_logging_priority(),
+                    "Set the default map for LIS cabling...");
+        lis_default_map = sysdesc.default_map;
+      }
+    }
     
     // Initialization operations:
     if (! calohv_default_map.empty()) {
@@ -106,6 +123,11 @@ namespace sncabling {
       _pimpl_->default_calo_signal_ptr->load(calosignal_default_map);
     }
     
+    if (! lis_default_map.empty()) {
+      _pimpl_->default_lis_ptr.reset(new lis_cabling);
+      _pimpl_->default_lis_ptr->load(lis_default_map);
+    }
+
     _initialized_ = true;
     return EXIT_SUCCESS;
   }
@@ -123,9 +145,14 @@ namespace sncabling {
     if (_pimpl_->default_calo_signal_ptr.get() != nullptr) {
       _pimpl_->default_calo_signal_ptr->clear();
     }
+        
+    if (_pimpl_->default_lis_ptr.get() != nullptr) {
+      _pimpl_->default_lis_ptr->clear();
+    }
     
-    _pimpl_->default_calo_hv_ptr.reset();
+    _pimpl_->default_lis_ptr.reset();
     _pimpl_->default_calo_signal_ptr.reset();
+    _pimpl_->default_calo_hv_ptr.reset();
     
     return EXIT_SUCCESS;
   }
@@ -138,6 +165,11 @@ namespace sncabling {
   const calo_signal_cabling & service::get_calo_signal_cabling(const time_mark & /* tm_ */) const
   {
     return *_pimpl_->default_calo_signal_ptr.get();
+  }
+    
+  const lis_cabling & service::get_lis_cabling(const time_mark & /* tm_ */) const
+  {
+    return *_pimpl_->default_lis_ptr.get();
   }
 
 } // namespace sncabling

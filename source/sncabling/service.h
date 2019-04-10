@@ -36,6 +36,7 @@ namespace sncabling {
 
   class calo_hv_cabling;
   class calo_signal_cabling;
+  class lis_cabling;
   
   /// \brief Cabling service
   class service
@@ -70,6 +71,12 @@ namespace sncabling {
     /// If several cabling tables are available depending on some experimental period, it is possible to
     /// identify a given time mark (default: unused)
     const calo_signal_cabling & get_calo_signal_cabling(const time_mark & tm_ = time_mark::invalid_time_mark()) const;
+    
+    /// Access to the LIS cabling table 
+    ///
+    /// If several cabling tables are available depending on some experimental period, it is possible to
+    /// identify a given time mark (default: unused)
+    const lis_cabling & get_lis_cabling(const time_mark & tm_ = time_mark::invalid_time_mark()) const;
     
   private:
     

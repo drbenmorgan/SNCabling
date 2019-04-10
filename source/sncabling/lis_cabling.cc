@@ -223,5 +223,15 @@ namespace sncabling {
     }
     return;
   }
- 
+
+
+  void lis_cabling::clear()
+  {
+    _reverse_table_.clear();
+    _table_.clear();
+    return;
+  }
+  
+  
+  
 } // namespace sncabling
