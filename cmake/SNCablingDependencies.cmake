@@ -7,7 +7,7 @@ endif()
 
 # Default Boost version:
 set(SNCABLING_BOOST_MIN_VERSION "1.53")
-set(SNCABLING_BOOST_COMPONENTS "filesystem" "date_time" )
+set(SNCABLING_BOOST_COMPONENTS "filesystem" "date_time" "system")
 
 if (SNCABLING_WITH_BAYEUX_DEPENDENCY)
   #-------------------------------------------------------
@@ -47,7 +47,7 @@ set(Boost_NO_BOOST_CMAKE ON)
 message( STATUS "[info] SNCABLING_BOOST_COMPONENTS   = '${SNCABLING_BOOST_COMPONENTS}'")
 message( STATUS "[info] Finding Boost with specific libraries...")
 find_package(Boost ${SNCABLING_BOOST_MIN_VERSION} REQUIRED
-  ${SNCABLING_BOOST_COMPONENTS}
+  COMPONENTS ${SNCABLING_BOOST_COMPONENTS}
   )
 set(SNCabling_Boost_VERSION ${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION})
 set(SNCabling_Boost_LIBRARIES)
