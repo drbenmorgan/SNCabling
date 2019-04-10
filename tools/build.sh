@@ -47,6 +47,8 @@ with_service=false
 with_bayeux=false
 bayeux_version="3.4.0"
 boost_prefix=
+builder=make
+builder_option=
 
 function cl_parse()
 {
@@ -108,6 +110,15 @@ if [ -f /etc/lsb-release ]; then
     fi
 
 fi
+
+which ninja > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+    builder=ninja
+    builder_option=-GNinja
+else
+    echo >&2 "[info] Ninja not found. Using make..."
+fi
+
 # # Check:
 # which brew > /dev/null 2>&1
 # if [ $? -ne 0 ]; then
@@ -130,7 +141,7 @@ fi
 if [ ${with_bayeux} == true ]; then
     which bxquery > /dev/null 2>&1
     if [ $? -ne 0 ]; then
-	echo >&2 "[error] Bayeux is not setup!"
+	echo >&2 "[error] Bayeux is not installed nor setup!"
 	my_exit 1
     fi
     
@@ -192,7 +203,7 @@ cmake \
     -DSNCABLING_ENABLE_TESTING=ON \
     -DSNCABLING_WITH_DOCS=ON \
     -DSNCABLING_WITH_DEVELOPER_TOOLS=ON \
-    -GNinja \
+    ${builder_option} \
     ${sncabling_source_dir}
 if [ $? -ne 0 ]; then
     echo >&2 "[error] SNCabling ${sncabling_version} configuration failed!"
@@ -203,7 +214,7 @@ if [ ${only_configure} -eq 0 ]; then
 
     echo >&2 ""
     echo >&2 "[info] Building..."
-    ninja -j4
+    ${builder} -j4
     if [ $? -ne 0 ]; then
 	echo >&2 "[error] SNCabling ${vire_version} build failed!"
 	my_exit 1
@@ -212,7 +223,7 @@ if [ ${only_configure} -eq 0 ]; then
     if [ ${with_tests} = true ]; then
 	echo >&2 ""
 	echo >&2 "[info] Testing..."
-	ninja test
+	${builder} test
 	if [ $? -ne 0 ]; then
 	    echo >&2 "[error] SNCabling ${vire_version} testing failed!"
 	    my_exit 1
@@ -221,7 +232,7 @@ if [ ${only_configure} -eq 0 ]; then
 
     echo >&2 ""
     echo >&2 "[info] Installing..."
-    ninja install
+    ${builder} install
     if [ $? -ne 0 ]; then
 	echo >&2 "[error] SNCabling ${vire_version} installation failed!"
 	my_exit 1
