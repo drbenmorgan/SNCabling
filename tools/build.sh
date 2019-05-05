@@ -48,6 +48,7 @@ with_bayeux=false
 bayeux_min_version="3.4.1"
 bayeux_version="3.4.1"
 boost_prefix=
+boost_version=
 builder=make
 builder_option=
 
@@ -79,6 +80,9 @@ function cl_parse()
 	elif [ "${arg}" = "--boost-prefix" ]; then
 	    shift 1
 	    boost_prefix="$1"
+	elif [ "${arg}" = "--boost-version" ]; then
+	    shift 1
+	    boost_version="$1"
 	fi
 	shift 1
     done
@@ -187,6 +191,9 @@ if [ ${with_service} == true ]; then
 fi
 if [ "x${boost_prefix}" != "x" ]; then
     special_options="-DBOOST_ROOT:PATH=${boost_prefix}"
+    if [ "x${boost_version}" != "x" ]; then
+	special_options="${special_options} -DBoost_ADDITIONAL_VERSIONS=${boost_version}"
+    fi
 fi
 ### special_options="-DCMAKE_FIND_ROOT_PATH:PATH=${linuxbrew_prefix}"
 ### special_options="-DBOOST_ROOT:PATH=${boost_prefix}"
