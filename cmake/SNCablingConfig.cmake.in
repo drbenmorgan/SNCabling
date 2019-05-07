@@ -70,6 +70,7 @@ if (SNCabling_WITH_BAYEUX_DEPENDENCY)
   set(Bayeux_DIR @Bayeux_CMAKE_CONFIG_DIR@)
   message(STATUS "[info] SNCablingConfig.cmake: Searching Bayeux ${SNCabling_Bayeux_VERSION} from ${Bayeux_DIR}...")
   find_package(Bayeux ${SNCabling_Bayeux_VERSION} EXACT REQUIRED NO_MODULE)
+	message(STATUS "[info] SNCablingConfig.cmake: SNCabling_Bayeux_VERSION          = ${SNCabling_Bayeux_VERSION}")
 endif()
 
 # - More boost
@@ -80,7 +81,6 @@ set(SNCabling_BOOST_COMPONENTS @SNCABLING_BOOST_COMPONENTS@)
 find_package(Boost @SNCabling_Boost_VERSION@ REQUIRED
   ${SNCabling_BOOST_COMPONENTS}
   )
-message(STATUS "[info] SNCablingConfig.cmake: SNCabling_Bayeux_VERSION          = ${SNCabling_Bayeux_VERSION}")
 message(STATUS "[info] SNCablingConfig.cmake: SNCabling_Boost_VERSION           = ${SNCabling_Boost_VERSION}")
 
 #-----------------------------------------------------------------------
