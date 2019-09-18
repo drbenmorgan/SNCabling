@@ -13,3 +13,10 @@ high voltage system cabling.
     * Compared to the ideal mapping, M:1.13.6 and M:1.13.8 are swapped.
 
   - ``actual_1/`` : actual cabling table (september 2019)
+
+    * Take into account various swapped HV cables operated on the detector.
+    * Take into account reverse HV cable tables for Italian main wall.
+
+
+.. end
+    
