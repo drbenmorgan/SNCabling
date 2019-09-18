@@ -28,6 +28,7 @@ Options:
    --debug              : activate debug mode
    --only-configure     : perform configuration stage only
    --with-service       : build with service support (and Bayeux dep)
+   --with-vire          : build with Vire
    --with-tests         : build with testing support 
    --boost-prefix path  : set the Boost installation prefix (not with service and Bayeux dep)
 
@@ -45,6 +46,7 @@ build_dir=$(pwd)/_build.d
 with_tests=false
 with_service=false
 with_bayeux=false
+with_vire=false
 bayeux_min_version="3.4.1"
 bayeux_version="3.4.1"
 boost_prefix=
@@ -72,6 +74,10 @@ function cl_parse()
 	    sncabling_source_dir="$1"
 	elif [ "${arg}" = "--with-service" ]; then
 	    with_service=true
+	elif [ "${arg}" = "--without-service" ]; then
+	    with_service=false
+	elif [ "${arg}" = "--with-vire" ]; then
+	    with_vire=true
 	elif [ "${arg}" = "--develop" ]; then
 	    sncabling_version="develop"
 	elif [ "${arg}" = "--bayeux-version" ]; then
@@ -124,22 +130,17 @@ else
     echo >&2 "[info] Ninja not found. Using make..."
 fi
 
-# # Check:
-# which brew > /dev/null 2>&1
-# if [ $? -ne 0 ]; then
-#     echo >&2 "[error] Linuxbrew is not setup! Please run linuxbrew_setup! Abort!"
-#     my_exit 1
-# else
-#     echo >&2 "[info] Found Linuxbrew : $(which brew)"
-# fi
-
 if [ ! -d ${sncabling_source_dir} ]; then
     echo >&2 "[error] SNCabling source directory '${sncabling_source_dir}' does not exist! Abort!"
     my_exit 1
 fi
 
 if [ ${with_service} == true ]; then
-    with_bayeux=true
+    if [ ${with_vire} == true ]; then
+	with_bayeux=false
+    else
+	with_bayeux=true
+    fi
 fi
 
 # Checks:
@@ -149,7 +150,6 @@ if [ ${with_bayeux} == true ]; then
 	echo >&2 "[error] Bayeux is not installed nor setup!"
 	my_exit 1
     fi
-    
     bxversion=$(bxquery --version)
     # if [ "${bxversion}" != "${bayeux_version}" ]; then
     #     echo >&2 "[error] Bayeux's version ${bxversion} is not supported!"
@@ -158,6 +158,16 @@ if [ ${with_bayeux} == true ]; then
     #     echo >&2 "[info] Found Bayeux ${bxversion}"
     # fi
     echo >&2 "[info] Found Bayeux ${bxversion}"
+fi
+
+if [ ${with_vire} == true ]; then
+    which virequery > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+	echo >&2 "[error] Vire is not installed nor setup!"
+	my_exit 1
+    fi
+    vrversion=$(virequery --version)
+    echo >&2 "[info] Found Vire ${vrversion}"
 fi
 
 if [ "x${boost_prefix}" != "x" ]; then
@@ -195,8 +205,10 @@ if [ "x${boost_prefix}" != "x" ]; then
 	special_options="${special_options} -DBoost_ADDITIONAL_VERSIONS=${boost_version}"
     fi
 fi
-### special_options="-DCMAKE_FIND_ROOT_PATH:PATH=${linuxbrew_prefix}"
-### special_options="-DBOOST_ROOT:PATH=${boost_prefix}"
+vire_options=
+if [ ${with_vire} == true ]; then
+    vire_options="-DVire_DIR:PATH=$(virequery --cmakedir)"
+fi
 											  
 cd ${build_dir}
 echo >&2 ""
@@ -206,6 +218,7 @@ cmake \
     -DCMAKE_INSTALL_PREFIX:PATH="${install_dir}" \
     ${special_options} \
     ${service_options} \
+    ${vire_options} \
     -DSNCABLING_COMPILER_ERROR_ON_WARNING=ON \
     -DSNCABLING_CXX_STANDARD="11" \
     -DSNCABLING_ENABLE_TESTING=ON \

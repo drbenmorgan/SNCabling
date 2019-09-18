@@ -28,6 +28,7 @@
 
 namespace sncabling {
 
+  /// \brief Text label for an identifier
   struct label
   {
   public:
@@ -63,8 +64,8 @@ namespace sncabling {
     
   private:
     
-    char             _symbol_ = '?';
-    std::vector<int> _address_;
+    char             _symbol_ = '?'; ///< Leading symbol of the label
+    std::vector<int> _address_;      ///< Addressing segments
     
   };
     

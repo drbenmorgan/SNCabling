@@ -23,7 +23,7 @@
 #define SNCABLING_SNCABLING_H
 
 // Standard Library:
-#include <string>
+#include <cstdint>
 
 //! Main namespace for the SNCabling library
 namespace sncabling {

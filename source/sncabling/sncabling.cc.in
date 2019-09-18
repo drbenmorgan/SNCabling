@@ -21,6 +21,7 @@
 #include <sncabling/sncabling.h>
 
 // Standard library
+#include <string>
 #include <iostream>
 
 // This project:

@@ -5,7 +5,8 @@
 #  SNCabling_WITH_DEVELOPER_TOOLS - SNCabling is built with development tools
 #  SNCabling_INCLUDE_DIRS       - SNCabling include directories
 #  SNCabling_CMAKE_CONFIG_DIR   - SNCabling CMake config path
-#
+#  SNCabling_WITH_BAYEUX_DEPENDENCY
+#  SNCabling_INSTALL_DIR
 
 #----------------------------------------------------------------------
 # This program is free software: you can redistribute it and/or modify
@@ -57,7 +58,11 @@ set_and_check(SNCabling_INCLUDE_DIR
   )
 message(STATUS "[info] SNCablingConfig.cmake: SNCabling_INCLUDE_DIR = '@SNCabling_INCLUDE_DIR@'")
 
-#set_and_check(SNCabling_RESOURCE_DIR "@PACKAGE_CMAKE_INSTALL_DATAROOTDIR@/resources")
+set(SNCabling_INSTALL_DIR  "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@")
+set(SNCabling_INCLUDE_DIRS "${SNCabling_INCLUDE_DIR}" )
+if (SNCabling_WITH_BAYEUX_DEPENDENCY)
+  list(APPEND SNCabling_INCLUDE_DIRS "${Bayeux_INCLUDE_DIRS}" )
+endif()
 
 #-----------------------------------------------------------------------
 # Handle paths/targets for third party deps here...
@@ -71,17 +76,17 @@ if (SNCabling_WITH_BAYEUX_DEPENDENCY)
   message(STATUS "[info] SNCablingConfig.cmake: Searching Bayeux ${SNCabling_Bayeux_VERSION} from ${Bayeux_DIR}...")
   find_package(Bayeux ${SNCabling_Bayeux_VERSION} EXACT REQUIRED NO_MODULE)
 endif()
+message(STATUS "[info] SNCablingConfig.cmake: SNCabling_Bayeux_VERSION  = ${SNCabling_Bayeux_VERSION}")
 
 # - More boost
-message(STATUS "[info] SNCablingConfig.cmake: Searching specific Boost ${SNCabling_Bayeux_VERSION} from ${Bayeux_DIR}...")
 set(Boost_NO_BOOST_CMAKE ON)
-set(SNCabling_Boost_VERSION    @SNCabling_Boost_VERSION@)
+set(SNCabling_Boost_VERSION @SNCabling_Boost_VERSION@)
+message(STATUS "[info] SNCablingConfig.cmake: Searching Boost ${SNCabling_Boost_VERSION}...")
 set(SNCabling_BOOST_COMPONENTS @SNCABLING_BOOST_COMPONENTS@)
 find_package(Boost @SNCabling_Boost_VERSION@ REQUIRED
   ${SNCabling_BOOST_COMPONENTS}
   )
-message(STATUS "[info] SNCablingConfig.cmake: SNCabling_Bayeux_VERSION          = ${SNCabling_Bayeux_VERSION}")
-message(STATUS "[info] SNCablingConfig.cmake: SNCabling_Boost_VERSION           = ${SNCabling_Boost_VERSION}")
+message(STATUS "[info] SNCablingConfig.cmake: SNCabling_Boost_VERSION   = ${SNCabling_Boost_VERSION}")
 
 #-----------------------------------------------------------------------
 # Include the file listing all the imported targets.
