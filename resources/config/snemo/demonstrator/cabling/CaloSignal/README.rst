@@ -8,4 +8,7 @@ readout cabling.
 * ``tags/`` : Repository for tagged calorimeter signal cabling tables
   
   * ``original/`` : original cabling table (december 2018-february 2019)
-  * ``actual/`` : actual cabling table (september 2019-)
+
+
+.. end
+   
