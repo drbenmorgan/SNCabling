@@ -75,6 +75,7 @@ if (SNCabling_WITH_BAYEUX_DEPENDENCY)
   set(Bayeux_DIR @Bayeux_CMAKE_CONFIG_DIR@)
   message(STATUS "[info] SNCablingConfig.cmake: Searching Bayeux ${SNCabling_Bayeux_VERSION} from ${Bayeux_DIR}...")
   find_package(Bayeux ${SNCabling_Bayeux_VERSION} EXACT REQUIRED NO_MODULE)
+	message(STATUS "[info] SNCablingConfig.cmake: SNCabling_Bayeux_VERSION          = ${SNCabling_Bayeux_VERSION}")
 endif()
 message(STATUS "[info] SNCablingConfig.cmake: SNCabling_Bayeux_VERSION  = ${SNCabling_Bayeux_VERSION}")
 
