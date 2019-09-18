@@ -9,9 +9,91 @@
 \begin{itemize}
 \item Date: December 2018.
 \item Cabling model: \texttt{ideal} tag.
-\item Effective HV cabling tag: \texttt{original} tag.
 \item Target: 260 PMTs on the french main wall.
 \item HV cables to PMTs \verb+M:1.13.6+ and \verb+M:1.13.8+ have been swapped.
+\item Effective HV cabling tag: \texttt{original} tag.
+\item A bug has been identified in the Python map builder. Now obsolete.
+\end{itemize}
+
+\subsection{Step 2 : French and italian main walls cabling}
+
+\begin{itemize}
+\item Date: September 2019,
+\item Cabling model: \texttt{actual\_1} tag adapted from \texttt{ideal},
+\item Target:
+  \begin{itemize}
+  \item   260 PMTs on the french main wall,
+  \item   260 PMTs on the italian main wall,
+  \end{itemize}
+\item Tag \texttt{original} is now obsolete,
+\item Effective HV cabling tag: \texttt{actual\_1} tag,
+\item Special hardcoded swapped channels have been added in the Python code:
+  \begin{description}
+    
+  \item[Swap \#1:]  HV cables to PMTs \verb+M:1.13.6+ and \verb+M:1.13.8+ have been swapped because
+    of a wrong pin (6 $\leftrightarrow$ 37) in the internal HV connector (see SuperNEMO elog \#30):
+
+    \par Ideally was:
+    \fvset{frame=single,gobble=6}
+    \begin{Verbatim}
+      H:1.5.26 ; E:5   ; A:5.6    ; M:1.13.6  
+      ...
+      H:1.5.9  ; E:5   ; A:5.37   ; M:1.13.8  
+    \end{Verbatim}                
+    \par Realistic table is now:
+    \begin{Verbatim}
+      H:1.5.9  ; E:5   ; A:5.6    ; M:1.13.6  
+      ...
+      H:1.5.26 ; E:5   ; A:5.37   ; M:1.13.8  
+    \end{Verbatim}                
+    
+  \item[Swap \#2:]  HV cables to PMTs \verb+M:0.14.1+ and \verb+M:0.15.1+ because of too short cables  (see SuperNEMO elog \#30):
+
+    \par Ideally was:
+    \begin{Verbatim}
+      H:0.0.13  ; E:12  ; A:12.25  ; M:0.15.1  
+      ...
+      H:0.0.14  ; E:12  ; A:12.26  ; M:0.14.1
+    \end{Verbatim}                
+    \par Realistic table is now:
+    \begin{Verbatim}
+      H:0.0.14  ; E:12  ; A:12.26  ; M:0.15.1  
+      ...
+      H:0.0.13  ; E:12  ; A:12.25  ; M:0.14.1
+    \end{Verbatim}                
+
+    %% \item HV cables to PMTs \verb+M:0.9.7+ and \verb+M:0.9.9+ because of too short cables  (see SuperNEMO elog \#30):
+
+    %%   \par Ideally was:
+    %% \begin{verbatim}
+    %%   H:0.5.22  ; E:17  ; A:17.18  ; M:0.9.7   
+    %%   ...
+    %%   H:0.7.23  ; E:19  ; A:19.3   ; M:0.9.9   
+    %% \end{verbatim}                
+    %% \par Realistic table is now:
+    %% \begin{verbatim}
+    %%   H:0.7.23  ; E:19  ; A:19.3   ; M:0.9.7   
+    %%   ...
+    %%   H:0.5.22  ; E:17  ; A:17.18  ; M:0.9.9   
+    %% \end{verbatim}                
+    
+  \item[Swap \#3:]  HV cables to PMTs \verb+M:0.7.9+ and \verb+M:0.9.9+ because of too short cables  (see SuperNEMO elog \#30):
+
+    \par Ideally was:
+    \begin{Verbatim}
+      H:0.7.25  ; E:19  ; A:19.5   ; M:0.7.9 
+      ...
+      H:0.7.23  ; E:19  ; A:19.3   ; M:0.9.9   
+    \end{Verbatim}                
+    \par Realistic table is now:
+    \begin{Verbatim}
+      H:0.7.23  ; E:19  ; A:19.3   ; M:0.7.9   
+      ...
+      H:0.7.25  ; E:19  ; A:19.5   ; M:0.9.9   
+    \end{Verbatim}                
+
+  \end{description}
+
 \end{itemize}
 
 

@@ -4,7 +4,7 @@ THE_DIR=.
 XFIG_DIR=$(THE_DIR)/fig
 PDFTEX_DIR=$(THE_DIR)/pdftex
 PDFTEX_T_DIR=$(THE_DIR)/pdftex_t
-DOCVER=0.4
+DOCVER=0.5
 
 MAIN=main
 FILE_LABEL=SuperNEMO_CaloHV_CablingScheme-$(DOCVER)
