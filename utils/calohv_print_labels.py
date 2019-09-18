@@ -162,7 +162,7 @@ There are several categories of labels:
         return
 
 if __name__ == "__main__" :
-    calohvmap = "calohv_mapping-skel.csv"
+    calohvmap = "calohv_mapping.csv"
     workdir = "./_calohv_labels_out.d/"
     if len(sys.argv) > 1 :
         calohvmap = sys.argv[1]

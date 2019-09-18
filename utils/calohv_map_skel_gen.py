@@ -8,9 +8,25 @@ from calohv import *
 class CaloHVCablingMapSkelGen:
     """CaloHV Cabling Map Skeleton Generator """
 
-    def __init__(self, csvfile_, debug_ = False):
-        self._fcsv_ = open(csvfile_, "w")
+    def __init__(self, csvfile_, version_ = "" , debug_ = False):
         self._debug_ = debug_
+        self._fcsv_ = open(csvfile_, "w")
+        if self._debug_ :
+            print("debug: requested version = '{}'".format(version_))
+            print("debug:         of length = '{}'".format(len(version_)))
+        version = ""
+        if len(version_) == 0 :
+            version = "ideal"
+        else :
+            version = version_
+        if self._debug_ :
+            print("debug: effective version = '{}'".format(version))
+        if version in [ "ideal", "original", "actual_1" ] :
+            self._version_ = version
+        else :
+            raise Exception("Invalid CaloHVCablingMapSkelGen version '{:s}'!".format(version))
+        if self._debug_ :
+            print("debug: version = '{}'".format(self._version_))
         return
     
     @staticmethod
@@ -149,7 +165,8 @@ class CaloHVCablingMapSkelGen:
                 board_lbl = "{:s}:{:d}.{:d}".format("B", crate_num, board_num)
                 extharness_lbl = "{:s}:{:d}".format("E", harness_num)
                 intcable_lbl = "{:s}:{:d}.{:d}".format("A", harness_num, cable_num)
-                self._fcsv_.write("{:9s} ; {:5s} ; {:8s} ; {:10s}\n".format(channel_lbl, extharness_lbl, intcable_lbl, om_lbl))
+                self._fcsv_.write("{:9s} ; {:5s} ; {:8s} ; {:10s}\n"
+                                  .format(channel_lbl, extharness_lbl, intcable_lbl, om_lbl))
         return
  
     def _run_xcalo(self, side_):
@@ -182,7 +199,8 @@ class CaloHVCablingMapSkelGen:
                         sys.stderr.write("==> X wall label={:s}\n".format(om_lbl))
                     ### harness_num = first_harness + 2 * (om_row // nrows)
                     pin_index += 1
-                    print("======> X-wall Pin index : %d" % pin_index) 
+                    if self._debug_ :
+                        print("======> X-wall Pin index : %d" % pin_index) 
                     # pin_index = (om_row % nrows) * 2 + om_column
                     # if om_column >= half_ncols :
                     #     pin_index = (om_row % nrows) * 2 + (om_column - nrows)
@@ -202,7 +220,8 @@ class CaloHVCablingMapSkelGen:
                     board_lbl = "{:s}:{:d}.{:d}".format("B", crate_num, board_num)
                     extharness_lbl = "{:s}:{:d}".format("E", harness_num)
                     intcable_lbl = "{:s}:{:d}.{:d}".format("A", harness_num, cable_num)
-                    self._fcsv_.write("{:9s} ; {:5s} ; {:8s} ; {:10s}\n".format(channel_lbl, extharness_lbl, intcable_lbl, om_lbl))
+                    self._fcsv_.write("{:9s} ; {:5s} ; {:8s} ; {:10s}\n"
+                                      .format(channel_lbl, extharness_lbl, intcable_lbl, om_lbl))
         return
     
     def _run_calo(self, side_):
@@ -221,26 +240,33 @@ class CaloHVCablingMapSkelGen:
         channel_num = -1
         cable_num   = -1
         half_ncols  = ncols // 2
-        for om_column in range(ncols):
+        for icol in range(ncols) :
+            om_column = icol
+            if self._version_ == "actual_1" and side_ == SuperNEMO.side_italy :
+                # print("debug: actual_1 @ italy")
+                om_column = ncols - icol - 1
             self._fcsv_.write("# Column {:d}:\n".format(om_column))
-            for om_row in range(nrows):
+            for irow in range(nrows):
+                om_row = irow
                 om_lbl = "{:s}:{:d}.{:d}.{:d}".format("M", side_, om_column, om_row)
                 if self._debug_ :
                     sys.stderr.write("==> Calo main label={:s}\n".format(om_lbl))
-                if om_row == nrows - 1:
+                if irow == (nrows - 1) :
                     harness_num = last_harness
-                    pin_index = om_column
+                    pin_index = icol
                     pin_num = CaloHVCablingMapSkelGen.get_redel_female_pins_top()[pin_index]
-                else:
-                    harness_num = first_harness + 2 * (om_row // 3)
-                    pin_index = (om_row % 3) * 10 + om_column
-                    if om_column >= half_ncols :
+                else :
+                    harness_num = first_harness + 2 * (irow // 3)
+                    pin_index = (irow % 3) * 10 + icol
+                    if icol >= half_ncols :
                         harness_num += 1
-                        pin_index = (om_row % 3) * 10 + (om_column - 10)
+                        pin_index = (irow % 3) * 10 + (icol - 10)
                     pin_num = CaloHVCablingMapSkelGen.get_redel_female_pins()[pin_index]
-                cable_num = pin_num
+                if self._debug_ :
+                    sys.stderr.write("==> pin_index={:d}\n".format(pin_index))
+                cable_num   = pin_num
                 channel_num = CaloHVSystem.get_calohv_board_channel_pin_assignment()[pin_num]
-                board_num = CaloHVSystem.get_hv_crate_harness_board_assignment()[harness_num]
+                board_num   = CaloHVSystem.get_hv_crate_harness_board_assignment()[harness_num]
                 # harness_bias = 12
                 # harness_index = harness_num
                 # if harness_num >= harness_bias :
@@ -258,10 +284,41 @@ class CaloHVCablingMapSkelGen:
                 board_lbl = "{:s}:{:d}.{:d}".format("B", crate_num, board_num)
                 extharness_lbl = "{:s}:{:d}".format("E", harness_num)
                 intcable_lbl = "{:s}:{:d}.{:d}".format("A", harness_num, cable_num)
-                self._fcsv_.write("{:9s} ; {:5s} ; {:8s} ; {:10s}\n".format(channel_lbl, extharness_lbl, intcable_lbl, om_lbl))
+                # Special cabling swap:
+                if self._version_ == "actual_1" or self._version_ == "original" :
+                     # ==> Swap #1
+                    if om_lbl == "M:1.13.6" :
+                        print("debug: swap 3")
+                        channel_lbl    = "H:1.5.9"
+                        extharness_lbl = "E:5"
+                        intcable_lbl   = "A:5.6" 
+                    if om_lbl == "M:1.13.8" :
+                        print("debug: swap 3")
+                        channel_lbl    = "H:1.5.26" 
+                        extharness_lbl = "E:5"
+                        intcable_lbl   = "A:5.37" 
+                    # ==> Swap #2
+                    if om_lbl == "M:0.14.1" :
+                        channel_lbl = "H:0.0.13" 
+                        extharness_lbl = "E:12"
+                        intcable_lbl   = "A:12.25" 
+                    if om_lbl == "M:0.15.1" :
+                        channel_lbl = "H:0.0.14" 
+                        extharness_lbl = "E:12"
+                        intcable_lbl   = "A:12.26" 
+                    # ==> Swap #3
+                    if om_lbl == "M:0.7.9" :
+                        channel_lbl = "H:0.7.23" 
+                        extharness_lbl = "E:19"
+                        intcable_lbl   = "A:19.3" 
+                    if om_lbl == "M:0.9.9" :
+                        channel_lbl = "H:0.7.25" 
+                        extharness_lbl = "E:19"
+                        intcable_lbl   = "A:19.5" 
+                    self._fcsv_.write("{:9s} ; {:5s} ; {:8s} ; {:10s}\n"
+                                      .format(channel_lbl, extharness_lbl, intcable_lbl, om_lbl))
         return
         
- 
     def run(self):
         self._fcsv_.write("##############\n")
         self._fcsv_.write("# Main walls #\n")
@@ -278,12 +335,26 @@ class CaloHVCablingMapSkelGen:
         self._fcsv_.write("####################\n")
         self._run_gveto(SuperNEMO.side_italy)
         self._run_gveto(SuperNEMO.side_france)
+        # self._fcsv_.write("#################\n")
+        # self._fcsv_.write("# Reference OMs #\n")
+        # self._fcsv_.write("#################\n")
         # self._run_ref_om()
         return
 
 if __name__ == "__main__" :
-    gm = CaloHVCablingMapSkelGen("calohv_mapping-skel.csv", True)
+    version = "actual_1"
+    debug = False
+    skel_map_file = "calohv_mapping-skel.csv"
+    # print("# argv = ", len(sys.argv))
+    if len(sys.argv) > 1 :
+        version = sys.argv[1]
+    if len(sys.argv) > 2 :
+        if sys.argv[2] == 'debug' :
+            debug = True
+    sys.stderr.write("info: version = '{:s}'\n".format(version))
+    gm = CaloHVCablingMapSkelGen(skel_map_file, version, debug)
     error_code = gm.run()
+    sys.stderr.write("info: skeleton map file = '{:s}'\n".format(skel_map_file))
     sys.exit(error_code)
 
 # end

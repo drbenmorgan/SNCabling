@@ -5,11 +5,11 @@ all : build_calohv build_calosignal
 
 .PHONY : build_calohv
 build_calohv :
-	./mkcalohv
+	./mkcalohv.sh
 
 .PHONY : build_calosignal
 build_calosignal :
-	./mkcalosignal
+	./mkcalosignal.sh
 
 .PHONY : clean
 clean : clean_calohv clean_calosignal

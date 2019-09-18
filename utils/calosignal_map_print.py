@@ -42,10 +42,10 @@ class CaloSignalCablingMapPrint:
             if len(line) == 0 : continue
             if line[0] == '#' : continue
             tokens = line.split(";")
-            channel_label    = tokens[0].strip()
+            channel_label  = tokens[0].strip()
             extcable_label = tokens[1].strip()
-            intcable_label   = tokens[2].strip()
-            pmt_label        = tokens[3].strip()
+            intcable_label = tokens[2].strip()
+            pmt_label      = tokens[3].strip()
             pmtaddr      = OMaddress(pmt_label)
             extcableaddr = CaloSignalExternalCableAddress(extcable_label)
             intcableaddr = CaloSignalInternalCableAddress(intcable_label)

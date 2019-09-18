@@ -194,6 +194,10 @@ class CaloHVCablingMapPrint:
             fout.write("\\textcolor{blue}{\\small %s} &" % (row));
             for icol in range(ncols) :
                 column = icol
+                if side == SuperNEMO.side_italy and wall == SuperNEMO.side_edelweiss:
+                    column = ncols - 1 - icol
+                if side == SuperNEMO.side_france and wall == SuperNEMO.side_tunnel:
+                    column = ncols - 1 - icol
                 pmt_label = "{:s}:{:d}.{:d}.{:d}.{:d}".format("X", side, wall, column, row)
                 pmt_addr = OMaddress(pmt_label)
                 pmt_addr.print_me(sys.stderr, "PMT address: ", "[info] ")
@@ -416,7 +420,7 @@ class CaloHVCablingMapPrint:
         return
         
 if __name__ == "__main__" :
-    calohvmap = "calohv_mapping-skel.csv"
+    calohvmap = "calohv_mapping.csv"
     workdir = "./_calohv_table_out.d/"
     if len(sys.argv) > 1 :
         calohvmap = sys.argv[1]
