@@ -3,7 +3,7 @@ SuperNEMO Demonstrator Cabling
 ========================================
 
 :Author: F.Mauger, Y.Lemière
-:Date: 2019-04-08
+:Date: 2019-09-18
 
 .. role:: cpp(code)
    :language: cpp
@@ -27,8 +27,8 @@ The ``SNCabling`` C++ library
 The  ``SNCabling`` C++  library  provides a  service  which hosts  all
 searchable cabling tables of interest:
 
-- ``CaloHV`` : SuperNEMO calorimeter HV system (*to be fixed with final cabling*)
-- ``CaloSignal`` : SuperNEMO calorimeter signal readout system (*to be checked*)
+- ``CaloHV`` : SuperNEMO calorimeter HV system (*updated to the actual cabling*)
+- ``CaloSignal`` : SuperNEMO calorimeter signal readout system (*should be up to date*)
 - ``TrackerHV`` : SuperNEMO tracker HV system (*not implemented yet*)
 - ``TrackerSignal`` :  SuperNEMO tracker  signal readout  system (*not
   implemented yet*)
@@ -108,8 +108,8 @@ Output is then:
 Dependencies
 ============
 
-* Boost
-* Bayeux for *service* support
+* Boost (recommended >= 1.69)
+* Bayeux only for *service* support (recommended >= 3.4.1)
 
 
 Installing SNCabling
