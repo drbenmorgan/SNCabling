@@ -68,6 +68,7 @@ namespace sncabling {
     bool operator<(const calo_hv_id & other_) const;
     bool operator>(const calo_hv_id & other_) const;
     bool operator==(const calo_hv_id & other_) const;
+    bool operator!=(const calo_hv_id & other_) const;
 
     bool from_label(const label & lbl_);
     label to_label() const;

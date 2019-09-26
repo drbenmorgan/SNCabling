@@ -286,6 +286,11 @@ namespace sncabling {
   {
     return compare(*this, other_) == 0;
   }
+ 
+  bool calo_hv_id::operator!=(const calo_hv_id & other_) const
+  {
+    return compare(*this, other_) != 0;
+  }
 
   calo_hv_id calo_hv_id::get_crate_id() const
   {
