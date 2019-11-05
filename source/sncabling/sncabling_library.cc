@@ -27,7 +27,7 @@
 // This project;
 #include "sncabling/version.h"
 #include "sncabling/resource_files.h"
-#include "sncabling_binreloc.h"
+#include "sncabling/sncabling_binreloc.h"
 #include "sncabling/exception.h"
 
 namespace {
@@ -165,7 +165,7 @@ namespace sncabling {
     _initialize_urn_services_();
 
 #endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
-    
+
     _initialized_ = true;
     return;
   }
@@ -186,7 +186,7 @@ namespace sncabling {
     // Deregister library informations from the Bayeux/datatools' kernel:
     _libinfo_deregistration_();
 #endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
-    
+
     return;
   }
 

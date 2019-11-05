@@ -49,6 +49,11 @@ list(INSERT CMAKE_MODULE_PATH 0 ${PROJECT_SOURCE_DIR}/cmake)
 include(LPCCMakeSettings)
 
 #-----------------------------------------------------------------------
+# Primary dependencies
+#
+find_package(Boost 1.64 REQUIRED filesystem date_time system)
+
+#-----------------------------------------------------------------------
 # Useful variables
 set(SNCABLING_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
 set(SNCABLING_BINARY_DIR "${PROJECT_BINARY_DIR}")
@@ -62,23 +67,17 @@ if(SNCABLING_ENABLE_TESTING)
 endif()
 
 #-----------------------------------------------------------------------
-# Configure/Build utilities as needed
+# Configure/Build optional components
 #
 option(SNCABLING_WITH_DEVELOPER_TOOLS "Build/install developer tools" ON)
 mark_as_advanced(SNCABLING_WITH_DEVELOPER_TOOLS)
 
-#-----------------------------------------------------------------------
-# Optional build of documentation
-#
-option(SNCABLING_WITH_SERVICE "Build service support for SNCabling (depends on Bayeux)" OFF)
+option(SNCABLING_WITH_SERVICE "Build Bayeux service support for SNCabling" OFF)
+if(SNCABLING_WITH_SERVICE)
+  find_package(Bayeux 3.4.0 REQUIRED)
+endif()
 
-#-----------------------------------------------------------------------
-# Optional build of documentation
-#
 option(SNCABLING_WITH_DOCS "Build documentation for SNCabling" ON)
-
-#-----------------------------------------------------------------------
-include(SNCablingDependencies)
 
 #-----------------------------------------------------------------------
 # Build the subdirectories as required

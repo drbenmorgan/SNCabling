@@ -24,7 +24,7 @@
 #include <mach-o/dyld.h>
 #include <dlfcn.h>
 #endif
-#include "sncabling_binreloc.h"
+#include "sncabling/sncabling_binreloc.h"
 
 #ifdef __cplusplus
 extern "C" {

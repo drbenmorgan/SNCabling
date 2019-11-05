@@ -20,17 +20,6 @@
 #-----------------------------------------------------------------------
 
 #-----------------------------------------------------------------------
-# Core configuration
-#
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-include_directories(${SNCABLING_BUILD_PREFIX}/include)
-include_directories(${SNCABLING_BUILD_PREFIX}/include/sncabling)
-#
-#-----------------------------------------------------------------------
-# Libraries and apps
-#
-
-#-----------------------------------------------------------------------
 # Main SNCabling library + protobuf support:
 add_subdirectory(sncabling)
 

@@ -18,124 +18,78 @@ if("${isSystemDir}" STREQUAL "-1")
   set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_FULL_LIBDIR}")
 endif()
 
-set(SNCablingLibrary_HEADERS
-  sncabling_config.h.in
-  resource_files.h
-  version.h.in
-  label.h
-  sncabling_library.h
-  om_id.h
-  lis_id.h
-  calo_hv_id.h
-  calo_signal_id.h
-  lis_cabling.h
-  calo_hv_cabling.h
-  calo_signal_cabling.h
-  utils.h
-  logger.h
-  exception.h
-  time_mark.h
-  sncabling.h
-  )
-
-#-----------------------------------------------------------------------
-# Declare sources
-#
+# Configured sources
+configure_file(sncabling_config.h.in sncabling_config.h @ONLY)
 configure_file(sncabling.cc.in      sncabling.cc      @ONLY)
 configure_file(resource_files.cc.in resource_files.cc @ONLY)
+configure_file(version.h.in version.h @ONLY)
 
 string(RANDOM LENGTH 18 MANGLE_BINRELOC_MAIN)
 set(MANGLE_BINRELOC "SNCABLINGMB${MANGLE_BINRELOC_MAIN}")
 configure_file(sncabling_binreloc.h.in sncabling_binreloc.h @ONLY)
 
-set(SNCablingLibrary_SOURCES
+
+# Build and link the library
+add_library(SNCabling SHARED
+  ${CMAKE_CURRENT_BINARY_DIR}/sncabling_config.h
+  ${CMAKE_CURRENT_BINARY_DIR}/version.h
   version.cc
   ${CMAKE_CURRENT_BINARY_DIR}/sncabling.cc
-  ${CMAKE_CURRENT_BINARY_DIR}/resource_files.cc
-  ${CMAKE_CURRENT_BINARY_DIR}/sncabling_binreloc.h
-  label.cc
-  om_id.cc
-  lis_id.cc
-  lis_cabling.cc
-  calo_hv_id.cc
-  calo_signal_id.cc
-  calo_hv_cabling.cc
-  calo_signal_cabling.cc
-  utils.cc
-  time_mark.cc
   sncabling.h
+  ${CMAKE_CURRENT_BINARY_DIR}/resource_files.cc
+  resource_files.h
+  ${CMAKE_CURRENT_BINARY_DIR}/sncabling_binreloc.h
   sncabling_binreloc.c
+  calo_hv_cabling.cc
+  calo_hv_cabling.h
+  calo_hv_id.cc
+  calo_hv_id.h
+  calo_signal_cabling.cc
+  calo_signal_cabling.h
+  calo_signal_id.cc
+  calo_signal_id.h
+  exception.h
+  label.cc
+  label.h
+  lis_cabling.cc
+  lis_cabling.h
+  lis_id.cc
+  lis_id.h
+  logger.h
+  om_id.cc
+  om_id.h
   sncabling_library.cc
+  sncabling_library.h
+  testing
+  time_mark.cc
+  time_mark.h
+  utils.cc
+  utils.h
   )
 
-if (SNCABLING_WITH_SERVICE)
-
-  list(APPEND SNCablingLibrary_HEADERS
-    service.h
-    )
-  list(APPEND SNCablingLibrary_SOURCES
-    service.cc
-    )
-
+if(SNCABLING_WITH_SERVICE)
+  target_sources(SNCabling PRIVATE service.h service.cc)
 endif()
-
-# - Publish headers
-foreach(_hdrin ${SNCablingLibrary_HEADERS})
-  string(REGEX REPLACE "\\.in$" "" _hdrout "${_hdrin}")
-  configure_file(${_hdrin} ${SNCABLING_BUILD_PREFIX}/include/sncabling/${_hdrout} @ONLY)
-endforeach()
-
-#-----------------------------------------------------------------------
-# Build/Link Library
-#
-include_directories(${SNCABLING_BUILD_PREFIX}/include)
-
-#-----------------------------------------------------------------------
-# Build/Link the library
-#
-add_library(SNCabling SHARED
-  ${SNCablingLibrary_HEADERS}
-  ${SNCablingLibrary_PRIVATE_HEADERS}
-  ${SNCablingLibrary_SOURCES}
-  ${_SNCablingProtobufLibrary_cpp_HEADERS}
-  ${_SNCablingProtobufLibrary_cpp_SOURCES}
-  )
-# Doc: https://cmake.org/Wiki/CMake_FAQ#How_can_I_add_a_dependency_to_a_source_file_which_is_generated_in_a_subdirectory.3F
-# Tell CMake the source won't be available until build time.
-set_source_files_properties(${_SNCablingProtobufLibrary_cpp_HEADERS} PROPERTIES GENERATED 1)
-set_source_files_properties(${_SNCablingProtobufLibrary_cpp_SOURCES} PROPERTIES GENERATED 1)
-set_target_properties(SNCabling PROPERTIES LINKER_LANGUAGE CXX)
-foreach(_pb_target ${_SNCablingProtobufLibrary_cpp_TARGETS})
-  message( STATUS "[info] ##### Adding new dependency from target='${_pb_target}'")
-  add_dependencies(SNCabling ${_pb_target})
-endforeach()
 
 target_compile_definitions(SNCabling PRIVATE ENABLE_BINRELOC)
 target_compile_features(SNCabling PUBLIC ${SNCABLING_CXX_COMPILE_FEATURES})
-# - Use BinReloc
-set_target_properties(SNCabling PROPERTIES COMPILE_DEFINITIONS ENABLE_BINRELOC)
 
 target_include_directories(SNCabling
   PUBLIC
-  $<BUILD_INTERFACE:${SNCABLING_BUILD_PREFIX}/include>
-  $<BUILD_INTERFACE:${SNCABLING_BUILD_PREFIX}/include/sncabling>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/source>
+  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/source>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sncabling>
   )
 
-
-set(_SNCabling_SPECIAL_LINKS)
-if (SNCABLING_WITH_BAYEUX_DEPENDENCY)
-  set(_SNCabling_SPECIAL_LINKS Bayeux::Bayeux)
+target_link_libraries(SNCabling PUBLIC Boost::filesystem Boost::date_time Boost::system)
+if(SNCABLING_WITH_SERVICE)
+  target_link_libraries(SNCabling PUBLIC Bayeux::Bayeux)
 endif()
 
-target_link_libraries(SNCabling PUBLIC
-  ${_SNCabling_SPECIAL_LINKS}
-  ${SNCabling_Boost_LIBRARIES}
-  )
+# Alias the library so that SNCabling can be used as a subproject
+add_library(SNCabling::SNCabling ALIAS SNCabling)
 
-# - Install it
+# - Install the target and headers
 install(TARGETS SNCabling
   EXPORT  SNCablingTargets
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -143,11 +97,12 @@ install(TARGETS SNCabling
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   )
 
-# - Install public headers (preliminary)
-install(DIRECTORY ${SNCABLING_BUILD_PREFIX}/include/sncabling
-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/ ${CMAKE_CURRENT_BINARY_DIR}/
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sncabling
   FILES_MATCHING PATTERN "*.h"
-  PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
+  PATTERN "sncabling_binreloc.h" EXCLUDE
+  PATTERN "testing" EXCLUDE
+  PATTERN "CMakeFiles" EXCLUDE
   )
 
 add_subdirectory(testing)
