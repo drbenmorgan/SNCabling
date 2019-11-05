@@ -38,8 +38,8 @@
 //! Patch version number of SNCabling
 #define SNCABLING_VERSION_PATCH @SNCabling_VERSION_PATCH@
 
-//! Current revision/build number of SNCabling, 0 for a release
-#define SNCABLING_VERSION_REVISION @SNCabling_VERSION_REVISION@
+//Current revision/build number of SNCabling, 0 for a release
+//#define SNCABLING_VERSION_REVISION @SNCabling_VERSION_REVISION@
 
 //! Encode SNCabling to ordered integer available at compile time
 #define SNCABLING_ENCODE_VERSION(major, minor, patch) (                 \
@@ -76,8 +76,8 @@ namespace sncabling {
     //! Return the patch version number of SNCabling, e.g., 3 for '1.2.3'
     static int get_patch();
 
-    //! Return the revision/build number of SNCabling, e.g., 1234
-    static int get_revision();
+    // Return the revision/build number of SNCabling, e.g., 1234
+    //static int get_revision();
 
     //! Return the full version number of SNCabling as a string, e.g., '1.2.3'
     static std::string get_version();

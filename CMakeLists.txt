@@ -38,18 +38,10 @@ endif()
 # CMake/project requirements and configuration
 #
 cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
-project(SNCabling)
+project(SNCabling VERSION 1.0.0)
 
 # - Load custom modules
 list(INSERT CMAKE_MODULE_PATH 0 ${PROJECT_SOURCE_DIR}/cmake)
-
-# - Version number management utilities:
-include(BxVersionManager)
-
-# - Versioning only giving major and minor. Patch number is
-#   automatically deduced from an external file.
-bx_version_set(SNCabling 1 0)
-message(STATUS "[info] Project version = '${PROJECT_VERSION}'")
 
 #-----------------------------------------------------------------------
 # Common LPC utilities

@@ -37,9 +37,9 @@ namespace sncabling {
     return static_cast<int>(SNCABLING_VERSION_PATCH);
   }
 
-  int version::get_revision() {
-    return static_cast<int>(SNCABLING_VERSION_REVISION);
-  }
+  //int version::get_revision() {
+  //  return static_cast<int>(SNCABLING_VERSION_REVISION);
+  //}
 
   std::string version::get_version() {
     static std::string version("");
