@@ -73,14 +73,12 @@ endif()
 
 target_compile_definitions(SNCabling PRIVATE ENABLE_BINRELOC)
 target_compile_features(SNCabling PUBLIC ${SNCABLING_CXX_COMPILE_FEATURES})
-
 target_include_directories(SNCabling
   PUBLIC
   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
   )
-
 target_link_libraries(SNCabling PUBLIC Boost::filesystem Boost::date_time Boost::system)
 if(SNCABLING_WITH_SERVICE)
   target_link_libraries(SNCabling PUBLIC Bayeux::Bayeux)
@@ -105,6 +103,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/ ${CMAKE_CURRENT_BINARY_DIR}/
   PATTERN "CMakeFiles" EXCLUDE
   )
 
-add_subdirectory(testing)
+if(BUILD_TESTING)
+  add_subdirectory(testing)
+endif()
 
-# - end

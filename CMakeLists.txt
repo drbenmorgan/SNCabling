@@ -59,12 +59,9 @@ set(SNCABLING_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
 set(SNCABLING_BINARY_DIR "${PROJECT_BINARY_DIR}")
 
 #-----------------------------------------------------------------------
-# Configure testing if required
+# Set up testing (CTest provides the "BUILD_TESTING" option)
 #
-option(SNCABLING_ENABLE_TESTING "Build unit testing system for SNCabling" ON)
-if(SNCABLING_ENABLE_TESTING)
-  enable_testing()
-endif()
+include(CTest)
 
 #-----------------------------------------------------------------------
 # Configure/Build optional components
