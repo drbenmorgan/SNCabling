@@ -82,7 +82,7 @@ option(SNCABLING_WITH_DOCS "Build documentation for SNCabling" ON)
 #-----------------------------------------------------------------------
 # Build the subdirectories as required
 #
-add_subdirectory(source)
+add_subdirectory(sncabling)
 add_subdirectory(programs)
 add_subdirectory(resources)
 if(SNCABLING_WITH_DOCS)
