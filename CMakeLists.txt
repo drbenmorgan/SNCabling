@@ -19,7 +19,6 @@
 # You should have received a copy of the GNU General Public License
 # along with SNCabling.  If not, see <http://www.gnu.org/licenses/>.
 #-----------------------------------------------------------------------
-message (STATUS "[info] Begin of 'CMakeLists.txt'.")
 
 #-----------------------------------------------------------------------
 # Enforce an out-of-source build.
@@ -39,7 +38,6 @@ endif()
 # CMake/project requirements and configuration
 #
 cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
-
 project(SNCabling)
 
 # - Load custom modules
@@ -58,19 +56,6 @@ message(STATUS "[info] Project version = '${PROJECT_VERSION}'")
 #
 include(LPCCMakeSettings)
 
-# - SVN revision number for dev builds
-include(LPCSVNUtilities)
-set(SNCabling_VERSION_REVISION 0)
-
-Subversion_DIRECTORY_IS_WC(${PROJECT_SOURCE_DIR} SNCabling)
-if(SNCabling_DIRECTORY_IS_WC)
-  Subversion_WC_INFO(${PROJECT_SOURCE_DIR} SNCabling)
-  set(SNCabling_VERSION_REVISION ${SNCabling_WC_REVISION})
-endif()
-
-
-message (STATUS "[info] SNCABLING_LIBDIR_TO_RESOURCEDIR = '${SNCABLING_LIBDIR_TO_RESOURCEDIR}'")
- 
 #-----------------------------------------------------------------------
 # Useful variables
 set(SNCABLING_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
@@ -101,21 +86,11 @@ option(SNCABLING_WITH_SERVICE "Build service support for SNCabling (depends on B
 option(SNCABLING_WITH_DOCS "Build documentation for SNCabling" ON)
 
 #-----------------------------------------------------------------------
-# Debug
-message( STATUS "[info] SNCabling_VERSION              = '${SNCabling_VERSION}'")
-message( STATUS "[info] SNCABLING_SOURCE_DIR           = '${SNCABLING_SOURCE_DIR}'")
-message( STATUS "[info] SNCABLING_BINARY_DIR           = '${SNCABLING_BINARY_DIR}'")
-message( STATUS "[info] SNCABLING_ENABLE_TESTING       = '${SNCABLING_ENABLE_TESTING}'")
-message( STATUS "[info] SNCABLING_WITH_DEVELOPER_TOOLS = '${SNCABLING_WITH_DEVELOPER_TOOLS}'")
-message( STATUS "[info] SNCABLING_WITH_DOCS            = '${SNCABLING_WITH_DOCS}'")
-
-#-----------------------------------------------------------------------
 include(SNCablingDependencies)
 
 #-----------------------------------------------------------------------
 # Build the subdirectories as required
 #
-message( STATUS "[info] Adding subdirectory 'source'...")
 add_subdirectory(source)
 
 if(SNCABLING_WITH_DOCS)
@@ -131,9 +106,6 @@ write_basic_package_version_file(
   ${SNCABLING_BUILD_CMAKEDIR}/${SNCABLING_TAG}/SNCablingConfigVersion.cmake
   COMPATIBILITY SameMajorVersion
   )
-
-message(STATUS "[debug] CMAKE_INSTALL_CMAKEDIR = '${CMAKE_INSTALL_CMAKEDIR}'")
-message(STATUS "[debug] PROJECT_TAG            = '${PROJECT_TAG}'")
 
 # - Config file is also the same in build/install trees as we use same layout
 configure_package_config_file(
@@ -169,12 +141,7 @@ install(
   )
 
 #-----------------------------------------------------------------------
-# - Install published resources and documentation
-
-#-----------------------------------------------------------------------
 # Resource installation
 add_subdirectory(resources)
-
-message (STATUS "[info] End of 'CMakeLists.txt'.")
 
 # - end

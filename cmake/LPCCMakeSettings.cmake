@@ -157,8 +157,6 @@ else()
   set(__LPCCMAKESETTINGS_INCLUDED 1)
 endif()
 
-message( STATUS "[info] LPCCMakeSettings: Entering...")
-
 #-----------------------------------------------------------------------
 # Include needed modules
 #
@@ -257,7 +255,6 @@ foreach(_varname ITEMS
     CMAKEDIR_TO_INCLUDEDIR
     )
   set(${PROJECT_NAME_UC}_${_varname} "${PROJECT_${_varname}}")
-  message( STATUS "[info] LPCCMakeSettings: ${PROJECT_NAME_UC}_${_varname} = '${${PROJECT_NAME_UC}_${_varname}}'")
 endforeach()
 
 #-----------------------------------------------------------------------
@@ -429,4 +426,3 @@ if(${PROJECT_NAME_UC}_CXX_STANDARD EQUAL 14)
     )
 endif()
 
-message( STATUS "[info] LPCCMakeSettings: Exiting.")

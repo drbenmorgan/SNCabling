@@ -18,7 +18,6 @@
 # You should have received a copy of the GNU General Public License
 # along with SNCabling. If not, see <http://www.gnu.org/licenses/>.
 #-----------------------------------------------------------------------
-message (STATUS "[info] Begin of 'source/CMakeLists.txt'.")
 
 #-----------------------------------------------------------------------
 # Core configuration
@@ -33,30 +32,9 @@ include_directories(${SNCABLING_BUILD_PREFIX}/include/sncabling)
 
 #-----------------------------------------------------------------------
 # Main SNCabling library + protobuf support:
-message( STATUS "[info] Adding subdirectory 'sncabling'...")
 add_subdirectory(sncabling)
 
 #-----------------------------------------------------------------------
 # Apps
-message( STATUS "[info] Adding subdirectory 'sncablingquery'...")
 add_subdirectory(sncablingquery)
 
-#-----------------------------------------------------------------------
-# Manual
-#
-if(Pandoc_FOUND)
-  set(SNCABLING_MANPAGE_IN  ${CMAKE_CURRENT_SOURCE_DIR}/SNCabling.1.md)
-  set(SNCABLING_MANPAGE_OUT ${SNCABLING_BUILD_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${SNCABLING_TAG}/man/man1/SNCabling.1)
-
-  add_custom_command(OUTPUT ${SNCABLING_MANPAGE_OUT}
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${SNCABLING_BUILD_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${SNCABLING_TAG}/man/man1
-    COMMAND ${Pandoc_EXECUTABLE} -s -w man ${SNCABLING_MANPAGE_IN} -o ${SNCABLING_MANPAGE_OUT}
-    COMMENT "Generating SNCabling.1 man page"
-    DEPENDS ${SNCABLING_MANPAGE_IN}
-    )
-  add_custom_target(vire_man ALL DEPENDS ${SNCABLING_MANPAGE_OUT})
-endif()
-
-message (STATUS "[info] End of 'source/CMakeLists.txt'.")
-
-#- end

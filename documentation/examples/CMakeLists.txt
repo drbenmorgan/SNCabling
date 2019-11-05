@@ -1,5 +1,4 @@
 
-
 add_executable(ex_calo_hv_cabling ex_calo_hv_cabling.cxx)
 target_link_libraries(ex_calo_hv_cabling SNCabling)
 set_target_properties(ex_calo_hv_cabling
@@ -16,6 +15,6 @@ if (SNCABLING_WITH_SERVICE)
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sncabling_examples
     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sncabling_examples
     )
-  
+
 endif()
 # - end

@@ -1,16 +1,6 @@
-message(STATUS "[info] Begin of 'source/sncabling/CMakeLists.txt'")
-
-
 #-----------------------------------------------------------------------
 # Configure Sncabling library
 #
-
-message(STATUS "[debug] SNCABLING_LIBDIR_TO_RESOURCEDIR = '${SNCABLING_LIBDIR_TO_RESOURCEDIR}'")
-# set(SNCABLING_DATAROOTDIR ${SNCABLING_BUILD_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${SNCABLING_TAG})
-# set(SNCABLING_DATAROOTDIR ${PROJECT_BUILD_DATAROOTDIR}/${SNCABLING_TAG})
-# message(STATUS "[debug] SNCABLING_DATAROOTDIR           = '${SNCABLING_DATAROOTDIR}'")
-
-
 # -- RPATH settings --
 # From: https://cmake.org/Wiki/CMake_RPATH_handling
 # use, i.e. don't skip the full RPATH for the build tree
@@ -26,14 +16,6 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_FULL_LIBDIR}" isSystemDir)
 if("${isSystemDir}" STREQUAL "-1")
   set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_FULL_LIBDIR}")
-endif()
-
-set(SNCablingLibrary_DEFINITIONS
-  -std=c++11
-  )
-
-if(CMAKE_COMPILER_IS_GNUCXX)
-  set(CMAKE_CXX_FLAGS ${SNCablingLibrary_DEFINITIONS})
 endif()
 
 set(SNCablingLibrary_HEADERS
@@ -93,7 +75,7 @@ if (SNCABLING_WITH_SERVICE)
     )
   list(APPEND SNCablingLibrary_SOURCES
     service.cc
-    )  
+    )
 
 endif()
 
@@ -129,18 +111,9 @@ foreach(_pb_target ${_SNCablingProtobufLibrary_cpp_TARGETS})
 endforeach()
 
 target_compile_definitions(SNCabling PRIVATE ENABLE_BINRELOC)
-message( STATUS "[debug] SNCABLING_CXX_COMPILE_FEATURES = '${SNCABLING_CXX_COMPILE_FEATURES}'")
 target_compile_features(SNCabling PUBLIC ${SNCABLING_CXX_COMPILE_FEATURES})
-# set_property(TARGET SNCabling APPEND PROPERTY INTERFACE_INCLUDE_DIRECTORIES
-#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-#   $<INSTALL_INTERFACE:include/sncabling>  # <prefix>/include/sncabling
-#   )
-message( STATUS "[debug] SNCABLING_BUILD_PREFIX   = '${SNCABLING_BUILD_PREFIX}'")
-message( STATUS "[debug] CMAKE_CURRENT_BINARY_DIR = '${CMAKE_CURRENT_BINARY_DIR}'")
-message( STATUS "[debug] CMAKE_INSTALL_INCLUDEDIR = '${CMAKE_INSTALL_INCLUDEDIR}'")
 # - Use BinReloc
 set_target_properties(SNCabling PROPERTIES COMPILE_DEFINITIONS ENABLE_BINRELOC)
-# target_compile_definitions(SNCabling PRIVATE ENABLE_BINRELOC)
 
 target_include_directories(SNCabling
   PUBLIC
@@ -151,7 +124,6 @@ target_include_directories(SNCabling
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sncabling>
   )
 
-message( STATUS "[debug] SNCabling_Boost_LIBRARIES    = '${SNCabling_Boost_LIBRARIES}'")
 
 set(_SNCabling_SPECIAL_LINKS)
 if (SNCABLING_WITH_BAYEUX_DEPENDENCY)
@@ -179,7 +151,5 @@ install(DIRECTORY ${SNCABLING_BUILD_PREFIX}/include/sncabling
   )
 
 add_subdirectory(testing)
-
-message(STATUS "[info] End of 'source/sncabling/CMakeLists.txt'.")
 
 # - end
