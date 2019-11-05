@@ -23,7 +23,3 @@
 # Main SNCabling library + protobuf support:
 add_subdirectory(sncabling)
 
-#-----------------------------------------------------------------------
-# Apps
-add_subdirectory(sncablingquery)
-

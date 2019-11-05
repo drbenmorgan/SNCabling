@@ -12,7 +12,7 @@ SuperNEMO Demonstrator Cabling
    :language: bash
 
 .. contents::
-	      
+
 Introduction
 ============
 
@@ -34,7 +34,7 @@ searchable cabling tables of interest:
   implemented yet*)
 - ``LIS`` : SuperNEMO light injection system (*to be checked*)
 
-  
+
 **Example**:  the  following  example  illustrates how  to,  from  the
 SuperNEMO cabling API, search and find the identifier of a WaveCatcher
 board readout  channel from  the identifier  of a  calorimeter optical
@@ -71,7 +71,7 @@ options with explicit dependency on Bayeux in order to implement the
 
         const sncabling::calo_signal_id & readout_channel
 	  = caloSignalCabling.get_channel(calo_id);
-	  
+
 	std::cout << "OM [" << calo_id.to_label() << "] "
 	          << "is associated to the WaveCatcher readout channel "
 	          << "[" << readout_channel.to_label() << "]\n";
@@ -124,7 +124,7 @@ Installing SNCabling
 
       $ git clone https://gitlab.in2p3.fr/SuperNEMO-DBD/SNCabling
       $ cd SNCabling/
-	     
+
 #. From the  ``SNCabling`` source  directory, create a  separate build
    directory:
 
@@ -133,7 +133,7 @@ Installing SNCabling
       $ mkdir _build
       $ cd _build
    ..
-	     
+
 #. Configure ``SNCabling`` without *service* support:
 
 
@@ -148,14 +148,14 @@ Installing SNCabling
       $ ninja test
       $ ninja install
    ..
-   
+
    where ``/opt/sw/SuperNEMO-DBD/SNCabling`` is an arbitrary directory where to install
    ``SNCabling``.
 
 
    With *service* support, you need to specify the Bayeux installation prefix path:
 
- 
+
    .. code:: bash
 
       $ which bxquery
@@ -166,19 +166,19 @@ Installing SNCabling
 	  -DBayeux_DIR:PATH=$(bxquery --cmakedir) \
 	  -GNinja \
 	  ..
-   ..  
-	     
+   ..
+
 #. Cleaning:
 
    You can safely remove the build directory:
- 
+
    .. code:: bash
 
       $ cd ..
       $ rm -fr _build
    ..
-   
-   
+
+
 Using SNCabling
 ===============
 
@@ -189,13 +189,13 @@ You must update your ``PATH`` environment variable:
    $ export PATH="/opt/sw/SuperNEMO-DBD/SNCabling/bin:${PATH}"
 ..
 
-The   ``sncablingquery``  utility   script  is   provided  to   locate
+The   ``sncabling-config``  utility   script  is   provided  to   locate
 ``SNCabling``  components  (shared  library,  header  files,  resource
 files) in the installation directory:
 
 .. code:: bash
 
-   $ sncablingquery --help	  
+   $ sncabling-config --help
 ..
 
 ``SNCabling``  is provided  with  CMake support.  To  build a  package
@@ -204,7 +204,7 @@ location to CMake with a command like:
 
 .. code:: bash
 
-   $ cmake -DSNCabling_DIR=$(sncablingquery --cmakedir) ...	  
+   $ cmake -DSNCabling_DIR=$(sncabling-config --cmakedir) ...
 ..
 
 

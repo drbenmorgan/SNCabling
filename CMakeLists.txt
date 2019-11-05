@@ -83,7 +83,8 @@ option(SNCABLING_WITH_DOCS "Build documentation for SNCabling" ON)
 # Build the subdirectories as required
 #
 add_subdirectory(source)
-
+add_subdirectory(programs)
+add_subdirectory(resources)
 if(SNCABLING_WITH_DOCS)
   add_subdirectory(documentation)
 endif()
@@ -131,8 +132,3 @@ install(
     ${CMAKE_INSTALL_CMAKEDIR}/${SNCABLING_TAG}
   )
 
-#-----------------------------------------------------------------------
-# Resource installation
-add_subdirectory(resources)
-
-# - end

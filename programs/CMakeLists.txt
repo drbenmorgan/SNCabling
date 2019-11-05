@@ -1,4 +1,4 @@
-# - CMake build script for sncablingquery application
+# - CMake build script for sncabling-config application
 
 #-----------------------------------------------------------------------
 # Copyright 2018 François Mauger <mauger@lpccaen.in2p3.fr>
@@ -21,9 +21,9 @@
 #-----------------------------------------------------------------------
 # Build utility script
 #
-configure_file(sncablingquery.in ${CMAKE_CURRENT_BINARY_DIR}/sncablingquery @ONLY)
+configure_file(sncabling-config.in ${CMAKE_CURRENT_BINARY_DIR}/sncabling-config @ONLY)
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sncablingquery
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sncabling-config
   DESTINATION ${CMAKE_INSTALL_BINDIR}
   PERMISSIONS
   OWNER_READ OWNER_EXECUTE
