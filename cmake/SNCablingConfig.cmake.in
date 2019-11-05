@@ -1,12 +1,14 @@
-# - Config file for the Vire package
-# It defines the following variables
-#  SNCabling_VERSION            - SNCabling version
-#  SNCabling_VERSION_REVISION   - SNCabling version revision
-#  SNCabling_WITH_DEVELOPER_TOOLS - SNCabling is built with development tools
-#  SNCabling_INCLUDE_DIRS       - SNCabling include directories
-#  SNCabling_CMAKE_CONFIG_DIR   - SNCabling CMake config path
-#  SNCabling_WITH_BAYEUX_DEPENDENCY
-#  SNCabling_INSTALL_DIR
+#.rst: SNCablingConfig
+#
+# Variables
+# - SNCabling_VERSION: version number
+# - SNCabling_INCLUDE_DIR: Path to SNCabling headers
+#
+# Components
+# - devtools: available if the package was built with devtools
+# - docs: available if the package was built with documentation
+# - service: available if the Bayeux service for SNCabling was built
+#
 
 #----------------------------------------------------------------------
 # This program is free software: you can redistribute it and/or modify
@@ -23,71 +25,36 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------
 
-message(STATUS "[info] SNCablingConfig.cmake: Entering...")
-
-# - Core API version
 set(SNCabling_VERSION "@SNCabling_VERSION@")
-# - Development Tag
-set(SNCabling_VERSION_REVISION "@SNCabling_VERSION_REVISION@")
-# - SNCabling cmake-config path is stored to help explicit path resolution in client packages:
-set(SNCabling_CMAKE_CONFIG_DIR "${CMAKE_CURRENT_LIST_DIR}")
-set(SNCabling_WITH_DEVELOPER_TOOLS "@SNCABLING_WITH_DEVELOPER_TOOLS@")
-set(SNCabling_DOCS_FOUND            "@SNCABLING_WITH_DOCS@")
-set(SNCabling_WITH_SERVICE          "@SNCABLING_WITH_SERVICE@")
-set(SNCabling_WITH_BAYEUX_DEPENDENCY "@SNCABLING_WITH_BAYEUX_DEPENDENCY@")
-
-message(STATUS "[info] SNCablingConfig.cmake: SNCabling_VERSION          = '${SNCabling_VERSION}'")
-message(STATUS "[info] SNCablingConfig.cmake: SNCabling_VERSION_REVISION = '${SNCabling_VERSION_REVISION}'")
-
-# Component Availability
 
 #-----------------------------------------------------------------------
 # Start of CMake Generated
 @PACKAGE_INIT@
 # END OF CMAKE GENERATED
 
+# Component Availability
+set(SNCabling_devtools_FOUND @SNCABLING_WITH_DEVELOPER_TOOLS@)
+set(SNCabling_docs_FOUND @SNCABLING_WITH_DOCS@)
+set(SNCabling_service_FOUND @SNCABLING_WITH_SERVICE@)
+
 #-----------------------------------------------------------------------
 # Setup paths that clients may need
 #
-message(STATUS "[info] SNCablingConfig.cmake: PACKAGE_CMAKE_INSTALL_BINDIR      = '@PACKAGE_CMAKE_INSTALL_BINDIR@'")
-message(STATUS "[info] SNCablingConfig.cmake: PACKAGE_CMAKE_INSTALL_LIBDIR      = '@PACKAGE_CMAKE_INSTALL_LIBDIR@'")
-message(STATUS "[info] SNCablingConfig.cmake: PACKAGE_CMAKE_INSTALL_INCLUDEDIR  = '@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@'")
-message(STATUS "[info] SNCablingConfig.cmake: PACKAGE_CMAKE_INSTALL_DATAROOTDIR = '@PACKAGE_CMAKE_INSTALL_DATAROOTDIR@'")
-set_and_check(SNCabling_INCLUDE_DIR
-  "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@"
-  )
-message(STATUS "[info] SNCablingConfig.cmake: SNCabling_INCLUDE_DIR = '@SNCabling_INCLUDE_DIR@'")
+set_and_check(SNCabling_INCLUDE_DIR "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@")
 
-set(SNCabling_INSTALL_DIR  "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@")
-set(SNCabling_INCLUDE_DIRS "${SNCabling_INCLUDE_DIR}" )
-if (SNCabling_WITH_BAYEUX_DEPENDENCY)
-  list(APPEND SNCabling_INCLUDE_DIRS "${Bayeux_INCLUDE_DIRS}" )
-endif()
 
 #-----------------------------------------------------------------------
 # Handle paths/targets for third party deps here...
+#
+include(CMakeFindDependencyMacro)
 
-if (SNCabling_WITH_BAYEUX_DEPENDENCY)
-  # - Bayeux
-  # Our main dependency is Bayeux, and this will supply the main third
-  # party deps for SNCabling as well
-  set(SNCabling_Bayeux_VERSION @SNCabling_BAYEUX_VERSION@)
-  set(Bayeux_DIR @Bayeux_CMAKE_CONFIG_DIR@)
-  message(STATUS "[info] SNCablingConfig.cmake: Searching Bayeux ${SNCabling_Bayeux_VERSION} from ${Bayeux_DIR}...")
-  find_package(Bayeux ${SNCabling_Bayeux_VERSION} EXACT REQUIRED NO_MODULE)
-	message(STATUS "[info] SNCablingConfig.cmake: SNCabling_Bayeux_VERSION          = ${SNCabling_Bayeux_VERSION}")
+if(SNCabling_service_FOUND)
+  find_dependency(Bayeux @Bayeux_VERSION@ EXACT)
 endif()
-message(STATUS "[info] SNCablingConfig.cmake: SNCabling_Bayeux_VERSION  = ${SNCabling_Bayeux_VERSION}")
 
-# - More boost
-set(Boost_NO_BOOST_CMAKE ON)
-set(SNCabling_Boost_VERSION @SNCabling_Boost_VERSION@)
-message(STATUS "[info] SNCablingConfig.cmake: Searching Boost ${SNCabling_Boost_VERSION}...")
-set(SNCabling_BOOST_COMPONENTS @SNCABLING_BOOST_COMPONENTS@)
-find_package(Boost @SNCabling_Boost_VERSION@ REQUIRED
-  ${SNCabling_BOOST_COMPONENTS}
-  )
-message(STATUS "[info] SNCablingConfig.cmake: SNCabling_Boost_VERSION   = ${SNCabling_Boost_VERSION}")
+# Find Boost after Bayeux, as latter should supply boost for us.
+find_dependency(Boost @Boost_MAJOR_VERSION@.@Boost_MINOR_VERSION@ EXACT
+  COMPONENTS filesystem date_time system)
 
 #-----------------------------------------------------------------------
 # Include the file listing all the imported targets.
@@ -99,12 +66,6 @@ if(NOT SNCabling_TARGETS_LOADED)
 endif()
 
 #-----------------------------------------------------------------------
-# Documentation - loaded optionally as it's only present if docs were
-# built
-#
-#include("${CMAKE_CURRENT_LIST_DIR}/SNCablingDocs.cmake" OPTIONAL)
+# - Auto check components
 check_required_components(SNCabling)
 
-message(STATUS "[info] SNCablingConfig.cmake: Exiting.")
-
-# - end
