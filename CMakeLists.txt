@@ -37,8 +37,11 @@ endif()
 #-----------------------------------------------------------------------
 # CMake/project requirements and configuration
 #
-cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
-project(SNCabling VERSION 1.0.0)
+cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+project(SNCabling
+  VERSION 1.0.0
+  DESCRIPTION "SuperNEMO Demonstrator Cabling Conditions Database"
+  )
 
 # - Load custom modules
 list(INSERT CMAKE_MODULE_PATH 0 ${PROJECT_SOURCE_DIR}/cmake)
