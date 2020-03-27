@@ -7,7 +7,7 @@
 #include <sncabling/sncabling.h>
 #include <sncabling/resource_files.h>
 
-int main(void)
+int main()
 {
   sncabling::initialize();
   int error_code = EXIT_SUCCESS;

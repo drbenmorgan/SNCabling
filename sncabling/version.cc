@@ -42,7 +42,7 @@ namespace sncabling {
   //}
 
   std::string version::get_version() {
-    static std::string version("");
+    static std::string version;
 
     if (version.empty()) {
       std::ostringstream stream;
@@ -56,15 +56,25 @@ namespace sncabling {
   }
 
   bool version::is_at_least(int major, int minor, int patch) {
-    if (SNCABLING_VERSION_MAJOR < major) return false;
-    if (SNCABLING_VERSION_MAJOR > major) return true;
-    if (SNCABLING_VERSION_MINOR < minor) return false;
-    if (SNCABLING_VERSION_MINOR > minor) return true;
-    if (SNCABLING_VERSION_PATCH < patch) return false;
+    if (SNCABLING_VERSION_MAJOR < major) {
+      return false;
+    }
+    if (SNCABLING_VERSION_MAJOR > major) {
+      return true;
+    }
+    if (SNCABLING_VERSION_MINOR < minor) {
+      return false;
+    }
+    if (SNCABLING_VERSION_MINOR > minor) {
+      return true;
+    }
+    if (SNCABLING_VERSION_PATCH < patch) {
+      return false;
+    }
     return true;
   }
 
-  bool version::has_feature(const std::string&) {
+  bool version::has_feature(const std::string& /*unused*/) {
     /// - If you want to add features, then the following implementation
     ///   provides one example based on string features cached in a set.
     ///

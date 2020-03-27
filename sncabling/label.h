@@ -32,7 +32,7 @@ namespace sncabling {
   struct label
   {
   public:
-    
+
     label(const char symbol_ = '?',
           const int addr0_ = -1,
           const int addr1_ = -1,
@@ -51,24 +51,24 @@ namespace sncabling {
     void set_address(const std::vector<int> & addr_);
 
     void append_address(const int);
-    
+
     const std::vector<int> & get_address() const;
-    
+
     friend std::ostream & operator<<(std::ostream & out_, const label & label_);
 
-    bool parse_from(const std::string & token_,
+    bool parse_from(const std::string & word_,
                     const char symbol_ = '\0',
                     const std::size_t & depth_ = 0);
 
     std::string to_string() const;
-    
+
   private:
-    
+
     char             _symbol_ = '?'; ///< Leading symbol of the label
     std::vector<int> _address_;      ///< Addressing segments
-    
+
   };
-    
+
 } // namespace sncabling
 
 #endif // SNCABLING_LABEL_H

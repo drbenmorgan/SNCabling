@@ -37,17 +37,11 @@
 
 namespace sncabling {
 
-  lis_cabling::lis_cabling()
-  {
-    return;
-  }
-
   bool lis_cabling::has_fiber(const lis_id & fiber_) const
   {
-    if (_table_.find(fiber_) != _table_.end()) return true;
-    return false;
+    return (_table_.find(fiber_) != _table_.end());
   }
-  
+
   void lis_cabling::add_fiber(const lis_id & fiber_,
                               const lis_id & from_led_,
                               const om_id & to_om_)
@@ -59,9 +53,8 @@ namespace sncabling {
     conn.om = to_om_;
     conn.led = from_led_;
     _table_[fiber_] = conn;
-    return;
   }
-  
+
   const om_id & lis_cabling::get_om(const lis_id & fiber_) const
   {
     const auto & found = _table_.find(fiber_);
@@ -69,7 +62,7 @@ namespace sncabling {
                 "Missing fiber!");
     return found->second.om;
   }
-  
+
   const lis_id & lis_cabling::get_led(const lis_id & fiber_) const
   {
     const auto & found = _table_.find(fiber_);
@@ -77,12 +70,12 @@ namespace sncabling {
                 "Missing fiber!");
     return found->second.led;
   }
-  
+
   const lis_cabling::fiber_cabling_map_type & lis_cabling::get_table() const
   {
     return _table_;
   }
- 
+
   void lis_cabling::print(std::ostream & out_) const
   {
     out_ << "LED" << " " << "Fiber"  << " " << "OM" << std::endl;
@@ -92,7 +85,6 @@ namespace sncabling {
       sncabling::label lbl_to   = p.second.om.to_label();
       out_ << lbl_from << " <- " << lbl_link  << " -> " << lbl_to  << std::endl;
     }
-    return;
   }
 
   bool lis_cabling::om_has_fiber(const om_id & om_, const bool secondary_) const
@@ -131,7 +123,6 @@ namespace sncabling {
         }
       }
     }
-    return;
   }
 
   bool lis_cabling::build_led_from_om(const om_id & om_,
@@ -159,10 +150,10 @@ namespace sncabling {
   {
     bool debug = false;
     bool led_bundle_match = false;
-    if (tags_ & LOAD_DEBUG) {
+    if ((tags_ & LOAD_DEBUG) != 0U) {
       debug = true;
     }
-    if (tags_ & LOAD_LED_BUNDLE_MATCH) {
+    if ((tags_ & LOAD_LED_BUNDLE_MATCH) != 0U) {
       led_bundle_match = true;
     }
     SN_LOG_DEBUG(debug, "Loading file '" << filename_ << "'...");
@@ -176,18 +167,18 @@ namespace sncabling {
       std::getline(fin, raw_line);
       boost::trim(raw_line);
       line_counter++;
-      if (raw_line.size() == 0 || raw_line[0] == '#') {
+      if (raw_line.empty() || raw_line[0] == '#') {
         continue;
       }
       SN_LOG_DEBUG(debug,"Raw line: '" << raw_line << "'");
       std::vector<std::string> tokens;
-      
+
       boost::split(tokens, raw_line, boost::is_any_of(";"));
       SN_THROW_IF(tokens.size() != 2, std::logic_error,
                   "Invalid format!");
       std::string fiber_repr = tokens[0];
       std::string om_repr = tokens[1];
-     
+
       label fiber_lbl;
       SN_THROW_IF(!fiber_lbl.parse_from(fiber_repr),
                   std::logic_error,
@@ -210,7 +201,7 @@ namespace sncabling {
 
       lis_id led(sncabling::LIS_LED, fiber.get_bundle(), -1, fiber.is_secondary());
       if (led_bundle_match) {
-        
+
       }
       add_fiber(fiber, led, om);
       fin >> std::ws;
@@ -221,7 +212,6 @@ namespace sncabling {
         break;
       }
     }
-    return;
   }
 
 
@@ -229,9 +219,5 @@ namespace sncabling {
   {
     _reverse_table_.clear();
     _table_.clear();
-    return;
   }
-  
-  
-  
 } // namespace sncabling

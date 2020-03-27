@@ -28,7 +28,7 @@
 #include <sncabling/label.h>
 
 namespace sncabling {
-  
+
   om_id::om_id(const om_type type_,
                const int addr0_,
                const int addr1_,
@@ -55,30 +55,53 @@ namespace sncabling {
       _wall_ = addr1_;
       _column_ = addr2_;
     }
-    return;
   }
 
   bool om_id::is_valid() const
   {
-    if (_type_ == OM_UNDEF) return false;
+    if (_type_ == OM_UNDEF) {
+      return false;
+    }
     if (_type_ == OM_REF) {
-      if (_ref_ < 0) return false;
+      if (_ref_ < 0) {
+        return false;
+      }
     }
     if (_type_ == OM_MAIN) {
-      if (_side_ < 0) return false;
-      if (_column_ < 0) return false;
-      if (_row_ < 0) return false;
+      if (_side_ < 0) {
+        return false;
+      }
+      if (_column_ < 0) {
+        return false;
+      }
+      if (_row_ < 0) {
+        return false;
+      }
     }
     if (_type_ == OM_XWALL) {
-      if (_side_ < 0) return false;
-      if (_wall_ < 0) return false;
-      if (_column_ < 0) return false;
-      if (_row_ < 0) return false;
+      if (_side_ < 0) {
+        return false;
+      }
+      if (_wall_ < 0) {
+        return false;
+      }
+      if (_column_ < 0) {
+        return false;
+      }
+      if (_row_ < 0) {
+        return false;
+      }
     }
     if (_type_ == OM_GVETO) {
-      if (_side_ < 0) return false;
-      if (_wall_ < 0) return false;
-      if (_column_ < 0) return false;
+      if (_side_ < 0) {
+        return false;
+      }
+      if (_wall_ < 0) {
+        return false;
+      }
+      if (_column_ < 0) {
+        return false;
+      }
     }
     return true;
   }
@@ -91,7 +114,6 @@ namespace sncabling {
     _column_  = -1;
     _row_    = -1;
     _ref_    = -1;
-    return;
   }
 
   int om_id::get_type() const
@@ -118,17 +140,17 @@ namespace sncabling {
   {
     return _type_== OM_MAIN;
   }
-  
+
   bool om_id::is_xwall() const
   {
     return _type_== OM_XWALL;
   }
-  
+
   bool om_id::is_gveto() const
   {
     return _type_== OM_GVETO;
   }
-  
+
   bool om_id::is_ref() const
   {
     return _type_== OM_REF;
@@ -138,22 +160,22 @@ namespace sncabling {
   {
     return _side_;
   }
-  
+
   int om_id::get_wall() const
   {
     return _wall_;
   }
-  
+
   int om_id::get_column() const
   {
     return _column_;
   }
-  
+
   int om_id::get_row() const
   {
     return _row_;
   }
-  
+
   int om_id::get_ref() const
   {
     return _ref_;
@@ -189,7 +211,7 @@ namespace sncabling {
     }
     return lbl;
   }
-  
+
   bool om_id::from_label(const label & lbl_)
   {
     bool ok = false;
@@ -199,7 +221,7 @@ namespace sncabling {
                     lbl_.get_address()[1],
                     lbl_.get_address()[2]);
       ok  = true;
-    } 
+    }
     if (!ok && lbl_.is('X', 4)) {
       *this = om_id(OM_XWALL,
                     lbl_.get_address()[0],
@@ -207,7 +229,7 @@ namespace sncabling {
                     lbl_.get_address()[2],
                     lbl_.get_address()[3]);
       ok  = true;
-    } 
+    }
     if (!ok && lbl_.is('G', 3)) {
       *this = om_id(OM_GVETO,
                     lbl_.get_address()[0],
@@ -219,25 +241,49 @@ namespace sncabling {
       *this = om_id(OM_REF,
                     lbl_.get_address()[0]);
       ok  = true;
-    } 
+    }
     return ok;
   }
 
   // static
   int om_id::compare(const om_id & lhs_, const om_id & rhs_)
   {
-    if (lhs_.get_type() < rhs_.get_type()) return -1;
-    if (lhs_.get_type() > rhs_.get_type()) return +1;
-    if (lhs_.get_side() < rhs_.get_side()) return -1;
-    if (lhs_.get_side() > rhs_.get_side()) return +1;
-    if (lhs_.get_wall() < rhs_.get_wall()) return -1;
-    if (lhs_.get_wall() > rhs_.get_wall()) return +1;
-    if (lhs_.get_column() < rhs_.get_column()) return -1;
-    if (lhs_.get_column() > rhs_.get_column()) return +1;
-    if (lhs_.get_row() < rhs_.get_row()) return -1;
-    if (lhs_.get_row() > rhs_.get_row()) return +1;
-    if (lhs_.get_ref() < rhs_.get_ref()) return -1;
-    if (lhs_.get_ref() > rhs_.get_ref()) return +1;
+    if (lhs_.get_type() < rhs_.get_type()) {
+      return -1;
+    }
+    if (lhs_.get_type() > rhs_.get_type()) {
+      return +1;
+    }
+    if (lhs_.get_side() < rhs_.get_side()) {
+      return -1;
+    }
+    if (lhs_.get_side() > rhs_.get_side()) {
+      return +1;
+    }
+    if (lhs_.get_wall() < rhs_.get_wall()) {
+      return -1;
+    }
+    if (lhs_.get_wall() > rhs_.get_wall()) {
+      return +1;
+    }
+    if (lhs_.get_column() < rhs_.get_column()) {
+      return -1;
+    }
+    if (lhs_.get_column() > rhs_.get_column()) {
+      return +1;
+    }
+    if (lhs_.get_row() < rhs_.get_row()) {
+      return -1;
+    }
+    if (lhs_.get_row() > rhs_.get_row()) {
+      return +1;
+    }
+    if (lhs_.get_ref() < rhs_.get_ref()) {
+      return -1;
+    }
+    if (lhs_.get_ref() > rhs_.get_ref()) {
+      return +1;
+    }
     return 0;
   }
 
@@ -245,12 +291,12 @@ namespace sncabling {
   {
     return compare(*this, other_) == -1;
   }
- 
+
   bool om_id::operator>(const om_id & other_) const
   {
     return compare(*this, other_) == +1;
   }
-  
+
   bool om_id::operator==(const om_id & other_) const
   {
     return compare(*this, other_) == 0;
@@ -275,5 +321,5 @@ namespace sncabling {
 //     if (lhs_.get_row() < rhs_.get_row()) return true;
 //       return false;
 //   }
-  
-// } // namespace std 
+
+// } // namespace std

@@ -11,7 +11,7 @@
 void run1();
 void run2();
 
-int main(void)
+int main()
 {
   int error_code = EXIT_SUCCESS;
   try {
@@ -35,7 +35,7 @@ void run1()
   for (int iled = 0; iled < 3; iled++) {
     int bundle = 9 + iled;
     int side = 0;
-    int column = 3 + iled; 
+    int column = 3 + iled;
     for (int ifiber = 0; ifiber < 13; ifiber++) {
       int row = ifiber;
       cabling.add_fiber(sncabling::lis_id(sncabling::LIS_FIBER, bundle, ifiber),
@@ -47,7 +47,7 @@ void run1()
   for (int iled = 3; iled < 5; iled++) {
     int bundle = 9 + iled;
     int side = 0;
-    int column = 1 + iled; 
+    int column = 1 + iled;
     for (int ifiber = 0; ifiber < 13; ifiber++) {
       int row = ifiber;
       cabling.add_fiber(sncabling::lis_id(sncabling::LIS_FIBER, bundle, ifiber, true),
@@ -55,7 +55,7 @@ void run1()
                         sncabling::om_id(sncabling::OM_MAIN, side, column, row));
     }
   }
-    
+
   cabling.print(std::cout);
 
   {
@@ -113,9 +113,8 @@ void run1()
       std::cout << "OM " << om.to_label() << " is lid by led " << led.to_label() << " (secondary)" << std::endl;
     }
   }
-  
+
   std::cout << std::endl;
-  return;
 }
 
 void run2()
@@ -132,5 +131,4 @@ void run2()
   }
 
   std::cout << std::endl;
-  return;
 }

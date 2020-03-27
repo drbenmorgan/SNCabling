@@ -6,7 +6,7 @@
 #include <sncabling/calo_hv_id.h>
 #include <sncabling/label.h>
 
-int main(void)
+int main()
 {
   int error_code = EXIT_SUCCESS;
   try {
@@ -41,8 +41,8 @@ int main(void)
     sncabling::calo_hv_id id7(sncabling::CALOHV_INTCABLE, 3, 41);
     sncabling::label lbl7 = id7.to_label();
     std::cout << "Label #7 = " << lbl7 << std::endl;
- 
- 
+
+
   } catch (std::exception & err) {
     std::cerr << "[error] " << err.what() << std::endl;
   } catch (...) {

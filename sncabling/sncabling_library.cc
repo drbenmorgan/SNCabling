@@ -122,7 +122,6 @@ namespace sncabling {
                 std::logic_error,
                 "SNCabling library system singleton is already set!");
     sncabling_library::_instance_ = this;
-    return;
   }
 
   sncabling_library::~sncabling_library()
@@ -131,7 +130,6 @@ namespace sncabling {
       shutdown();
     }
     sncabling_library::_instance_ = nullptr;
-    return;
   }
 
 #if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
@@ -167,7 +165,6 @@ namespace sncabling {
 #endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
 
     _initialized_ = true;
-    return;
   }
 
   void sncabling_library::shutdown()
@@ -186,8 +183,6 @@ namespace sncabling {
     // Deregister library informations from the Bayeux/datatools' kernel:
     _libinfo_deregistration_();
 #endif // SNCABLING_WITH_BAYEUX_DEPENDENCY
-
-    return;
   }
 
 #if SNCABLING_WITH_BAYEUX_DEPENDENCY == 1
@@ -273,8 +268,6 @@ namespace sncabling {
       DT_LOG_TRACE(_logging_, "SNCabling resource files dir env is documented.");
       DT_LOG_TRACE(_logging_, "SNCabling library has been registered in the Bayeux/datatools' kernel.");
     }
-
-    return;
   }
 
   void sncabling_library::_libinfo_deregistration_()

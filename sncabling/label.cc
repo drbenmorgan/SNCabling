@@ -63,13 +63,11 @@ namespace sncabling {
       return;
     }
     _address_.push_back(addr4_);
-   return;
   }
 
   void label::set_symbol(const char symbol_)
   {
     _symbol_ = symbol_;
-    return;
   }
 
   char label::get_symbol() const
@@ -79,27 +77,28 @@ namespace sncabling {
 
   bool label::is_symbol(const char symbol_) const
   {
-    if (_symbol_ != symbol_) return false;
-    return true;
+    return _symbol_ == symbol_;
   }
 
   bool label::is(const char symbol_, const std::size_t depth_) const
   {
-    if (! is_symbol(symbol_)) return false;
-    if (_address_.size() != depth_) return false;
+    if (! is_symbol(symbol_)) {
+      return false;
+    }
+    if (_address_.size() != depth_) {
+      return false;
+    }
     return true;
   }
-  
+
   void label::set_address(const std::vector<int> & addr_)
   {
     _address_ = addr_;
-    return;
   }
 
   void label::append_address(const int addr_)
   {
     _address_.push_back(addr_);
-    return;
   }
 
   const std::vector<int> & label::get_address() const
@@ -114,7 +113,7 @@ namespace sncabling {
     std::istringstream in(word_);
     std::string token;
     in >> token;
-    if (token.size() == 0) {
+    if (token.empty()) {
       SN_LOG_ERROR("Zero length string!");
       return false;
     }
@@ -135,12 +134,12 @@ namespace sncabling {
     std::string addr_repr = token.substr(2);
     boost::split(saddr, addr_repr, boost::is_any_of("."));
     std::vector<int> address;
-    for (std::size_t i  = 0; i < saddr.size(); i++) {
+    for (const auto& i : saddr) {
       int addr;
-      std::istringstream ss(saddr[i]);
+      std::istringstream ss(i);
       ss >> addr;
       if (!ss) {
-        SN_LOG_ERROR("Cannot parse an address segment from '" << saddr[i] << "!");
+        SN_LOG_ERROR("Cannot parse an address segment from '" << i << "!");
         return false;
       }
       if (addr < 0) {
@@ -149,7 +148,7 @@ namespace sncabling {
       }
       address.push_back(addr);
     }
-    if (depth_ && address.size() != depth_) {
+    if (depth_ != 0U && address.size() != depth_) {
       SN_LOG_ERROR("Address depth [" << address.size() << "] does not match the expected [" << depth_ << "]!");
       return false;
     }
@@ -179,5 +178,5 @@ namespace sncabling {
     out_ << strout.str();
     return out_;
   }
-  
+
 } // namespace sncabling

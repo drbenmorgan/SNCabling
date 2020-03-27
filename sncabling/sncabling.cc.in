@@ -42,8 +42,8 @@
 
 namespace {
 
-  static bool _sncablingInit = false;
-  static bool _bayeuxInitMaster = false;
+  bool _sncablingInit = false;
+  bool _bayeuxInitMaster = false;
 
   void sncabling_initialize_impl()
   {
@@ -53,8 +53,6 @@ namespace {
       ::sncabling::sncabling_library & sncablingLib = ::sncabling::sncabling_library::instantiate();
       sncablingLib.initialize();
     }
-
-    return;
   }
 
   void sncabling_terminate_impl()
@@ -65,7 +63,6 @@ namespace {
         sncablingLib.shutdown();
       }
     }
-    return;
   }
 
 }
@@ -94,7 +91,6 @@ namespace sncabling {
       SN_THROW_IF(true, std::logic_error,
                   "Attempt to initialize the already initialized SNCabling library!");
     }
-    return;
   }
 
   void terminate()
@@ -115,7 +111,6 @@ namespace sncabling {
         SN_THROW(std::logic_error,
                  "Attempt to terminate the already terminated SNCabling library!");
     }
-    return;
   }
 
 } // namespace sncabling

@@ -39,7 +39,7 @@ namespace sncabling {
   class time_mark
   {
   public:
-    
+
     enum time_mark_mode {
       TIME_MARK_UNDEF     = 0,
       TIME_MARK_PERIOD    = 1,
@@ -47,9 +47,6 @@ namespace sncabling {
     };
 
     static const int32_t INVALID_PERIOD = -1;
-
-    /// Constructor
-    time_mark();
 
     void make_period(const int32_t);
 
@@ -66,19 +63,19 @@ namespace sncabling {
     bool is_time_point() const;
 
     int32_t get_period_id() const;
-    
+
     const boost::posix_time::ptime & get_time() const;
 
     friend std::ostream & operator<<(std::ostream & out_, const time_mark & tm_);
 
     static const time_mark & invalid_time_mark();
-    
+
   private:
-                
+
     time_mark_mode           _mode_      = TIME_MARK_UNDEF;
     int32_t                  _period_id_ = INVALID_PERIOD;
     boost::posix_time::ptime _time_      = boost::posix_time::not_a_date_time;
-                
+
   };
 
 } // namespace sncabling

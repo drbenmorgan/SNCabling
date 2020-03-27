@@ -11,7 +11,7 @@
 void run1();
 void run2();
 
-int main(void)
+int main()
 {
   int error_code = EXIT_SUCCESS;
   try {
@@ -48,7 +48,7 @@ void run1()
               sncabling::calo_hv_id(sncabling::CALOHV_CHANNEL, crate, board, channel),
               sncabling::calo_hv_id(sncabling::CALOHV_EXTHARNESS, extharness),
               sncabling::calo_hv_id(sncabling::CALOHV_INTCABLE, intharness, intcable));
-    
+
   cabling.print(std::cout);
 
   /*
@@ -109,7 +109,6 @@ void run1()
   }
   */
   std::cout << std::endl;
-  return;
 }
 
 void run2()
@@ -156,5 +155,4 @@ void run2()
   }
 
   std::cout << std::endl;
-  return;
 }

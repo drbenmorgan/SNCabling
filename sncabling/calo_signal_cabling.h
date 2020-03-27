@@ -45,11 +45,9 @@ namespace sncabling {
       calo_signal_id extcable;
       calo_signal_id intcable;
     };
-    
+
     typedef std::map<om_id, signal_connections> signal_cabling_map_type;
     typedef std::map<calo_signal_id, om_id>     reverse_signal_cabling_map_type;
-
-    calo_signal_cabling();
 
     bool has_om(const om_id &) const;
 
@@ -63,11 +61,11 @@ namespace sncabling {
     const calo_signal_id & get_channel(const om_id & om_) const;
 
     const calo_signal_id & get_int_cable(const om_id & om_) const;
- 
+
     const calo_signal_id & get_ext_cable(const om_id & om_) const;
-        
+
     const om_id & get_om(const calo_signal_id & channel_) const;
- 
+
     const signal_cabling_map_type & get_table() const;
 
     const reverse_signal_cabling_map_type & get_reverse_table() const;
@@ -79,22 +77,22 @@ namespace sncabling {
                              std::vector<om_id> & list_) const;
 
     void print(std::ostream & out_ = std::clog) const;
-    
+
     enum load_tag {
       LOAD_DEBUG = 0x0
     };
-    
+
     void load(const std::string & filename_, const unsigned int tags_ = 0);
-  
+
     void clear();
-    
+
   private:
-    
+
     signal_cabling_map_type         _table_;         ///< Main signal readout cabling map
     reverse_signal_cabling_map_type _reverse_table_; ///< Slave reverse signal readout cabling map
-    
+
   };
-  
+
 } // namespace sncabling
 
 #endif // SNCABLING_CALO_SIGNAL_CABLING_H

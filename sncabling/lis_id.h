@@ -29,7 +29,7 @@
 namespace sncabling {
 
   class label;
-  
+
   enum lis_type {
     LIS_UNDEF  = -1,
     LIS_LED    =  0,
@@ -63,18 +63,18 @@ namespace sncabling {
     bool operator==(const lis_id & other_) const;
     bool from_label(const label & lbl_);
     label to_label() const;
-   
+
   private:
-      
+
     lis_type _type_ = LIS_UNDEF;
     bool _secondary_ = false;
     int  _led_     = -1;
     int  _bundle_  = -1;
     int  _fiber_   = -1;
-    
+
   };
 
-} // namespace sncabling 
+} // namespace sncabling
 
 #endif // SNCABLING_LIS_ID_H
 

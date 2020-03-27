@@ -45,11 +45,9 @@ namespace sncabling {
       calo_hv_id extharness;
       calo_hv_id intcable;
     };
-    
+
     typedef std::map<om_id, hv_connections> hv_cabling_map_type;
     typedef std::map<calo_hv_id, om_id>     reverse_hv_cabling_map_type;
-
-    calo_hv_cabling();
 
     bool has_om(const om_id &) const;
 
@@ -63,9 +61,9 @@ namespace sncabling {
     const calo_hv_id & get_channel(const om_id & om_) const;
 
     const calo_hv_id & get_int_cable(const om_id & om_) const;
-        
+
     const om_id & get_om(const calo_hv_id & channel_) const;
- 
+
     const hv_cabling_map_type & get_table() const;
 
     void build_om_from_board(const calo_hv_id & board_,
@@ -75,22 +73,22 @@ namespace sncabling {
                              std::vector<om_id> & list_) const;
 
     void print(std::ostream & out_ = std::clog) const;
-    
+
     enum load_tag {
       LOAD_DEBUG = 0x0
     };
-    
+
     void load(const std::string & filename_, const unsigned int tags_ = 0);
 
     void clear();
-    
+
   private:
-    
+
     hv_cabling_map_type         _table_;         ///< Main HV cabling map
     reverse_hv_cabling_map_type _reverse_table_; ///< Slave reverse HV cabling map
-    
+
   };
-  
+
 } // namespace sncabling
 
 #endif // SNCABLING_CALO_HV_CABLING_H

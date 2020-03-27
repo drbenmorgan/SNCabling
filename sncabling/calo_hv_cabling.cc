@@ -37,21 +37,14 @@
 
 namespace sncabling {
 
-  calo_hv_cabling::calo_hv_cabling()
-  {
-    return;
-  }
-
   bool calo_hv_cabling::has_om(const om_id & om_) const
   {
-    if (_table_.find(om_) != _table_.end()) return true;
-    return false;
+    return (_table_.find(om_) != _table_.end());
   }
 
   bool calo_hv_cabling::has_channel(const calo_hv_id & channel_) const
   {
-    if (_reverse_table_.find(channel_) != _reverse_table_.end()) return true;
-    return false;
+    return (_reverse_table_.find(channel_) != _reverse_table_.end());
   }
 
   void calo_hv_cabling::add(const om_id & om_,
@@ -73,9 +66,8 @@ namespace sncabling {
     conn.intcable = intcable_;
     _table_[om_] = conn;
     _reverse_table_[channel_] = om_;
-    return;
   }
- 
+
   const calo_hv_id & calo_hv_cabling::get_channel(const om_id & om_) const
   {
     const auto & found = _table_.find(om_);
@@ -83,7 +75,7 @@ namespace sncabling {
                 "Missing OM!");
     return found->second.channel;
   }
- 
+
   const calo_hv_id & calo_hv_cabling::get_int_cable(const om_id & om_) const
   {
     const auto & found = _table_.find(om_);
@@ -91,7 +83,7 @@ namespace sncabling {
                 "Missing OM!");
     return found->second.intcable;
   }
-       
+
   const om_id & calo_hv_cabling::get_om(const calo_hv_id & channel_) const
   {
     const auto & found = _reverse_table_.find(channel_);
@@ -105,7 +97,7 @@ namespace sncabling {
   {
     return _table_;
   }
- 
+
   void calo_hv_cabling::build_om_from_board(const calo_hv_id & board_,
                                             std::vector<om_id> & list_) const
   {
@@ -118,9 +110,8 @@ namespace sncabling {
         list_.push_back(p.first);
       }
     }
-    return;
   }
- 
+
   void calo_hv_cabling::build_om_from_crate(const calo_hv_id & crate_,
                                             std::vector<om_id> & list_) const
   {
@@ -133,7 +124,6 @@ namespace sncabling {
         list_.push_back(p.first);
       }
     }
-    return;
   }
 
   void calo_hv_cabling::print(std::ostream & out_) const
@@ -149,21 +139,19 @@ namespace sncabling {
            << " " << std::setw(7) << std::left << lbl_int_cable.to_string()
            << " " << std::left << lbl_to_om.to_string()  << std::endl;
     }
-    return;
   }
 
   void calo_hv_cabling::clear()
   {
     _reverse_table_.clear();
     _table_.clear();
-    return;
   }
-  
+
   void calo_hv_cabling::load(const std::string & filename_, const unsigned int tags_)
   {
     bool debug = false;
     // bool led_harness_match = false;
-    if (tags_ & LOAD_DEBUG) {
+    if ((tags_ & LOAD_DEBUG) != 0U) {
       debug = true;
     }
     // if (tags_ & LOAD_LED_HARNESS_MATCH) {
@@ -180,12 +168,12 @@ namespace sncabling {
       std::getline(fin, raw_line);
       boost::trim(raw_line);
       line_counter++;
-      if (raw_line.size() == 0 || raw_line[0] == '#') {
+      if (raw_line.empty() || raw_line[0] == '#') {
         continue;
       }
       SN_LOG_DEBUG(debug, "Raw line: '" << raw_line << "'");
       std::vector<std::string> tokens;
-      
+
       boost::split(tokens, raw_line, boost::is_any_of(";"));
       SN_THROW_IF(tokens.size() != 4, std::logic_error,
                   "Invalid format!")
@@ -196,25 +184,25 @@ namespace sncabling {
       std::string extharness_repr = tokens[1];
       std::string intcable_repr = tokens[2];
       std::string om_repr = tokens[3];
-     
+
       label channel_lbl;
       SN_THROW_IF(!channel_lbl.parse_from(channel_repr, 'H', 3),
                   std::logic_error,
                   "Invalid CaloHV label format '" << channel_repr << "'!");
       SN_LOG_DEBUG(debug, "CaloHV channel label: '" << channel_lbl << "'");
-     
+
       label extharness_lbl;
       SN_THROW_IF(!extharness_lbl.parse_from(extharness_repr, 'E', 1),
                   std::logic_error,
                   "Invalid CaloHV label format '" << extharness_repr << "'!");
       SN_LOG_DEBUG(debug, "CaloHV external harness label: '" << extharness_lbl << "'");
-     
+
       label intcable_lbl;
       SN_THROW_IF(!intcable_lbl.parse_from(intcable_repr, 'A', 2),
                   std::logic_error,
                   "Invalid CaloHV label format '" << intcable_repr << "'!");
       SN_LOG_DEBUG(debug, "CaloHV internal cable label: '" << intcable_lbl << "'");
-            
+
       label om_lbl;
       SN_THROW_IF(!om_lbl.parse_from(om_repr),
                   std::logic_error,
@@ -244,7 +232,7 @@ namespace sncabling {
       SN_THROW_IF(!intcable.is_internal_cable(),
                   std::logic_error,
                   "Not a CaloHV internal harness identifier '" << extharness_lbl << "'!");
-      
+
       om_id om;
       SN_THROW_IF(!om.from_label(om_lbl),
                   std::logic_error,
@@ -258,7 +246,6 @@ namespace sncabling {
         break;
       }
     }
-    return;
   }
- 
+
 } // namespace sncabling

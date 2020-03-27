@@ -34,20 +34,21 @@ namespace sncabling {
     static const time_mark _itm;
     return _itm;
   }
-  
-  time_mark::time_mark()
-  {
-    return;
-  }
 
   bool time_mark::is_complete() const
   {
     if (_mode_ == TIME_MARK_UNDEF) {
       return false;
-    } else if (_mode_ == TIME_MARK_PERIOD) {
-      if (_period_id_ < 0) return false;
-    } else if (_mode_ == TIME_MARK_TIMEPOINT) {
-      if (_time_.is_not_a_date_time()) return false;
+    }
+    if (_mode_ == TIME_MARK_PERIOD) {
+      if (_period_id_ < 0) {
+        return false;
+      }
+    }
+    if (_mode_ == TIME_MARK_TIMEPOINT) {
+      if (_time_.is_not_a_date_time()) {
+        return false;
+      }
     }
     return true;
   }
@@ -68,7 +69,6 @@ namespace sncabling {
     SN_THROW_IF(period_id_ < 0, std::logic_error, "Invalid period ID [" << period_id_ << "]!");
     _period_id_ = period_id_;
     _time_ = boost::posix_time::not_a_date_time;
-    return;
   }
 
   void time_mark::make_time_point(const boost::posix_time::ptime & pt_)
@@ -77,7 +77,6 @@ namespace sncabling {
     _period_id_ = INVALID_PERIOD;
     SN_THROW_IF(pt_.is_not_a_date_time(), std::logic_error, "Invalid time point!");
     _time_ = pt_;
-    return;
   }
 
   void time_mark::make_time_point(const std::string & time_repr_)
@@ -108,7 +107,6 @@ namespace sncabling {
       }
       SN_THROW_IF(!success, std::logic_error, "Invalid time representation '" << time_repr_ << "'!");
     }
-    return;
   }
 
   void time_mark::invalidate()
@@ -116,14 +114,13 @@ namespace sncabling {
     _mode_      = TIME_MARK_UNDEF;
     _period_id_ = INVALID_PERIOD;
     _time_      = boost::posix_time::not_a_date_time;
-    return;
   }
- 
+
   int32_t time_mark::get_period_id() const
   {
     return _period_id_;
   }
-    
+
   const boost::posix_time::ptime & time_mark::get_time() const
   {
     return _time_;
@@ -138,7 +135,7 @@ namespace sncabling {
     } else if (tm_.is_time_point()) {
       sout << "[T:" << boost::posix_time::to_iso_string(tm_._time_) << ']';
     } else {
-      sout << "[?]";  
+      sout << "[?]";
     }
     out_ << sout.str();
     return out_;

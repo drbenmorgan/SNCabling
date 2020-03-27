@@ -60,7 +60,7 @@ namespace {
   }
 
   std::string get_library_dir() {
-    char* exePath(0);
+    char* exePath(nullptr);
     exePath = br_find_exe_dir("");
     boost::filesystem::path sExePath(exePath);
     free(exePath);

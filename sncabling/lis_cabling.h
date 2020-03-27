@@ -33,7 +33,7 @@
 
 namespace sncabling {
 
-  /// \brief Light Injection System Cabling 
+  /// \brief Light Injection System Cabling
   class lis_cabling
   {
   public:
@@ -43,22 +43,20 @@ namespace sncabling {
       om_id  om;  ///< Optical module ID
       lis_id led; ///< LED ID
     };
-    
+
     typedef std::map<lis_id, fiber_connections> fiber_cabling_map_type;
     typedef std::map<om_id, lis_id> reverse_fiber_cabling_map_type;
-
-    lis_cabling();
 
     bool has_fiber(const lis_id &) const;
 
     void add_fiber(const lis_id & fiber_,
                    const lis_id & from_led_,
                    const om_id & to_om_);
-    
+
     const om_id & get_om(const lis_id & fiber_) const;
-    
+
     const lis_id & get_led(const lis_id & fiber_) const;
-    
+
     const fiber_cabling_map_type & get_table() const;
 
     void print(std::ostream & out_ = std::clog) const;
@@ -73,18 +71,18 @@ namespace sncabling {
       LOAD_DEBUG            = 0x0,
       LOAD_LED_BUNDLE_MATCH = 0x1
     };
-    
+
     void load(const std::string & filename_, const unsigned int tags_ = 0);
 
     void clear();
-    
+
   private:
-    
+
     fiber_cabling_map_type         _table_;         ///< Main LIS cabling map
     reverse_fiber_cabling_map_type _reverse_table_; ///< Slave reverse HV cabling map
-    
+
   };
-  
+
 } // namespace sncabling
 
 #endif // SNCABLING_LIS_CABLING_H

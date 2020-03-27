@@ -28,7 +28,7 @@
 #include <sncabling/label.h>
 
 namespace sncabling {
-  
+
   lis_id::lis_id(const lis_type type_,
                  const int addr0_,
                  const int addr1_,
@@ -46,21 +46,30 @@ namespace sncabling {
       _fiber_ = addr1_ < 0 ? -1 : addr1_;
       _secondary_ = secondary_;
     }
-    return;
   }
 
   bool lis_id::is_valid() const
   {
-    if (_type_ == LIS_UNDEF) return false;
+    if (_type_ == LIS_UNDEF) {
+      return false;
+    }
     if (_type_ == LIS_LED) {
-      if (_led_ < 0) return false;
+      if (_led_ < 0) {
+        return false;
+      }
     }
     if (_type_ == LIS_BUNDLE) {
-      if (_bundle_ < 0) return false;
+      if (_bundle_ < 0) {
+        return false;
+      }
     }
     if (_type_ == LIS_FIBER) {
-      if (_bundle_ < 0) return false;
-      if (_fiber_ < 0) return false;
+      if (_bundle_ < 0) {
+        return false;
+      }
+      if (_fiber_ < 0) {
+        return false;
+      }
     }
     return true;
   }
@@ -72,7 +81,6 @@ namespace sncabling {
     _led_     = -1;
     _bundle_  = -1;
     _fiber_   = -1;
-    return;
   }
 
   int lis_id::get_type() const
@@ -97,22 +105,22 @@ namespace sncabling {
   {
     return _type_== LIS_LED;
   }
-  
+
   bool lis_id::is_bundle() const
   {
     return _type_== LIS_BUNDLE;
   }
-  
+
   bool lis_id::is_fiber() const
   {
     return _type_== LIS_FIBER;
   }
- 
+
   bool lis_id::is_primary() const
   {
     return !_secondary_;
   }
- 
+
   bool lis_id::is_secondary() const
   {
     return _secondary_;
@@ -122,17 +130,17 @@ namespace sncabling {
   {
     return _led_;
   }
-  
+
   int lis_id::get_bundle() const
   {
     return _bundle_;
   }
-  
+
   int lis_id::get_fiber() const
   {
     return _fiber_;
   }
-  
+
   label lis_id::to_label() const
   {
     label lbl;
@@ -157,7 +165,7 @@ namespace sncabling {
     }
     return lbl;
   }
-  
+
   bool lis_id::from_label(const label & lbl_)
   {
     bool ok = false;
@@ -165,12 +173,12 @@ namespace sncabling {
       *this = lis_id(LIS_LED,
                     lbl_.get_address()[0]);
       ok  = true;
-    } 
+    }
     if (!ok && lbl_.is('B', 1)) {
       *this = lis_id(LIS_BUNDLE,
                     lbl_.get_address()[0]);
       ok  = true;
-    } 
+    }
     if (!ok && lbl_.is('P', 2)) {
       *this = lis_id(LIS_FIBER,
                     lbl_.get_address()[0],
@@ -191,14 +199,30 @@ namespace sncabling {
   // static
   int lis_id::compare(const lis_id & lhs_, const lis_id & rhs_)
   {
-    if (lhs_.get_type() < rhs_.get_type()) return -1;
-    if (lhs_.get_type() > rhs_.get_type()) return +1;
-    if (lhs_.get_led() < rhs_.get_led()) return -1;
-    if (lhs_.get_led() > rhs_.get_led()) return +1;
-    if (lhs_.get_bundle() < rhs_.get_bundle()) return -1;
-    if (lhs_.get_bundle() > rhs_.get_bundle()) return +1;
-    if (lhs_.get_fiber() < rhs_.get_fiber()) return -1;
-    if (lhs_.get_fiber() > rhs_.get_fiber()) return +1;
+    if (lhs_.get_type() < rhs_.get_type()) {
+      return -1;
+    }
+    if (lhs_.get_type() > rhs_.get_type()) {
+      return +1;
+    }
+    if (lhs_.get_led() < rhs_.get_led()) {
+      return -1;
+    }
+    if (lhs_.get_led() > rhs_.get_led()) {
+      return +1;
+    }
+    if (lhs_.get_bundle() < rhs_.get_bundle()) {
+      return -1;
+    }
+    if (lhs_.get_bundle() > rhs_.get_bundle()) {
+      return +1;
+    }
+    if (lhs_.get_fiber() < rhs_.get_fiber()) {
+      return -1;
+    }
+    if (lhs_.get_fiber() > rhs_.get_fiber()) {
+      return +1;
+    }
     return 0;
   }
 
@@ -206,12 +230,12 @@ namespace sncabling {
   {
     return compare(*this, other_) == -1;
   }
- 
+
   bool lis_id::operator>(const lis_id & other_) const
   {
     return compare(*this, other_) == +1;
   }
-  
+
   bool lis_id::operator==(const lis_id & other_) const
   {
     return compare(*this, other_) == 0;

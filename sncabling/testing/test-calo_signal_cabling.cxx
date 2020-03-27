@@ -11,7 +11,7 @@
 void run1();
 void run2();
 
-int main(void)
+int main()
 {
   int error_code = EXIT_SUCCESS;
   try {
@@ -51,7 +51,6 @@ void run1()
               sncabling::calo_signal_id(sncabling::CALOSIGNAL_INTCABLE, intharness, intcable));
   cabling.print(std::cout);
   std::cout << std::endl;
-  return;
 }
 
 void run2()
@@ -74,7 +73,7 @@ void run2()
         std::cout << "OM [" << calo_id.to_label() << "] has no signal readout connection." << std::endl;
       }
     }
-    
+
     {
       sncabling::om_id calo_id(sncabling::OM_GVETO, 1, 1, 14);
       if (cabling.has_om(calo_id)) {
@@ -85,7 +84,7 @@ void run2()
         std::cout << "OM [" << calo_id.to_label() << "] has no signal readout connection." << std::endl;
       }
     }
-    
+
     {
       sncabling::om_id calo_id(sncabling::OM_XWALL, 1, 1, 0, 9);
       if (cabling.has_om(calo_id)) {
@@ -100,5 +99,4 @@ void run2()
   }
 
   std::cout << std::endl;
-  return;
 }

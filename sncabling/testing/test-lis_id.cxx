@@ -6,7 +6,7 @@
 #include <sncabling/lis_id.h>
 #include <sncabling/label.h>
 
-int main(void)
+int main()
 {
   int error_code = EXIT_SUCCESS;
   try {
@@ -22,7 +22,7 @@ int main(void)
     sncabling::lis_id id3(sncabling::LIS_FIBER, 8, 1);
     sncabling::label lbl3 = id3.to_label();
     std::cout << "Label #3 = " << lbl3 << std::endl;
-    
+
   } catch (std::exception & err) {
     std::cerr << "[error] " << err.what() << std::endl;
   } catch (...) {

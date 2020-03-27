@@ -15,7 +15,7 @@
 void run1();
 void run2();
 
-int main(void)
+int main()
 {
   int error_code = EXIT_SUCCESS;
   try {
@@ -59,9 +59,8 @@ void run2()
   const sncabling::calo_signal_cabling & caloSignalCabling = cabling.get_calo_signal_cabling();
   caloSignalCabling.print(std::clog);
   std::clog << std::endl;
-  
+
   cabling.reset();
-  return;
 }
 
 void run1()
@@ -91,8 +90,6 @@ void run1()
               << "[" << calo_id.to_label() << "].\n";
   }
 
- 
   // Terminate the cabling service:
   snCabling.reset();
-  return;
 }

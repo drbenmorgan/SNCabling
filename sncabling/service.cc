@@ -41,18 +41,16 @@ namespace sncabling {
   service::service()
   {
     _pimpl_.reset(new pimpl_type);
-    return;
   }
-    
+
   service::~service()
   {
     if (this->service::is_initialized()) {
       this->service::reset();
     }
     _pimpl_.reset();
-    return;
   }
-  
+
   bool service::is_initialized() const
   {
     return _initialized_;
@@ -63,13 +61,13 @@ namespace sncabling {
   {
     DT_THROW_IF(is_initialized(), std::logic_error,
                 "Cabling service '" << get_name() << "' is already initialized ! ");
-    
+
     base_service::common_initialize(config_);
 
     std::string calohv_default_map;
     std::string calosignal_default_map;
     std::string lis_default_map;
-    
+
     if (config_.has_key("CaloHV.default_map")) {
       calohv_default_map = config_.fetch_path("CaloHV.default_map");
     }
@@ -111,18 +109,18 @@ namespace sncabling {
         lis_default_map = sysdesc.default_map;
       }
     }
-    
+
     // Initialization operations:
     if (! calohv_default_map.empty()) {
       _pimpl_->default_calo_hv_ptr.reset(new calo_hv_cabling);
       _pimpl_->default_calo_hv_ptr->load(calohv_default_map);
     }
-    
+
     if (! calosignal_default_map.empty()) {
       _pimpl_->default_calo_signal_ptr.reset(new calo_signal_cabling);
       _pimpl_->default_calo_signal_ptr->load(calosignal_default_map);
     }
-    
+
     if (! lis_default_map.empty()) {
       _pimpl_->default_lis_ptr.reset(new lis_cabling);
       _pimpl_->default_lis_ptr->load(lis_default_map);
@@ -138,38 +136,38 @@ namespace sncabling {
                 "Electronics service '" << get_name() << "' is not initialized ! ");
     _initialized_ = false;
 
-    if (_pimpl_->default_calo_hv_ptr.get() != nullptr) {
+    if (_pimpl_->default_calo_hv_ptr) {
       _pimpl_->default_calo_hv_ptr->clear();
     }
-    
-    if (_pimpl_->default_calo_signal_ptr.get() != nullptr) {
+
+    if (_pimpl_->default_calo_signal_ptr) {
       _pimpl_->default_calo_signal_ptr->clear();
     }
-        
-    if (_pimpl_->default_lis_ptr.get() != nullptr) {
+
+    if (_pimpl_->default_lis_ptr) {
       _pimpl_->default_lis_ptr->clear();
     }
-    
+
     _pimpl_->default_lis_ptr.reset();
     _pimpl_->default_calo_signal_ptr.reset();
     _pimpl_->default_calo_hv_ptr.reset();
-    
+
     return EXIT_SUCCESS;
   }
 
   const calo_hv_cabling & service::get_calo_hv_cabling(const time_mark & /* tm_ */) const
   {
-    return *_pimpl_->default_calo_hv_ptr.get();
+    return *_pimpl_->default_calo_hv_ptr;
   }
-    
+
   const calo_signal_cabling & service::get_calo_signal_cabling(const time_mark & /* tm_ */) const
   {
-    return *_pimpl_->default_calo_signal_ptr.get();
+    return *_pimpl_->default_calo_signal_ptr;
   }
-    
+
   const lis_cabling & service::get_lis_cabling(const time_mark & /* tm_ */) const
   {
-    return *_pimpl_->default_lis_ptr.get();
+    return *_pimpl_->default_lis_ptr;
   }
 
 } // namespace sncabling

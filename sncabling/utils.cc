@@ -32,12 +32,12 @@
 
 namespace sncabling {
 
-  const system_map_type & systems_map() 
+  const system_map_type & systems_map()
   {
     static std::unique_ptr<system_map_type> _sysmap;
-    if (_sysmap.get() == nullptr) {
+    if (_sysmap) {
       _sysmap.reset(new system_map_type);
-      system_map_type & sysmap = *_sysmap.get();
+      system_map_type & sysmap = *_sysmap;
       {
         system_description sd;
         sd.label       = "CaloHV";
@@ -84,7 +84,7 @@ namespace sncabling {
         sysmap[sd.id]  = sd;
       }
     }
-    return *_sysmap.get();
+    return *_sysmap;
   }
 
   system_tag_type system_label_to_tag(const std::string & label_)
@@ -102,7 +102,7 @@ namespace sncabling {
   const std::set<system_tag_type> & list_of_system_tags()
   {
     static std::set<system_tag_type> _syslis;
-    if (_syslis.size() == 0) {
+    if (_syslis.empty()) {
       const system_map_type & sysmap = systems_map();
       for (const auto & syspair : sysmap) {
         _syslis.insert(syspair.first);

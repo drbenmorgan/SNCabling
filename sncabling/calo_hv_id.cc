@@ -28,7 +28,7 @@
 #include <sncabling/label.h>
 
 namespace sncabling {
-  
+
   calo_hv_id::calo_hv_id(const calohv_type type_,
                          const int addr0_,
                          const int addr1_,
@@ -57,33 +57,54 @@ namespace sncabling {
       _harness_ = addr0_ < 0 ? -1 : addr0_  ;
       _cable_ = addr1_ < 0 ? -1 : addr1_  ;
     }
-    return;
   }
 
   bool calo_hv_id::is_valid() const
   {
-    if (_type_ == CALOHV_UNDEF) return false;
+    if (_type_ == CALOHV_UNDEF) {
+      return false;
+    }
     if (_type_ == CALOHV_CRATE) {
-      if (_crate_ < 0) return false;
+      if (_crate_ < 0) {
+        return false;
+      }
     }
     if (_type_ == CALOHV_BOARD) {
-      if (_crate_ < 0) return false;
-      if (_board_ < 0) return false;
+      if (_crate_ < 0) {
+        return false;
+      }
+      if (_board_ < 0) {
+        return false;
+      }
     }
     if (_type_ == CALOHV_CHANNEL) {
-      if (_crate_ < 0) return false;
-      if (_board_ < 0) return false;
-      if (_channel_ < 0) return false;
+      if (_crate_ < 0) {
+        return false;
+      }
+      if (_board_ < 0) {
+        return false;
+      }
+      if (_channel_ < 0) {
+        return false;
+      }
     }
     if (_type_ == CALOHV_EXTHARNESS) {
-      if (_harness_ < 0) return false;
+      if (_harness_ < 0) {
+        return false;
+      }
     }
     if (_type_ == CALOHV_INTHARNESS) {
-      if (_harness_ < 0) return false;
+      if (_harness_ < 0) {
+        return false;
+      }
     }
     if (_type_ == CALOHV_INTCABLE) {
-      if (_harness_ < 0) return false;
-      if (_cable_ < 0) return false;
+      if (_harness_ < 0) {
+        return false;
+      }
+      if (_cable_ < 0) {
+        return false;
+      }
     }
     return true;
   }
@@ -115,7 +136,6 @@ namespace sncabling {
     _channel_  = -1;
     _harness_   = -1;
     _cable_    = -1;
-    return;
   }
 
   int calo_hv_id::get_type() const
@@ -127,12 +147,12 @@ namespace sncabling {
   {
     return _type_== CALOHV_CRATE;
   }
-  
+
   bool calo_hv_id::is_board() const
   {
     return _type_== CALOHV_BOARD;
   }
-  
+
   bool calo_hv_id::is_channel() const
   {
     return _type_== CALOHV_CHANNEL;
@@ -147,7 +167,7 @@ namespace sncabling {
   {
     return _type_ == CALOHV_INTHARNESS;
   }
-  
+
   bool calo_hv_id::is_internal_cable() const
   {
     return _type_ == CALOHV_INTCABLE;
@@ -157,22 +177,22 @@ namespace sncabling {
   {
     return _crate_;
   }
-  
+
   int calo_hv_id::get_board() const
   {
     return _board_;
   }
-  
+
   int calo_hv_id::get_channel() const
   {
     return _channel_;
   }
- 
+
   int calo_hv_id::get_harness() const
   {
     return _harness_;
   }
-   
+
   int calo_hv_id::get_cable() const
   {
     return _cable_;
@@ -213,7 +233,7 @@ namespace sncabling {
     }
     return lbl;
   }
-  
+
   bool calo_hv_id::from_label(const label & lbl_)
   {
     bool ok = false;
@@ -221,13 +241,13 @@ namespace sncabling {
       *this = calo_hv_id(CALOHV_CRATE,
                          lbl_.get_address()[0]);
       ok  = true;
-    } 
+    }
     if (!ok && lbl_.is('B', 2)) {
       *this = calo_hv_id(CALOHV_BOARD,
                          lbl_.get_address()[0],
                          lbl_.get_address()[1]);
       ok  = true;
-    } 
+    }
     if (!ok && lbl_.is('H', 3)) {
       *this = calo_hv_id(CALOHV_CHANNEL,
                          lbl_.get_address()[0],
@@ -257,18 +277,42 @@ namespace sncabling {
   // static
   int calo_hv_id::compare(const calo_hv_id & lhs_, const calo_hv_id & rhs_)
   {
-    if (lhs_.get_type() < rhs_.get_type()) return -1;
-    if (lhs_.get_type() > rhs_.get_type()) return +1;
-    if (lhs_.get_crate() < rhs_.get_crate()) return -1;
-    if (lhs_.get_crate() > rhs_.get_crate()) return +1;
-    if (lhs_.get_board() < rhs_.get_board()) return -1;
-    if (lhs_.get_board() > rhs_.get_board()) return +1;
-    if (lhs_.get_channel() < rhs_.get_channel()) return -1;
-    if (lhs_.get_channel() > rhs_.get_channel()) return +1;
-    if (lhs_.get_harness() < rhs_.get_harness()) return -1;
-    if (lhs_.get_harness() > rhs_.get_harness()) return +1;
-    if (lhs_.get_cable() < rhs_.get_cable()) return -1;
-    if (lhs_.get_cable() > rhs_.get_cable()) return +1;
+    if (lhs_.get_type() < rhs_.get_type()) {
+      return -1;
+    }
+    if (lhs_.get_type() > rhs_.get_type()) {
+      return +1;
+    }
+    if (lhs_.get_crate() < rhs_.get_crate()) {
+      return -1;
+    }
+    if (lhs_.get_crate() > rhs_.get_crate()) {
+      return +1;
+    }
+    if (lhs_.get_board() < rhs_.get_board()) {
+      return -1;
+    }
+    if (lhs_.get_board() > rhs_.get_board()) {
+      return +1;
+    }
+    if (lhs_.get_channel() < rhs_.get_channel()) {
+      return -1;
+    }
+    if (lhs_.get_channel() > rhs_.get_channel()) {
+      return +1;
+    }
+    if (lhs_.get_harness() < rhs_.get_harness()) {
+      return -1;
+    }
+    if (lhs_.get_harness() > rhs_.get_harness()) {
+      return +1;
+    }
+    if (lhs_.get_cable() < rhs_.get_cable()) {
+      return -1;
+    }
+    if (lhs_.get_cable() > rhs_.get_cable()) {
+      return +1;
+    }
     return 0;
   }
 
@@ -276,17 +320,17 @@ namespace sncabling {
   {
     return compare(*this, other_) == -1;
   }
- 
+
   bool calo_hv_id::operator>(const calo_hv_id & other_) const
   {
     return compare(*this, other_) == +1;
   }
-  
+
   bool calo_hv_id::operator==(const calo_hv_id & other_) const
   {
     return compare(*this, other_) == 0;
   }
- 
+
   bool calo_hv_id::operator!=(const calo_hv_id & other_) const
   {
     return compare(*this, other_) != 0;
@@ -297,13 +341,13 @@ namespace sncabling {
     calo_hv_id cr(CALOHV_CRATE, _crate_);
     return cr;
   }
-  
+
   calo_hv_id calo_hv_id::get_board_id() const
   {
     calo_hv_id cr(CALOHV_BOARD, _crate_, _board_);
     return cr;
   }
-  
+
   calo_hv_id calo_hv_id::get_internal_harness_id() const
   {
     calo_hv_id cr(CALOHV_INTHARNESS, _harness_);
